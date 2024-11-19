@@ -11,7 +11,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #ffffff;
     --foreground: #ededed;
   }
 }
@@ -20,4 +20,59 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ANIMACIONES */
+@keyframes fadeInUp{
+  0%{
+    opacity:0;
+    transform: translateY(20px);
+  }
+  100%{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown{
+  0%{
+    opacity:0;
+    transform: translateY(-20px);
+  }
+  100%{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientMove{
+  0%{
+    background-position: 0% 50%;
+  }
+  50%{
+    background-position: 100% 50%;
+  }
+  100%{
+    background-position: 0% 50%;
+  }
+}
+
+.animate-fade-in-up{
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-fade-in-down{
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.animate-gradient-move{
+  background-size: 200% 200%;
+  animation: gradientMove 3s linear infinite;
+} 
+
+
+/* TAILWIND */
+.input-form{
+  @apply bg-gray-100 px-4 py-2 rounded-md text-black mb-1;
 }
