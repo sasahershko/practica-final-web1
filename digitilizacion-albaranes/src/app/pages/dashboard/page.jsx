@@ -2,7 +2,6 @@
 import {useRouter} from 'next/navigation';
 import useAuthProtection from '../useAuthProtection';
 import SideBar from '../../components/SideBar';
-import { useEffect } from 'react';
 
 export default function Dashboard(){
     const {hasToken, loading} = useAuthProtection();
@@ -23,7 +22,7 @@ export default function Dashboard(){
 
     return(
         <div>
-            <h1 className='text-black text-center text-[100px] font-bold animate-fade-in-up'>DASHBOARD</h1>
+            <h1 className='text-black text-center text-[100px] font-bold animate-fade-in-up'>Dashboard</h1>
             <SideBar/>
         </div>
     )
