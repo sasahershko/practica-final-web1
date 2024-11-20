@@ -27,7 +27,7 @@ export default function NavBar(){
     return(
         <nav>
             <div className='container mx-auto flex justify-between items-center w-full'>
-                <div className='flex gap-4'>
+                <div className='flex gap-4 mt-3'>
                     <Link className='text-black font-bold text-4xl' href='/'>
                         MyApp
                     </Link>
@@ -35,7 +35,6 @@ export default function NavBar(){
                                 Dashboard
                             </Button>
                 </div>
-
 
                 {isAuthenticated ? (
                     <div className='flex gap-4 mt-3'>

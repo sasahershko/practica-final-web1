@@ -1,11 +1,16 @@
 'use client'
 import {useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {Button} from '@nextui-org/react';
-import useAuthProtection from '../../hooks/useAuthProtection';
+import useAuthProtection from '../useAuthProtection';
 
 export default function VerifyAccount(){
     //SI NO TIENE TOKEN EN EL LOCALSTORAGE, NO VA A PODER ENTRAR
-    useAuthProtection();
+    const hasToken = useAuthProtection();
+
+    if(!hasToken){
+        return null;
+    }
 
     const [code, setCode] = useState(new Array(6).fill(''));
     const [message, setMessage] = useState('');

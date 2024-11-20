@@ -1,5 +1,6 @@
 'use client'
 // ELIMINAR framer-motion!!
+import SideBar from './components/SideBarV0';
 
 export default function HomePage(){
 
