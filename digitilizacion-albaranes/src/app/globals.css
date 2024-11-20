@@ -76,3 +76,7 @@ body {
 .input-form{
   @apply bg-gray-100 px-4 py-2 rounded-md text-black mb-1;
 }
+
+.nav-button{
+  @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-300 transition duration-300 ease-in-out;
+}

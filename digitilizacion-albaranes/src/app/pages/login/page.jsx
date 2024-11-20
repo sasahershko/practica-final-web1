@@ -2,16 +2,18 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {Button} from '@nextui-org/react';
+import {useRouter} from 'next/navigation';
 
 export default function Login(){
+    const router = useRouter();
 
     const formik = useFormik({
         initialValues:{
-            mail:'',
+            email:'',
             password: ''
         },
         validationSchema: Yup.object({
-            mail: Yup.string().email('E-mail inválido').required('Campo requerido'),
+            email: Yup.string().email('E-mail inválido').required('Campo requerido'),
             password: Yup.string().required('Campo requerido')
         }),
         onSubmit: async(values) =>{
@@ -24,7 +26,21 @@ export default function Login(){
                     headers:{
                         'Content-Type': 'application/json'
                     },
+                    body: JSON.stringify({
+                        email: values.email,
+                        password: values.password
+                    }),
                 })
+
+                const data = await response.json();
+
+                if(response.ok){
+                    //guardamos token
+                    localStorage.setItem('jwt', data.token);
+                    router.push('/dashboard');
+                }else{
+                    alert('Credenciales incorrectas ', data.message);
+                }
 
             }catch(error){
                 console.log('Error', error);
@@ -42,13 +58,13 @@ export default function Login(){
                 <div className='flex flex-col mb-4'>
                     <label className='text-black'>E-mail</label>
                     <input
-                        type='mail'
-                        name='mail'
-                        value = {formik.values.mail}
+                        type='email'
+                        name='email'
+                        value = {formik.values.email}
                         onChange={formik.handleChange}
                         className='input-form'
                     />
-                    {formik.touched.mail && formik.errors.mail ? (<p className='text-center text-red-500'>{formik.errors.mail}</p>): null}
+                    {formik.touched.email && formik.errors.email ? (<p className='text-center text-red-500'>{formik.errors.email}</p>): null}
                 </div>
   
 

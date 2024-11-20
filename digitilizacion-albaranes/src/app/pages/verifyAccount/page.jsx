@@ -4,6 +4,7 @@ import {Button} from '@nextui-org/react';
 import useAuthProtection from '../../hooks/useAuthProtection';
 
 export default function VerifyAccount(){
+    //SI NO TIENE TOKEN EN EL LOCALSTORAGE, NO VA A PODER ENTRAR
     useAuthProtection();
 
     const [code, setCode] = useState(new Array(6).fill(''));
