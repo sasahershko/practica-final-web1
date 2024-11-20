@@ -8,7 +8,7 @@ export default function NavBar(){
 
     return(
         <nav>
-            <div className='container mx-auto flex justify-between items-center'>
+            <div className='container mx-auto flex justify-between items-center w-full'>
                 <Link className='text-black font-bold text-4xl' href='/'>
                     MyApp
                 </Link>

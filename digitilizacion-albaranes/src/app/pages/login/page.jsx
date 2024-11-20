@@ -14,8 +14,21 @@ export default function Login(){
             mail: Yup.string().email('E-mail inválido').required('Campo requerido'),
             password: Yup.string().required('Campo requerido')
         }),
-        onSubmit: (values) =>{
+        onSubmit: async(values) =>{
             console.log('Datos enviados', values);
+
+            try{
+
+                const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/login', {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                })
+
+            }catch(error){
+                console.log('Error', error);
+            }
         }
     });
 

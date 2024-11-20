@@ -1,8 +1,10 @@
 'use client'
 import {useState} from 'react';
 import {Button} from '@nextui-org/react';
+import useAuthProtection from '../../hooks/useAuthProtection';
 
 export default function VerifyAccount(){
+    useAuthProtection();
 
     const [code, setCode] = useState(new Array(6).fill(''));
     const [message, setMessage] = useState('');
@@ -37,38 +39,77 @@ export default function VerifyAccount(){
         e.preventDefault();
 
         const codeValue = code.join('');
-        // console.log('CODE VALUE', codeValue);
 
-            //recuperar token JWT del registro
+        if (!codeValue || codeValue.length !== 6) {
+            alert('Por favor, ingresa el código completo (6 dígitos).');
+            return;
+        }else{
+            console.log(codeValue);
+        }
+
+        //recuperar token JWT del registro
         const token= localStorage.getItem('jwt');
         if(!token){
             alert('NO HAY TOKEN');
             return;
+        }else{
+            console.log(token);
         }
+
+        // try{
+        //     const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/validation', {
+        //         method: 'PUT',
+        //         headers:{
+        //             'Content-Type': 'application/json',
+        //             Authorization : `Bearer ${token}`
+        //         },
+        //         body: JSON.stringify({code: codeValue})
+        //     });
+
+        //     const data = await response.json();
+
+        //     if(response.ok){
+        //         setMessage('Cuenta verificada correctamente');
+        //         console.log('Cuenta verificada ', data);
+        //     }else{
+        //         console.log(`ERROR AL VERIFICAR CUENTA: ${data.message || JSON.stringify(data)}`);
+        //     }
+        // }catch(error){
+        //     alert('ERROR DENTRO DE VERIFY', error.message);
+        // }
+
+    };
+
+    const deleteAccount = async() =>{
+        const token = localStorage.getItem('jwt');
+        if(!token){
+            alert('NO HAY TOKEN');
+            return;
+        }
+        console.log('TOKEN: ', token);
 
         try{
-            const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/validation', {
-                method: 'PUT',
+
+            const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user', {
+                method: 'DELETE',
                 headers:{
                     'Content-Type': 'application/json',
-                    Authorization : `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({code: codeValue})
-            });
-
-            const data = await response.json();
+            })
 
             if(response.ok){
-                setMessage('Cuenta verificada correctamente');
-                
-            }else{
-                setMessage(`ERROR AL VERIFICAR CUENTA: ${data.message || JSON.stringify(data)}`);
+                const data = await response.json();
+                console.log('Usuario eliminado', data);
+                alert('USUARIO ELIMINADO CORRECTAMENTE.');
             }
-        }catch(error){
-            alert('ERROR DENTRO DE VERIFY', error.message);
-        }
 
-    }
+        }catch(error){
+            console.error('Error al eliminar el usuario: ', error.message);
+        }
+    };
+
+
 
     return(
         <div className='animate-fade-in-up'>
@@ -97,6 +138,10 @@ export default function VerifyAccount(){
                     
                 <Button type='submit' className='mt-5 rounded-md bg-blue-500 hover:bg-blue-300 transition duration-300 ease-in-out'>
                     Send verification
+                </Button>
+
+                <Button onClick={deleteAccount} className='mt-5 rounded-md bg-blue-500 hover:bg-blue-300 transition duration-300 ease-in-out'>
+                    DELETE ACCOUNT
                 </Button>
             </form>
         </div>
