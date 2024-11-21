@@ -3,6 +3,8 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {Button} from '@nextui-org/react';
 import {useRouter} from 'next/navigation';
+import {register} from '../../lib/register';
+
 
 export default function SignUp() {
     const router = useRouter();
@@ -17,36 +19,36 @@ export default function SignUp() {
             password: Yup.string().min(6, 'La contraseña debe tener al menos 6 caracteres').required('Campo requerido')
         }),
         onSubmit: async(values) => {
-            console.log('Datos enviados', values);
 
-            try{
-                const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/register', {
-                    method: 'POST',
-                    headers:{
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: values.email,
-                        password: values.password,
-                    })
-                });
+            register(values);
+            // try{
+            //     const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/register', {
+            //         method: 'POST',
+            //         headers:{
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({
+            //             email: values.email,
+            //             password: values.password,
+            //         })
+            //     });
 
-                const data = await response.json();
-                console.log('Respuesta del backend:', data);
+            //     const data = await response.json();
+            //     console.log('Respuesta del backend:', data);
 
-                if(response.ok){
-                    localStorage.setItem('jwt', data.token);
-                    console.log('DATA TOKEN', data.token);
+            //     if(response.ok){
+            //         localStorage.setItem('jwt', data.token);
+            //         console.log('DATA TOKEN', data.token);
 
-                    router.push('/pages/verifyAccount')
-                }else{
-                    console.log(`RESPONSE NOT OKEY: ${data.message || JSON.stringify(data)}`);
-                    return;
-                }
-            }catch(error){
-                alert('Error al conectar con el servidor');
-                console.log('ERROR AL CONECTAR SERVIDOR:', error.message)
-            }
+            //         router.push('/pages/verifyAccount')
+            //     }else{
+            //         console.log(`RESPONSE NOT OKEY: ${data.message || JSON.stringify(data)}`);
+            //         return;
+            //     }
+            // }catch(error){
+            //     alert('Error al conectar con el servidor');
+            //     console.log('ERROR AL CONECTAR SERVIDOR:', error.message)
+            // }
         }
     })
 

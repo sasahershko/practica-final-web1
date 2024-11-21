@@ -1,8 +1,8 @@
 'use client'
 import {useState} from 'react';
-import {useRouter} from 'next/navigation';
 import {Button} from '@nextui-org/react';
 import useAuthProtection from '../../hooks/useAuthProtection';
+
 
 export default function VerifyAccount(){
     //SI NO TIENE TOKEN EN EL LOCALSTORAGE, NO VA A PODER ENTRAR
@@ -53,14 +53,15 @@ export default function VerifyAccount(){
             console.log(codeValue);
         }
 
-        //recuperar token JWT del registro
-        const token= localStorage.getItem('jwt');
-        if(!token){
-            alert('NO HAY TOKEN');
-            return;
-        }else{
-            console.log(token);
-        }
+
+        // //recuperar token JWT del registro
+        // const token= localStorage.getItem('jwt');
+        // if(!token){
+        //     alert('NO HAY TOKEN');
+        //     return;
+        // }else{
+        //     console.log(token);
+        // }
 
         // try{
         //     const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/validation', {
@@ -77,6 +78,7 @@ export default function VerifyAccount(){
         //     if(response.ok){
         //         setMessage('Cuenta verificada correctamente');
         //         console.log('Cuenta verificada ', data);
+
         //     }else{
         //         console.log(`ERROR AL VERIFICAR CUENTA: ${data.message || JSON.stringify(data)}`);
         //     }

@@ -5,6 +5,12 @@ import {Button} from '@nextui-org/react';
 import {useRouter} from 'next/navigation';
 
 export default function Login(){
+
+        //COMO LEER DESDE LAS COOKES
+    // const cookieStore = cookies();
+    // const token = cookieStore.get('bytoken');
+    // const user = await validation(token);
+
     const router = useRouter();
 
     const formik = useFormik({
@@ -17,14 +23,18 @@ export default function Login(){
             password: Yup.string().required('Campo requerido')
         }),
         onSubmit: async(values) =>{
-            console.log('Datos enviados', values);
+            console.log('Datos enviados', JSON.stringify({
+                email: values.email,
+                password: values.password
+            }));
 
             try{
 
                 const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/login', {
                     method: 'POST',
                     headers:{
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('jwt')}`
                     },
                     body: JSON.stringify({
                         email: values.email,
@@ -37,7 +47,7 @@ export default function Login(){
                 if(response.ok){
                     //guardamos token
                     localStorage.setItem('jwt', data.token);
-                    router.push('/dashboard');
+                    router.push('/pages/sideBar/summary');
                 }else{
                     alert('Credenciales incorrectas ', data.message);
                 }
