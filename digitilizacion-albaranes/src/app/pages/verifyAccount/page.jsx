@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Button} from '@nextui-org/react';
-import useAuthProtection from '../useAuthProtection';
+import useAuthProtection from '../../hooks/useAuthProtection';
 
 export default function VerifyAccount(){
     //SI NO TIENE TOKEN EN EL LOCALSTORAGE, NO VA A PODER ENTRAR
