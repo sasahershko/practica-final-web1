@@ -1,16 +1,14 @@
 'use client'
 import {useState} from 'react';
 import {Button} from '@nextui-org/react';
+import {verify} from '../../lib/verify';
+import {useRouter} from 'next/navigation';
 import useAuthProtection from '../../hooks/useAuthProtection';
 
 
 export default function VerifyAccount(){
-    //SI NO TIENE TOKEN EN EL LOCALSTORAGE, NO VA A PODER ENTRAR
-    const hasToken = useAuthProtection();
 
-    if(!hasToken){
-        return null;
-    }
+    const router = useRouter();
 
     const [code, setCode] = useState(new Array(6).fill(''));
     const [message, setMessage] = useState('');
@@ -53,69 +51,51 @@ export default function VerifyAccount(){
             console.log(codeValue);
         }
 
-
-        // //recuperar token JWT del registro
-        // const token= localStorage.getItem('jwt');
-        // if(!token){
-        //     alert('NO HAY TOKEN');
-        //     return;
-        // }else{
-        //     console.log(token);
-        // }
-
-        // try{
-        //     const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/validation', {
-        //         method: 'PUT',
-        //         headers:{
-        //             'Content-Type': 'application/json',
-        //             Authorization : `Bearer ${token}`
-        //         },
-        //         body: JSON.stringify({code: codeValue})
-        //     });
-
-        //     const data = await response.json();
-
-        //     if(response.ok){
-        //         setMessage('Cuenta verificada correctamente');
-        //         console.log('Cuenta verificada ', data);
-
-        //     }else{
-        //         console.log(`ERROR AL VERIFICAR CUENTA: ${data.message || JSON.stringify(data)}`);
-        //     }
-        // }catch(error){
-        //     alert('ERROR DENTRO DE VERIFY', error.message);
-        // }
-
-    };
-
-    const deleteAccount = async() =>{
-        const token = localStorage.getItem('jwt');
-        if(!token){
-            alert('NO HAY TOKEN');
-            return;
-        }
-        console.log('TOKEN: ', token);
-
         try{
+            const result = await verify(codeValue);
 
-            const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user', {
-                method: 'DELETE',
-                headers:{
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-            })
+            if(result.success){
+                console.log('Verificación correcta: ', result);
+                setMessage('Cuenta verificada correctamente');
 
-            if(response.ok){
-                const data = await response.json();
-                console.log('Usuario eliminado', data);
-                alert('USUARIO ELIMINADO CORRECTAMENTE.');
+                router.push('/pages/sideBar/summary');
             }
 
         }catch(error){
-            console.error('Error al eliminar el usuario: ', error.message);
+            console.log('Error al verificar la cuenta: ', error.message);
+            setMessage('Error al verificar la cuenta');
         }
+
     };
+
+    // const deleteAccount = async() =>{
+    //     const token = localStorage.getItem('jwt');
+    //     if(!token){
+    //         alert('NO HAY TOKEN');
+    //         return;
+    //     }
+    //     console.log('TOKEN: ', token);
+
+    //     try{
+
+    //         const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user', {
+    //             method: 'DELETE',
+    //             headers:{
+    //                 'Content-Type': 'application/json',
+    //                 Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNmMGZjNDllZTI4YmUyMzY5Y2RhZDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzIyMTM5ODQsImV4cCI6MTczNDgwNTk4NH0.xrI_GpPHVgcvtYSL-hJ8cE5gCDXOcQApLSVR28uratE`
+    //             },
+    //         })
+
+    //         if(response.ok){
+    //             const data = await response.json();
+    //             console.log('Usuario eliminado', data);
+    //             alert('USUARIO ELIMINADO CORRECTAMENTE.');
+    //         }
+
+    //     }catch(error){
+    //         console.error('Error al eliminar el usuario: ', error.message);
+    //     }
+    // };
 
 
 
@@ -147,10 +127,10 @@ export default function VerifyAccount(){
                 <Button type='submit' className='mt-5 rounded-md bg-blue-500 hover:bg-blue-300 transition duration-300 ease-in-out'>
                     Send verification
                 </Button>
-
+{/* 
                 <Button onClick={deleteAccount} className='mt-5 rounded-md bg-blue-500 hover:bg-blue-300 transition duration-300 ease-in-out'>
                     DELETE ACCOUNT
-                </Button>
+                </Button> */}
             </form>
         </div>
     )

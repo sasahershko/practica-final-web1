@@ -1,9 +1,20 @@
+'use server'
+import {cookies} from 'next/headers';
+import {redirect} from 'next/navigation';
 
-
-export async function verify (token,  codeValue) {
+export async function verify (codeValue) {
 
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user/validation`, {
+        //recupero el token desde las cookies del server
+        const token = cookies().get('bytoken')?.value;
+
+        if(!token){
+            throw new Error('No se encontró el token de las cookies');
+        }
+
+
+        // `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user/validation`
+        const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/validation', {
             method: 'PUT',
             headers:{
                 'Content-Type': 'application/json',
@@ -12,16 +23,26 @@ export async function verify (token,  codeValue) {
             body: JSON.stringify({code: codeValue})
         });
 
-        const data = await response.json();
 
-        if(response.ok){
-            setMessage('Cuenta verificada correctamente');
-            console.log('Cuenta verificada ', data);
-            
-        }else{
+
+        if(!response.ok){
             console.log(`ERROR AL VERIFICAR CUENTA: ${data.message || JSON.stringify(data)}`);
+            // throw new Error(errorData.message || 'Error al validar la cuenta.');
+            return {success: false, message: errorData.message || 'Error al validar la cuenta.'};
         }
+
+        
+        const data = await response.json();
+    
+        (await cookies()).set('isLoggedIn', 'true', {
+            path: '/',
+            httpOnly: false,
+        });
+
+        return {success: true, data: data};
+
     }catch(error){
-        alert('ERROR DENTRO DE VERIFY', error.message);
+        // alert('ERROR DENTRO DE VERIFY', error.message);
+        return {success: false, message: error.message};
     }
 }

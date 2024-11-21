@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {Button} from '@nextui-org/react';
 import {useRouter} from 'next/navigation';
+import {login} from '../../lib/login';
 
 export default function Login(){
 
@@ -23,37 +24,18 @@ export default function Login(){
             password: Yup.string().required('Campo requerido')
         }),
         onSubmit: async(values) =>{
-            console.log('Datos enviados', JSON.stringify({
-                email: values.email,
-                password: values.password
-            }));
-
             try{
+                const result = await login(values);
 
-                const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/login', {
-                    method: 'POST',
-                    headers:{
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                    },
-                    body: JSON.stringify({
-                        email: values.email,
-                        password: values.password
-                    }),
-                })
-
-                const data = await response.json();
-
-                if(response.ok){
-                    //guardamos token
-                    localStorage.setItem('jwt', data.token);
+                if(result.success){
                     router.push('/pages/sideBar/summary');
                 }else{
-                    alert('Credenciales incorrectas ', data.message);
+                    console.log('Credenciales inválidas');
                 }
 
             }catch(error){
-                console.log('Error', error);
+                console.log(error.message);
+            
             }
         }
     });
@@ -98,5 +80,3 @@ export default function Login(){
         </div>
     )
 }
-
-// mt-3 rounded-md px-3 py-2 border

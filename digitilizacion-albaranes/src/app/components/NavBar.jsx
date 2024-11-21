@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import {Button, User} from '@nextui-org/react';
 import Link from 'next/link';
-import SideBar from './SideBar';
+import LogoutButton from '../components/LogoutButton';
 
 export default function NavBar(){
     const router = useRouter();
@@ -11,19 +11,28 @@ export default function NavBar(){
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() =>{
-        const token = localStorage.getItem('jwt');
+        const cookies = document.cookie.split('; ').find(row => row.startsWith('bytoken='));
+        const isLoggedInCookie = document.cookie.split('; ').find(row => row.startsWith('isLoggedIn='));
 
-        if(token){
-            setIsAuthenticated(true);
-        }
+        const isLoggedIn = isLoggedInCookie?.split('=')[1] === 'true';
+        const hasCookies = !!cookies;
+
+        setIsAuthenticated(hasCookies && isLoggedIn);
+
     }, []);
 
-    const handleLogout = ()=>{
-        // localStorage.removeItem('jwt');
-        localStorage.clear();
-        setIsAuthenticated(false);
-        router.push('/');
-    };
+    
+
+    const probarCookies = () =>{
+        const cookies = document.cookie.split('; ').find(row => row.startsWith('bytoken='));
+        const isLoggedInCookie = document.cookie.split('; ').find(row => row.startsWith('isLoggedIn='));
+
+        const hasCookies = !!cookies;
+        const isLoggedIn = isLoggedInCookie?.split('=')[1] === 'true';
+       console.log(hasCookies);
+       console.log(isLoggedIn);
+    }
+
 
     return(
         <>
@@ -33,7 +42,7 @@ export default function NavBar(){
                         <Link className='text-black font-bold text-4xl' href='/'>
                             MyApp
                         </Link>
-                        <Button className='nav-button' onClick={()=> router.push('/pages/sideBar/dashboard')}>
+                        <Button className='nav-button' onClick={()=> router.push('/pages/sideBar/summary')}>
                                     Dashboard
                                 </Button>
                     </div>
@@ -46,25 +55,31 @@ export default function NavBar(){
                                     src: 'https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg'
                                 }}
                                 className='text-black'/>
-                            <Button className='bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300 ease-in-out'>
-                                Logout
-                            </Button>
+                            <LogoutButton/>
                         </div>
                     ): (
                     <div className='flex gap-4 mt-3'>
                         <Button 
                             className='nav-button'
-                            onClick={()=> router.push('../pages/login')}
+                            onClick={()=> router.push('/pages/login')}
                         >
                             Log in
                         </Button>
 
                         <Button 
                             className='nav-button' 
-                            onClick={()=>router.push('../pages/signup')}
+                            onClick={()=>router.push('/pages/signup')}
                         >
                             Sign up
                         </Button>
+
+                        <Button 
+                            className='nav-button' 
+                            onClick={probarCookies}
+                        >
+                            COMPROBAR
+                        </Button>
+                    
                     </div>)}
 
                 </div>
