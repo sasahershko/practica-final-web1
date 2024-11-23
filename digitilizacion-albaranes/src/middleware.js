@@ -6,10 +6,10 @@ export function middleware(request) {
     const currentUser = request.cookies.get('bytoken')?.value;
     const isLoggedIn = request.cookies.get('isLoggedIn')?.value === 'true';
 
-    const protectedRoutes = ['/sideBar/dashboard', '/sideBar/summary', '/sideBar/transactions', '/sideBar/notifications', '/sideBar/settings'];
+    const protectedRoutes = ['/pages/sideBar/summary', '/pages/sideBar/transactions', '/pages/sideBar/notifications', '/pages/sideBar/settings'];
 
     //redirigir al dashboard si el usuario está autenticado
-    if (currentUser && isLoggedIn &&(request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup'))) {
+    if (currentUser && isLoggedIn &&(request.nextUrl.pathname.startsWith('/pages/login') || request.nextUrl.pathname.startsWith('/pages/signup'))) {
         console.log('Usuario autenticado, redirigiendo a /sideBar/summary');
         return NextResponse.redirect(new URL('/sideBar/summary', request.url));
     }

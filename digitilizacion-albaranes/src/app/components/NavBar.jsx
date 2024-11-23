@@ -21,7 +21,6 @@ export default function NavBar(){
 
     }, []);
 
-    
 
     const probarCookies = () =>{
         const cookies = document.cookie.split('; ').find(row => row.startsWith('bytoken='));
@@ -55,7 +54,7 @@ export default function NavBar(){
                                     src: 'https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg'
                                 }}
                                 className='text-black'/>
-                            <LogoutButton/>
+                            <LogoutButton />
                         </div>
                     ): (
                     <div className='flex gap-4 mt-3'>
