@@ -10,14 +10,28 @@ export default function NavBar(){
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() =>{
+    const checkAuthentication = () =>{
         const cookies = document.cookie.split('; ').find(row => row.startsWith('bytoken='));
         const isLoggedInCookie = document.cookie.split('; ').find(row => row.startsWith('isLoggedIn='));
 
         const isLoggedIn = isLoggedInCookie?.split('=')[1] === 'true';
         const hasCookies = !!cookies;
 
-        setIsAuthenticated(hasCookies && isLoggedIn);
+        return hasCookies && isLoggedIn;
+    }
+
+    useEffect(() =>{
+        const updateAuthState = () =>{
+            setIsAuthenticated(checkAuthentication());
+        };
+
+        updateAuthState();
+
+        const interval = setInterval(() => {   
+            updateAuthState();
+        }, 500);
+
+        return () => clearInterval(interval);
 
     }, []);
 
@@ -71,14 +85,13 @@ export default function NavBar(){
                         >
                             Sign up
                         </Button>
-
+{/* 
                         <Button 
                             className='nav-button' 
                             onClick={probarCookies}
                         >
                             COMPROBAR
-                        </Button>
-                    
+                        </Button> */}
                     </div>)}
 
                 </div>
