@@ -28,7 +28,7 @@ export default function Login(){
                 const result = await login(values);
 
                 if(result.success){
-                    router.push('/pages/sideBar/summary');
+                    router.push('/pages/dashboard/summary');
                 }else{
                     console.log('Credenciales inválidas');
                 }

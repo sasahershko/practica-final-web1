@@ -26,9 +26,8 @@ export default function SignUp() {
 
             console.log(values);
             try{
-                
+               
                 // const url = `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user/register`;
-                const url = 'https://bildy-rpmaya.koyeb.app/api/user/register';
                 const result = await register(values);
                 if(result.success){
                     router.push('/pages/verifyAccount');
@@ -38,7 +37,6 @@ export default function SignUp() {
                 setError(true);
                 console.log(error.message);
             }
-
         }
     })
 

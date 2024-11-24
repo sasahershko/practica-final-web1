@@ -22,6 +22,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Para navegadores modernos como Chrome, Edge, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Oculta la barra de desplazamiento */
+}
+
+/* Para navegadores como Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* Oculta la barra en IE y Edge */
+  scrollbar-width: none; /* Oculta la barra en Firefox */
+}
+
 
 /* ANIMACIONES */
 @keyframes fadeInUp{
@@ -71,6 +82,25 @@ body {
   animation: gradientMove 3s linear infinite;
 } 
 
+/* 
+PARA QUE LAS CARTAS TENGAN UNA ANIMACIÓN DE POP */
+@keyframes pop{
+  0%{
+    transform: scale(0.95);
+    opacity: 0.7
+  }
+  50%{
+    transform: scale(1.05);
+    opacity:1;
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+.selected-card{
+  animation: pop 0.5s ease-out;
+}
 
 /* TAILWIND */
 .input-form{

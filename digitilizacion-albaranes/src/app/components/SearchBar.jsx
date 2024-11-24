@@ -1,6 +1,6 @@
 export default function SearchBar(){
     return(
-        <div className='relative w-full max-w-lg'>
+        <div className='relative w-full max-w-lg text-black'>
             <input
                 type= 'text'
                 placeHolder= 'Search...'

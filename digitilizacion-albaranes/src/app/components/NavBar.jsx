@@ -55,7 +55,7 @@ export default function NavBar(){
                         <Link className='text-black font-bold text-4xl' href='/'>
                             MyApp
                         </Link>
-                        <Button className='nav-button' onClick={()=> router.push('/pages/sideBar/summary')}>
+                        <Button className='nav-button' onClick={()=> router.push('/pages/dashboard/summary')}>
                                     Dashboard
                                 </Button>
                     </div>

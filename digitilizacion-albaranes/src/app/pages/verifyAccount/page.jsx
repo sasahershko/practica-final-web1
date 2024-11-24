@@ -10,7 +10,6 @@ export default function VerifyAccount(){
     const router = useRouter();
 
     const [code, setCode] = useState(new Array(6).fill(''));
-    const [message, setMessage] = useState('');
 
     const handleChange= (e, index) =>{
         const newCode = [...code];
@@ -55,15 +54,13 @@ export default function VerifyAccount(){
 
             if(result.success){
                 console.log('Verificación correcta: ', result);
-                setMessage('Cuenta verificada correctamente');
 
-                // router.push('/pages/sideBar/summary');
+                // router.push('/pages//summary');
                 router.push('/pages/signupName');
             }
 
         }catch(error){
             console.log('Error al verificar la cuenta: ', error.message);
-            setMessage('Error al verificar la cuenta');
         }
 
     };
