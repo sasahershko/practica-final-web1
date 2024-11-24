@@ -1,6 +1,6 @@
 'use client'
 // ELIMINAR framer-motion!!
-import SearchBar from './components/SearchBar';
+import NavBar from './components/NavBar';
 
 export default function HomePage(){
 
@@ -11,7 +11,9 @@ export default function HomePage(){
     // 2xl: Pantallas muy grandes (≥ 1536px)
 
     return (
-       <div className  ='flex flex-col items-center justify-center bg-white text-black mt-[260px]'>
+       <>
+            <NavBar/>
+            <div className  ='flex flex-col items-center justify-center bg-white text-black mt-[260px]'>
 
             <h1 className='animate-fade-in-up text-7xl font-bold w-full text-center'>Welcome to</h1>
 
@@ -21,6 +23,8 @@ export default function HomePage(){
                     Digitization of delivery notes
                 </span>
             </h2>
-       </div>
+            </div>
+       </>
+
       );
 }
