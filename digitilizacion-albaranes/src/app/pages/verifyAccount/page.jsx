@@ -55,7 +55,7 @@ export default function VerifyAccount(){
             if(result.success){
                 console.log('Verificación correcta: ', result);
 
-                // router.push('/pages//summary');
+                // router.push('/pages/dashboard/summary');
                 router.push('/pages/signupName');
             }
 
