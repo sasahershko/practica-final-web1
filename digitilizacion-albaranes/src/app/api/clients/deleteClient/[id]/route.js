@@ -1,4 +1,4 @@
-import {cookies} from 'react-cookie';
+import {cookies} from 'next/headers';
 
 export async function DELETE(request, {params}){
     
