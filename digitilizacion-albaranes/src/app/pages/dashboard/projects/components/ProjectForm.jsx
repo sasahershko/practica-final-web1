@@ -8,7 +8,8 @@ export default function ProjectForm({ initialValues, onSubmit, title, isEdit, on
         initialValues: initialValues,
         validationSchema: Yup.object({
             name: Yup.string().max(50, 'The name cannot exceed 100 characters').required('The field is required'),
-            cif: Yup.string().matches(/^[A-Z]\d{7}[A-Z0-9]$/, 'Invalid CIF (e.g., A12345678 or B1234567X)').length(9, 'The CIF must have exactly 9 characters').required('The field is required'),
+            projectCode: Yup.string().matches(/^[A-Z]\d{7}[A-Z0-9]$/, 'Invalid CIF (e.g., A12345678 or B1234567X)').length(9, 'The CIF must have exactly 9 characters').required('The field is required'),
+            email: Yup.string().email('Invalid email').required('The field is required'),
             street: Yup.string().required('The field is required'),
             postal: Yup.string().matches(/^\d{5}$/, 'The postal code must have exactly 5 digits').required('The field is required'),
             city: Yup.string().required('The field is required'),

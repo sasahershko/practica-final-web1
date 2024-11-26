@@ -106,7 +106,7 @@ export default function NavBar() {
                                     </Link>
                                     <Link
                                         href="/"
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-150"
+                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-500 rounded-sm hover:text-white transition duration-150"
                                         onClick={() =>{handleLogout()}}
                                     >
                                         Logout

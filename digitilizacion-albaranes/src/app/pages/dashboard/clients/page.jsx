@@ -39,6 +39,14 @@ export default function ClientPage() {
     router.push('/pages/dashboard/clients/addClient');
   };
 
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500'></div>
+      </div>
+    )
+  }
+
   return (
     <div className="animate fade-in-up min-h-screen animate-fade-in-up">
       <div className="grid grid-cols-3 gap-4 p-8">
@@ -49,9 +57,7 @@ export default function ClientPage() {
           </h1>
 
           {loading ? (
-            <div className="flex justify-center items-center h-[400px]">
-              <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-            </div>
+            null
           ) : clients.length > 0 ? (
             <ClientList clients={clients} onSelectClient={setSelectedClient} onAddClient={handleAddClient} />
           ) : (
@@ -65,7 +71,7 @@ export default function ClientPage() {
           <>
             {clients.length > 0 ? (
               <div className="col-span-1">
-                <ClientDetails client={selectedClient} />
+                <ClientDetails  client={selectedClient} />
               </div>
             ) : (
               <PlaceHolderItemsAddClient />

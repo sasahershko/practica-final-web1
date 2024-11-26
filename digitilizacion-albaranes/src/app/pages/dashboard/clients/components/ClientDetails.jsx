@@ -15,7 +15,7 @@ export default function ClientDetails({ client }) {
   }
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-6 animate-fade-in-up'>
       <div className=' '>
         <Card title={<h1 className='text-blue-700 text-[50px] font-sour-gummy mb-6'>{client.name}</h1>}>
         <div className="p-6 bg-white shadow rounded-lg text-black">
