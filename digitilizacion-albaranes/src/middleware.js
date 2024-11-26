@@ -1,6 +1,5 @@
 import {NextResponse} from 'next/server';
 
-
 export function middleware(request) {
 
     const currentUser = request.cookies.get('bytoken')?.value;
@@ -18,8 +17,6 @@ export function middleware(request) {
     if((!isLoggedIn || !currentUser) && protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))){
         return NextResponse.redirect(new URL('/pages/login', request.url));
     }
-
-    // return NextResponse.redirect(new URL('/', request.url));
 }
     
 export const config = {

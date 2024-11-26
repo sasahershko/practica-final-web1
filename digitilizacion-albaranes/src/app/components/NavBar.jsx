@@ -55,7 +55,7 @@ export default function NavBar(){
                         <Link className='text-black font-bold text-4xl' href='/'>
                             MyApp
                         </Link>
-                        <Button className='nav-button' onClick={()=> router.push('/pages/dashboard/summary')}>
+                        <Button className='blue-button' onClick={()=> router.push('/pages/dashboard/summary')}>
                                     Dashboard
                                 </Button>
                     </div>
@@ -73,21 +73,21 @@ export default function NavBar(){
                     ): (
                     <div className='flex gap-4 mt-3'>
                         <Button 
-                            className='nav-button'
+                            className='blue-button'
                             onClick={()=> router.push('/pages/login')}
                         >
                             Log in
                         </Button>
 
                         <Button 
-                            className='nav-button' 
+                            className='blue-button' 
                             onClick={()=>router.push('/pages/signup')}
                         >
                             Sign up
                         </Button>
 {/* 
                         <Button 
-                            className='nav-button' 
+                            className='blue-button' 
                             onClick={probarCookies}
                         >
                             COMPROBAR

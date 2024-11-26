@@ -1,9 +1,22 @@
-export default function SearchBar(){
+'use client';
+import {useState} from 'react';
+
+export default function SearchBar({onSearch}){
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (e) =>{
+    const value = e.target.value;
+    setSearch(value);
+    onSearch(value);
+  }
+
     return(
         <div className='relative w-full max-w-lg text-black'>
             <input
                 type= 'text'
                 placeHolder= 'Search...'
+                value={search}
+                onChange={handleSearch}
                 className='w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-blue-300 focus:border-transparent bg-gray-100 transition-all duration-200 focus:bg-white' 
             />
 

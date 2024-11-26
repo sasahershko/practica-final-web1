@@ -15,6 +15,7 @@ module.exports = {
       },
       fontFamily:{
         'host': ['Host Grotesk', 'sans-serif'],
+        'sour-gummy': ['Source Sans Pro', 'sans-serif'],
       },
     },
   },

@@ -8,16 +8,13 @@ import Link from 'next/link';
 // FLECHA DERECHA: <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6492 11.2501L12.7904 6.53852L13.8346 5.46167L20.5774 12.0001L13.8346 18.5385L12.7904 17.4617L17.6492 12.7501H3V11.2501H17.6492Z" fill="#080341"></path> </g></svg>
 
 export default function SideBar({isOpen, setIsOpen}){
-    // const [isOpen, setIsOpen] = useState(false);
-    
-
     const toggleSidebar = () =>{
         setIsOpen(!isOpen);
     };
 
     return(
-        <div className='flex h-screen'>
-            <div className={`fixed top-20 h-full shadow-md transition-transform duration-300 ${isOpen ? 'translate-x-0': '-translate-x-full'}`}>
+        <div className='flex h-screen z-40'>
+            <div className={`fixed top-30 h-full shadow-md transition-transform duration-300 ${isOpen ? 'translate-x-0': '-translate-x-full'}`}>
                 <nav className='px-5 py-8'>
                     <ul className='space-y-4 text-left'>
                         <li>

@@ -40,8 +40,8 @@ export default function NavBar() {
 
     return (
         <>
-            <nav className='sticky top-0'>
-                <div className='container mx-auto flex justify-between items-center w-full h-20'>
+            <nav className='sticky top-0  bg-white shadow-sm  w-full'>
+                <div className='container mx-auto flex justify-between items-center h-20'>
                     <div className='flex  gap-4 mt-3'>
                         <Link className='text-black font-bold text-4xl' href='/'>
                             MyApp

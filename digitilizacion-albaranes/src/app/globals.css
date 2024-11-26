@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,15 +23,31 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Para navegadores modernos como Chrome, Edge, Safari */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Oculta la barra de desplazamiento */
+
+/* SCROLLBAR */
+
+/* Estilo general del scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho del scrollbar */
+  height: 12px; /* Alto del scrollbar para desplazamiento horizontal */
 }
 
-/* Para navegadores como Firefox */
-.hide-scrollbar {
-  -ms-overflow-style: none; /* Oculta la barra en IE y Edge */
-  scrollbar-width: none; /* Oculta la barra en Firefox */
+/*(fondo del scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Fondo del track */
+  border-radius: 6px; 
+}
+
+/* Thumb (la barra que se mueve) */
+::-webkit-scrollbar-thumb {
+  background: #85b9f3; /* Color de la barra */
+  border-radius: 6px; 
+  border: 3px solid #f0f0f0; /* Agregar espacio alrededor del thumb */
+}
+
+/* Thumb en hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color más oscuro al pasar el mouse */
 }
 
 
@@ -121,6 +138,10 @@ PARA QUE LAS CARTAS TENGAN UNA ANIMACIÓN DE POP */
   @apply bg-gray-100 px-4 py-2 rounded-md text-black mb-1;
 }
 
-.nav-button{
+.blue-button{
   @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-300 transition duration-300 ease-in-out;
+}
+
+.red-button{
+  @apply bg-red-500 text-white px-4 py-2 rounded hover:bg-red-300 transition duration-300 ease-in-out;
 }
