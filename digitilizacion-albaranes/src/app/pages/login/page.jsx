@@ -25,6 +25,7 @@ export default function Login(){
             password: Yup.string().required('Campo requerido')
         }),
         onSubmit: async(values) =>{
+            console.log(JSON.stringify(values));
             try{
                 const result = await login(values);
 
@@ -32,6 +33,7 @@ export default function Login(){
                     router.push('/pages/dashboard/summary');
                 }else{
                     console.log('Credenciales inválidas');
+                    console.log(values);
                 }
 
             }catch(error){

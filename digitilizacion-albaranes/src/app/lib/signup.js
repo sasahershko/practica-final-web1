@@ -20,9 +20,9 @@ async function createUser(formData){
             })
         });
 
-        console.log('Estado de la respuesta:', response.status);
+        //console.log('Estado de la respuesta:', response.status);
 
-        const responseBody = await response.text(); // Captura el texto completo de la respuesta
+        const responseBody = await response.text(); //captura el texto completo de la respuesta
         console.log('Cuerpo de la respuesta:', responseBody);
 
         if (!response.ok) {
@@ -60,6 +60,6 @@ export async function register(formData){
 
     }catch(error){
         throw new Error(error.message);
-        return {success: false, message: error.message};
+        // return {success: false, message: error.message};
     }
 }

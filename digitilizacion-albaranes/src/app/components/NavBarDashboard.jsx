@@ -63,7 +63,7 @@ export default function NavBar() {
                             <div className="relative">
                                 <button
                                     onClick={() => setUserMenuOpen((prev) => !prev)}
-                                    className="relative w-10 h-10 rounded-full overflow-hidden focus:outline-none ring-2 ring-blue-500 transform transition-transform duration-200 hover:scale-105"
+                                    className="relative z-auto w-10 h-10 rounded-full overflow-hidden focus:outline-none ring-2 ring-blue-500 transform transition-transform duration-200 hover:scale-105"
                                     aria-label="User menu"
                                 >
                                     <img

@@ -6,7 +6,7 @@ export function middleware(request) {
     const currentUser = request.cookies.get('bytoken')?.value;
     const isLoggedIn = request.cookies.get('isLoggedIn')?.value === 'true';
 
-    const protectedRoutes = ['/pages/dashboard/summary', '/pages/dashboard/transactions', '/pages/dashboard/notifications', '/pages/dashboard/settings'];
+    const protectedRoutes = ['/pages/dashboard/summary', '/pages/dashboard/projects', '/pages/dashboard/clients', '/pages/dashboard/suppliers', '/pages/dashboard/deliveryNotes', '/pages/dashboard/settings'];
 
     //redirigir al dashboard si el usuario está autenticado
     if (currentUser && isLoggedIn &&(request.nextUrl.pathname.startsWith('/pages/login') || request.nextUrl.pathname.startsWith('/pages/signup'))) {

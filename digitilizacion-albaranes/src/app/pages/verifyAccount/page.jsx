@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {Button} from '@nextui-org/react';
 import {verify} from '../../lib/verify';
 import {useRouter} from 'next/navigation';
-
+import NavBar from '../../components/NavBar';
 
 export default function VerifyAccount(){
 
@@ -55,8 +55,8 @@ export default function VerifyAccount(){
             if(result.success){
                 console.log('Verificación correcta: ', result);
 
-                // router.push('/pages/dashboard/summary');
-                router.push('/pages/signupName');
+                router.push('/pages/dashboard/summary');
+                // router.push('/pages/signupName');
             }
 
         }catch(error){
@@ -68,6 +68,7 @@ export default function VerifyAccount(){
 
     return(
         <div className='animate-fade-in-up'>
+            <NavBar />
             <h1 className="text-center text-[50px] mt-36 max-h-screen text-black mb-10 font-bold">Verify Account</h1>
 
             <p className='text-center text-black mb-4'>Enter the code we sent you to your e-mail</p>
