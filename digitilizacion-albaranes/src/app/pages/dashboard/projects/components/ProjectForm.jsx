@@ -1,3 +1,4 @@
+'use client';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Card from '@/app/components/Card';
@@ -30,14 +31,16 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             code: Yup.string().required('The field is required'),
             clientId: Yup.string().required('The field is required'),
         }),
-        onSubmit: onSubmit,
+        onSubmit: (values)=>{
+            console.log('a');
+        },
     });
 
     return (
         <div className='grid grid-cols-3 gap-4 p-8  animate-fade-in-up'>
             <div className="col-span-2">
                 <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
-                <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit() }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
+                <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(); }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
                     {[
                         { name: 'name', label: 'Name', type: 'text'},
                         { name: 'email', label: 'Email', type: 'email' },

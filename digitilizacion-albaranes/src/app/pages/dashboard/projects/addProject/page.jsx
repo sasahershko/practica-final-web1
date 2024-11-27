@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function AddProject(){
     const [clients, setClients] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchClients = async () => {
@@ -48,7 +49,8 @@ export default function AddProject(){
             <ProjectForm
                 title='Add Project'
                 initialValues={{ name: '', email: '', street: '', number: '', postal: '', city: '', province: '', code: '', clientId: ''}}     
-                clients={clients}       
+                clients={clients}  
+                onSubmit={handleSubmitProject}     
             />
         </>
     )

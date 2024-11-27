@@ -1,9 +1,10 @@
 'use client';
 import ProjectForm from "@/app/pages/dashboard/projects/components/ProjectForm";
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 
 export default function AddProjectForClient({params}){
-    const {id: clientId} = params;
+    const {id: clientId} = useParams();
     const [loading, setLoading] = useState(true);
     const [client, setClient] = useState(null);
 

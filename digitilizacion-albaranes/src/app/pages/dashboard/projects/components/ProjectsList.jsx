@@ -12,7 +12,7 @@ export default function ProjectList({projects, onSelectProject, onAddProject}){
               {projects.map((project, index) =>(
                 <div key={`${project._id}`} onClick={()=>onSelectProject(project)}>
                     <Card>
-                        <h2>{project.name}</h2>
+                        <h2 key={project._id}>{project.name}</h2>
                     </Card>
                 </div>
               ))}  
