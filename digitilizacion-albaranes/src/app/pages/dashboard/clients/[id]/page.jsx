@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import ClientForm from '../components/ClientForm'; 
+import ClientForm from '../components/ClientForm';
 
 export default function EditClientPage() {
   const { id } = useParams();
   const router = useRouter();
   const [client, setClient] = useState(null);
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Función para cargar los datos del cliente
   useEffect(() => {
     const fetchClient = async () => {
       try {
-        const response = await fetch(`/api/clients/getClient/${id}`); 
+        const response = await fetch(`/api/clients/getClient/${id}`);
         if (!response.ok) {
           throw new Error('Error al cargar los datos del cliente.');
         }
@@ -38,7 +38,7 @@ export default function EditClientPage() {
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -53,7 +53,7 @@ export default function EditClientPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values), 
+        body: JSON.stringify(values),
       });
 
       if (!response.ok) {
@@ -64,7 +64,7 @@ export default function EditClientPage() {
 
       if (result.success) {
         alert('Cliente actualizado correctamente.');
-        router.push('/pages/dashboard/clients'); 
+        router.push('/pages/dashboard/clients');
       } else {
         throw new Error(result.message || 'Error desconocido.');
       }
@@ -86,14 +86,16 @@ export default function EditClientPage() {
 
       const result = await response.json();
       alert('Cliente eliminado correctamente');
-      router.push('/pages/dashboard/clients'); 
+      router.push('/pages/dashboard/clients');
     } catch (error) {
       alert(`Error: ${error.message}`);
     }
   };
 
   if (loading) {
-    return <div className="text-center mt-8">Cargando datos del cliente...</div>;
+    return       <div className='flex justify-center items-center h-screen'>
+    <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500'></div>
+  </div>
   }
 
   if (error) {
@@ -102,11 +104,11 @@ export default function EditClientPage() {
 
   return (
     <div className="p-8">
-      <button className='blue-button' onClick={()=>router.push('/pages/dashboard/clients')}>Go back</button>
+      <button className='blue-button' onClick={() => router.push('/pages/dashboard/clients')}>Go back</button>
       <ClientForm
-        initialValues={client} 
+        initialValues={client}
         onSubmit={handleUpdate}
-        title="Edit Client" 
+        title="Edit Client"
         isEdit={true}
         onDelete={handleDelete}
       />
