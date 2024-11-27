@@ -33,7 +33,7 @@ export default function ErrorPage({ handleError }) {
             </button>
 
             <div className="text-4xl font-bold text-red-500 mb-4">Error</div>
-            <div className="text-xl text-gray-700 mb-4">We are sorry, something went wrong.</div>
+            <div className="text-xl text-gray-700 mb-4">We're sorry, something went wrong.</div>
             <div className="text-xl text-gray-700">Please try again clicking the <span className='text-red-600'>X</span> button.</div>
         </div>
     );

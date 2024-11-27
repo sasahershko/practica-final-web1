@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import SearchBar from './SearchBar';
 import {logout} from '../lib/logout';
-import {Image} from 'next/image';
 
 export default function NavBar() {
     const router = useRouter();
@@ -79,7 +78,7 @@ export default function NavBar() {
                                     className="relative z-auto w-10 h-10 rounded-full overflow-hidden focus:outline-none ring-2 ring-blue-500 transform transition-transform duration-200 hover:scale-105"
                                     aria-label="User menu"
                                 >
-                                    <Image
+                                    <img
                                         src="https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg"
                                         alt="Avatar"
                                         className="object-cover w-full h-full"
