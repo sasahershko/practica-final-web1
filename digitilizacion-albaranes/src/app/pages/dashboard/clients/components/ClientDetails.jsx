@@ -2,6 +2,7 @@
 import React from 'react';
 import Card from '../../../../components/Card';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function ClientDetails({ client }) {
   const router = useRouter();
@@ -17,9 +18,15 @@ export default function ClientDetails({ client }) {
   return (
     <div className='space-y-6'>
       <div className=' '>
-        <Card title={<h1 className='text-blue-700 text-[50px] font-sour-gummy mb-6'>{client.name}</h1>}>
-        <div className="p-6 bg-white shadow rounded-lg text-black">
-            <h2 className="text-xl font-bold mb-4">Client Details</h2>
+        <Card title={<h1 className='text-blue-700 text-[70px] font-jaro mb-6'>{client.name}</h1>}>
+          <div className="p-6 bg-white shadow rounded-lg text-black">
+
+            <div className='grid grid-cols-2'>
+              <h2 className="text-xl font-bold mb-4">Client Details</h2>
+
+              <img src='https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg' width={200} height={200} alt='client' />
+            </div>
+
 
             <div className="space-y-2">
               <div className="flex items-center">

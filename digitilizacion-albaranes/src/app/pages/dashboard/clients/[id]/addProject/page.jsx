@@ -1,16 +1,16 @@
 'use client';
-import ProjectForm from "../../../projects/components/ProjectForm";
+import ProjectForm from "@/app/pages/dashboard/projects/components/ProjectForm";
 import { useEffect, useState } from 'react';
 
 export default function AddProjectForClient({params}){
-    const {id} = params;
+    const {id: clientId} = params;
     const [loading, setLoading] = useState(true);
     const [client, setClient] = useState(null);
 
     useEffect(() => {
         const fetchClient = async () => {
           try {
-            const response = await fetch(`/api/clients/getClient/${id}`); 
+            const response = await fetch(`/api/clients/getClient/${clientId}`); 
             if (!response.ok) {
               throw new Error('Error al cargar los datos del cliente.');
             }
@@ -43,7 +43,7 @@ export default function AddProjectForClient({params}){
     return(
         <div>
             <ProjectForm initialValues={{
-                clientId:id,
+                clientId:clientId,
                 email:'',
                 name:'',
                 street:'',

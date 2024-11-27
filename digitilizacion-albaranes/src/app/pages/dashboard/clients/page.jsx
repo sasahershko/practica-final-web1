@@ -33,6 +33,7 @@ export default function ClientPage() {
     };
 
     fetchClients();
+
   }, []);
 
   const handleAddClient = () => {
@@ -44,7 +45,7 @@ export default function ClientPage() {
       <div className="grid grid-cols-3 gap-4 p-8">
         {/* columna izquierda */}
         <div className="col-span-2">
-          <h1 className="text-center text-[65px] font-bold text-black mb-3">
+          <h1 className="text-centefr text-[65px] font-bold text-black mb-3">
             Clients
           </h1>
 

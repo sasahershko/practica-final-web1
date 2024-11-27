@@ -1,8 +1,9 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import Card from '../../../../components/Card';
+import Card from '@/app/components/Card';
+import ObjectSelector from '@/app/components/ObjectSelector';
 
-export default function ProjectForm({ title, initialValues, onSubmit, isEdit, onDelete, client }) {
+export default function ProjectForm({ title, initialValues, onSubmit, isEdit, onDelete, client, clients }) {
 
     const formik = useFormik({
         enableReinitialize: true, //si ya existen campos, los rellena
@@ -80,18 +81,23 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                         </div>
                     ) : (
                         <div>
-                            <p className="text-gray-500 text-sm">No client selected</p>
-                        </div>)}
+                            <ObjectSelector
+                                placeholder="Select a client"
+                                objects={clients}
+                                displayKey="name"
+                                onSelect={(client) => formik.setFieldValue('clientId', client.id)}/>
+                        </div>
+                    )}
 
                 </Card>
 
                 <Card title="Notes">
-                    <p className="text-gray-500 text-sm">Add note about your customer.</p>
+                    <p className="text-gray-500 text-sm">Add note about your project.</p>
                 </Card>
 
                 <Card title="Tags">
                     <p className="text-gray-500 text-sm">
-                        Tags can be used to categorize customers into groups.
+                        Tags can be used to categorize projects into groups.
                     </p>
                 </Card>
             </div>

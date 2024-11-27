@@ -1,9 +1,22 @@
 'use client';
-import {useState, useEffect} from 'react';
+import Card from '@/app/components/Card';
 
-
-export default function ProjectList(){
+export default function ProjectList({projects, onSelectProject, onAddProject}){
     return(
-        <h1>Projects</h1>
+        <div className='grid grid-col-1'>
+            <button className='blue-button mb-5' onClick={onAddProject}>
+                Add project
+            </button>
+
+            <div>
+              {projects.map((project, index) =>(
+                <div key={`${project._id}`} onClick={()=>onSelectProject(project)}>
+                    <Card>
+                        <h2>{project.name}</h2>
+                    </Card>
+                </div>
+              ))}  
+            </div>
+        </div>
     )
 }

@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import Card from '../../../../components/Card';
+import Card from '@/app/components/Card';
 
 export default function ClientForm({ initialValues, onSubmit, title, isEdit, onDelete }) {
     const formik = useFormik({

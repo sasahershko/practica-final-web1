@@ -1,9 +1,10 @@
-import {cookies} from 'next/navigation';
+import {cookies} from 'next/headers';
 
 export async function GET (request){
-    const token = cookies.get('token')?.value;
+    const token = (await cookies()).get('bytoken')?.value;
 
     if(!token){
+        console.log('no hay token')
         return new Response(JSON.stringify({message: 'Unauthorized'}), {status: 401});
     }
 
@@ -12,7 +13,7 @@ export async function GET (request){
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Autorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             }
         });
 
