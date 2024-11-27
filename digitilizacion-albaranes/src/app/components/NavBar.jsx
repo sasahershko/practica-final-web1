@@ -4,6 +4,7 @@ import {useRouter} from 'next/navigation';
 import {Button, User} from '@nextui-org/react';
 import Link from 'next/link';
 import LogoutButton from '../components/LogoutButton';
+import UserCircle from '../components/UserCircle';
 
 export default function NavBar(){
     const router = useRouter();
@@ -56,20 +57,12 @@ export default function NavBar(){
                             MyApp
                         </Link>
                         <Button className='blue-button' onClick={()=> router.push('/pages/dashboard/summary')}>
-                                    Dashboard
-                                </Button>
+                            Dashboard
+                        </Button>
                     </div>
 
                     {isAuthenticated ? (
-                        <div className='flex gap-4 mt-3'>
-                            <User 
-                                name='Sasa Lara'
-                                avatarProps={{
-                                    src: 'https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg'
-                                }}
-                                className='text-black'/>
-                            <LogoutButton />
-                        </div>
+                        <UserCircle/>
                     ): (
                     <div className='flex gap-4 mt-3'>
                         <Button 
@@ -85,13 +78,6 @@ export default function NavBar(){
                         >
                             Sign up
                         </Button>
-{/* 
-                        <Button 
-                            className='blue-button' 
-                            onClick={probarCookies}
-                        >
-                            COMPROBAR
-                        </Button> */}
                     </div>)}
 
                 </div>

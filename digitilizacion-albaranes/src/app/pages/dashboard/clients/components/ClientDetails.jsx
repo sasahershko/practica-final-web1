@@ -50,7 +50,7 @@ export default function ClientDetails({ client }) {
           </div>
 
 
-          <button className='blue-button w-full mt-5' onClick={() => router.push(`/pages/dashboard/clients/${client._id}`, { state: client })}>
+          <button className='blue-button w-full mt-5' onClick={() => router.push(`/pages/dashboard/clients/${client._id}`)}>
             Edit
           </button>
         </Card>
@@ -59,7 +59,7 @@ export default function ClientDetails({ client }) {
       <div className=''>
         <Card title="Projects">
           <div className='grid grid-col-1'>
-            <button className='blue-button mx-auto' onClick={() => router.push('/pages/dashboard/projects')}>
+            <button className='blue-button mx-auto' onClick={() => router.push(`/pages/dashboard/clients/${client._id}/addProject`)}>
               Add project
             </button>
           </div>

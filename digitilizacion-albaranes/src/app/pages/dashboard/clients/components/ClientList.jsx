@@ -29,7 +29,7 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
       <ul className="space-y-2">
         {clients.map((client, index) => (
           <li
-            key={client.id}
+            key={`${client.id}-${index}`} //me da error porque dice que client.id puede no ser única
             className="bg-white shadow rounded-lg p-4 text-black font-semibold transform transition-all ease-in-out duration-300 hover:scale-101 hover:bg-blue-100 hover:scale- animate-fade-in-up"
             onClick={() => onSelectClient(client)}
             style={{ animationDelay: `${index * 200}ms` }} 
