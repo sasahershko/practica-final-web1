@@ -1,10 +1,12 @@
 'use client';
 import ProjectForm from '../components/ProjectForm';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function AddProject(){
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchClients = async () => {
@@ -29,7 +31,6 @@ export default function AddProject(){
       }, []);
 
       const handleSubmitProject= async(values) =>{
-        console.log('VALORES:', values);
         try{
           const response = await fetch('/api/projects/addProject', {
             method: 'POST',
@@ -38,6 +39,16 @@ export default function AddProject(){
             },
             body: JSON.stringify(values)
           })
+
+          if(!response.ok){
+            throw new Error('Error al añadir proyecto');
+          }
+
+          const result = await response.json();
+          if(result.success){
+            alert('Proyecto añadido correctamente');
+            router.push('/pages/dashboard/projects');
+          }
 
         }catch(error){
             console.log('Error al añadir proyecto', error.message);
@@ -48,7 +59,7 @@ export default function AddProject(){
         <>
             <ProjectForm
                 title='Add Project'
-                initialValues={{ name: '', email: '', street: '', number: '', postal: '', city: '', province: '', code: '', clientId: ''}}     
+                initialValues={{ name: '', projectCode: '', email: '', street: '', number: '', postal: '', city: '', province: '', code: '', clientId: ''}}     
                 clients={clients}  
                 onSubmit={handleSubmitProject}     
             />

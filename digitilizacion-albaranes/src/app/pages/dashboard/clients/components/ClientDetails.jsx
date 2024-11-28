@@ -18,7 +18,7 @@ export default function ClientDetails({ client }) {
   return (
     <div className='space-y-6'>
       <div className=' '>
-        <Card title={<h1 className='text-blue-700 text-[70px] font-jaro mb-6'>{client.name}</h1>}>
+        <Card title={<span className='text-blue-700 text-[70px] font-jaro mb-6'>{client.name}</span>}>
           <div className="p-6 bg-white shadow rounded-lg text-black">
 
             <div className='grid grid-cols-2'>

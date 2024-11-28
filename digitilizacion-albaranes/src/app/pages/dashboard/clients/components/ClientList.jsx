@@ -8,17 +8,21 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
   // const isFirstRun = useRef(true);
 
   useEffect(() => {
-    let timeouts = [];
+    const uniqueClients = clients.filter((project, index, self) => index === self.findIndex((p) => p._id === project._id));
+  
+    setVisibleClients([]);
+    let timers = [];
 
-    clients.forEach((client, index) => {
-      const timeout = setTimeout(() => {
-        setVisibleClients((prev) => [...prev, client]); //añadir cliente al estado
-      }, index * 200); 
-      timeouts.push(timeout);
-    });
-
-    // Limpiar timeouts al desmontar el componente
-    return () => timeouts.forEach(clearTimeout);
+    uniqueClients.forEach((client, index) =>{
+      const timer = setTimeout(()=>{
+        setVisibleClients((prev) =>{
+          if(prev.some((p)=>p._id=== client._id)) return prev;
+          return [...prev, client];
+        });
+      }, index * 200)
+      timers.push(timer);
+    })
+  
   }, [clients]);
   
   return (
@@ -29,8 +33,8 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
       <ul className="space-y-2">
         {clients.map((client, index) => (
           <li
-            key={`${client._id}`} //me da error porque dice que client.id puede no ser única
-            className="bg-white shadow rounded-lg p-4 text-black font-semibold transform transition-all ease-in-out duration-300 hover:scale-101 hover:bg-blue-100 hover:scale- animate-fade-in-up"
+            key={`${client._id}`}
+            className="bg-white shadow rounded-lg p-4 text-black font-semibold transform transition-all ease-in-out duration-300 hover:bg-blue-100 animate-fade-in-up"
             onClick={() => onSelectClient(client)}
             style={{ animationDelay: `${index * 200}ms` }} 
           >

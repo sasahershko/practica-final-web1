@@ -7,10 +7,11 @@ import ObjectSelector from '@/app/components/ObjectSelector';
 export default function ProjectForm({ title, initialValues, onSubmit, isEdit, onDelete, client, clients }) {
 
     const formik = useFormik({
-        enableReinitialize: true, //si ya existen campos, los rellena
-        initialValues: {
+        initialValues:
+        {
             name: '',
             email: '',
+            projectCode: '',
             street: '',
             number: '',
             postal: '',
@@ -18,10 +19,11 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             province: '',
             code: '',
             clientId: '',
-            ...initialValues,
+            ...initialValues
         },
         validationSchema: Yup.object({
             name: Yup.string().max(50, 'The name cannot exceed 100 characters').required('The field is required'),
+            projectCode: Yup.string().max(50, 'The project code cannot exceed 50 characters').required('The field is required'),
             email: Yup.string().email('Invalid email').required('The field is required'),
             street: Yup.string().required('The field is required'),
             number: Yup.number().required('The field is required'),
@@ -31,9 +33,9 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             code: Yup.string().required('The field is required'),
             clientId: Yup.string().required('The field is required'),
         }),
-        onSubmit: (values)=>{
-            console.log('a');
-        },
+        onSubmit: onSubmit,
+        validateOnChange: false,
+        validateOnBlur: false,
     });
 
     return (
@@ -42,7 +44,8 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                 <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
                 <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(); }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
                     {[
-                        { name: 'name', label: 'Name', type: 'text'},
+                        { name: 'name', label: 'Name', type: 'text', colSpan: 2 },
+                        { name: 'projectCode', label: 'Project Code', type: 'text' },
                         { name: 'email', label: 'Email', type: 'email' },
                         { name: 'street', label: 'Street', type: 'text' },
                         { name: 'number', label: 'Number', type: 'number' },
@@ -60,12 +63,28 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                                 onChange={formik.handleChange}
                                 className="input-form"
                             />
-                            {formik.touched[field.name] && formik.errors[field.name] ? (<p className="text-center text-red-500">{formik.errors[field.name]}</p>) : null}
+                            {formik.errors[field.name] ? (<p className="text-center text-red-500">{formik.errors[field.name]}</p>) : null}
                         </div>
                     ))}
+                    {clients && (
+                        <>
+                            <ObjectSelector
+                                placeholder="Select a client"
+                                objects={clients}
+                                displayKey="name"
+                                onSelect={(client) => formik.setFieldValue('clientId', client._id)} />
+
+                            {formik.errors.clientId && (
+                                <p className="text-red-500">{formik.errors.clientId}</p>
+                            )}
+                        </>
+                    )}
+
+
                     <button type="submit" className="blue-button mt-6 col-span-2 mx-auto w-full">{title}</button>
+
                     {isEdit &&
-                        <button type="button" className="red-button col-span-2 w-full" onClick={onDelete}>
+                        <button type="submit" className="red-button col-span-2 w-full" onClick={onDelete}>
                             Delete
                         </button>
                     }
@@ -84,12 +103,9 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                         </div>
                     ) : (
                         <div>
-                            <ObjectSelector
-                                placeholder="Select a client"
-                                objects={clients}
-                                displayKey="name"
-                                onSelect={(client) => formik.setFieldValue('clientId', client.id)}/>
+                            <p className="text-gray-500 text-sm">Select a client to see more details.</p>
                         </div>
+
                     )}
 
                 </Card>

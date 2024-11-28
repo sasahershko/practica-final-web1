@@ -35,18 +35,16 @@ export default function Projects() {
 
     const handleAddProject = () => {
         router.push('/pages/dashboard/projects/addProject');
-    }
+    };
 
     return (
         <div className="animate fade-in-up min-h-screen animate-fade-in-up">
             <div className="grid grid-cols-3 gap-4 p-8">
                 {/* columna izquierda */}
-                <div className="col-span-2">
+                <div className="col-span-3">
                     <h1 className="text-centefr text-[65px] font-bold text-black mb-3">
                         Projects
                     </h1>
-
-                    {projects.length > 0 ? projects.map((project) => { return (<p key={project.id}>project.name</p>) }) : (null)}
 
                     {loading ? (
                         <div className="flex justify-center items-center h-[400px]">
@@ -61,20 +59,18 @@ export default function Projects() {
 
 
                 {/* columna derecha */}
-                {loading ? (null) :
+                {selectedProject && (
                     <>
                         {projects.length > 0 ? (
                             <div className="col-span-1">
-                                {/* <ProjectDetails projects={projects} /> */}
+                                {/* <ProjectDetails projects={selectedProject} /> */}
                                 <p>project details</p>
-                                {/* <ClientDetails client={selectedClient} /> */}
                             </div>
                         ) : (
                             // <PlaceHolderItemsAddClient />
-
                             <p>nothin</p>
                         )}
-                    </>
+                    </>)
                 }
 
             </div>
