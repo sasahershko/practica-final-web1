@@ -4,9 +4,21 @@ import * as Yup from 'yup';
 import Card from '@/app/components/Card';
 import ObjectSelector from '@/app/components/ObjectSelector';
 import {useRouter} from 'next/navigation';
+import {useState, useEffect} from 'react';
 
 export default function ProjectForm({ title, initialValues, onSubmit, isEdit, onDelete, client, clients }) {
     const router = useRouter();
+
+    const [selectedClient, setSelectedClient] = useState(client);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true);
+        if (client) {
+            setSelectedClient(client);
+        }
+        setLoading(false);
+    }, [client]);
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -58,6 +70,11 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
         validateOnBlur: false,
     });
 
+    const handleClientSelect = (client) =>{
+        formik.setFieldValue('clientId', client._id);
+        setSelectedClient(client);
+    }
+
     return (
         <div>
             <button className='blue-button' onClick={()=>router.push('/pages/dashboard/projects')}>Go back</button>
@@ -71,7 +88,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                                     placeholder="Select a client"
                                     objects={clients}
                                     displayKey="name"
-                                    onSelect={(client) => formik.setFieldValue('clientId', client._id)} />
+                                    onSelect={handleClientSelect} />
 
                                 {formik.errors.clientId && (
                                     <p className="text-red-500">{formik.errors.clientId}</p>
@@ -118,12 +135,14 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                 {/* COLUMNA DERECHA */}
                 <div className='space-y-6'>
                     <Card title="Client">
-                        {client ? (
+                        {selectedClient ? (
                             <div>
-                                <p className="text-gray-500 text-sm">Name: {client.name}</p>
-                                <p className="text-gray-500 text-sm">CIF: {client.cif}</p>
-                                <p className="text-gray-500 text-sm">Address: {client.street} {client.number}</p>
-                                <p className="text-gray-500 text-sm">{client.postal} {client.city} ({client.province})</p>
+                                <p className="text-gray-500 text-sm">Name: {selectedClient.name}</p>
+                                <p className="text-gray-500 text-sm">CIF: {selectedClient.cif}</p>
+                                <p className="text-gray-500 text-sm">Address: {selectedClient.address.street} {selectedClient.address.number}</p>
+                                <p className="text-gray-500 text-sm">Postal:{selectedClient.address.postal} {selectedClient.address.city} ({selectedClient.address.province})</p>
+                                <p className="text-gray-500 text-sm">City: {selectedClient.address.city} </p>
+                                <p className="text-gray-500 text-sm">Provice:({selectedClient.address.province})</p>
                             </div>
                         ) : (
                             <div>

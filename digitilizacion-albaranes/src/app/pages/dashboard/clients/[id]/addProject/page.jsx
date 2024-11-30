@@ -2,7 +2,7 @@
 import ProjectForm from "@/app/pages/dashboard/projects/components/ProjectForm";
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getClients } from '@/app/lib/clients';
+import { getClientById, getClients } from '@/app/lib/clients';
 
 export default function AddProjectForClient({ params }) {
   const { id: clientId } = useParams();
@@ -11,17 +11,17 @@ export default function AddProjectForClient({ params }) {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchClients = async () => {
+    const fetchClient = async () => {
       try {
-        const clientData = await getClients();
+        const clientData = await getClientById(clientId);
         setClient({
-          name: result.data.name || '',
-          cif: result.data.cif || '',
-          street: result.data.address?.street || '',
-          number: result.data.address?.number || '',
-          postal: result.data.address?.postal || '',
-          city: result.data.address?.city || '',
-          province: result.data.address?.province || '',
+          name: clientData.name || '',
+          cif: clientData.cif || '',
+          street: clientData.address?.street || '',
+          number: clientData.address?.number || '',
+          postal: clientData.address?.postal || '',
+          city: clientData.address?.city || '',
+          province: clientData.address?.province || '',
         });
       } catch (error) {
         console.log(error.message);
@@ -30,22 +30,13 @@ export default function AddProjectForClient({ params }) {
       }
     };
 
-    fetchClients();
-
+    fetchClient();
   }, [])
 
   return (
     <div>
       <ProjectForm initialValues={{
         clientId: clientId,
-        email: '',
-        name: '',
-        street: '',
-        number: '',
-        postal: '',
-        city: '',
-        province: '',
-        code: ''
       }}
         title='Add Project'
         client={client} />
