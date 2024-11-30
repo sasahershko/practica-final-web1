@@ -1,8 +1,10 @@
 import {cookies} from 'next/headers';
 
-export async function POST (request){
+const EXTERNAL_API_URL = 'https://bildy-rpmaya.koyeb.app/';
 
-    const token = cookies().get('bytoken')?.value;
+export async function POST (request){
+    const cookieStorage = await cookies();
+    const token = cookieStorage.get('bytoken')?.value;
 
     if(!token){
         return new Response(JSON.stringify({ success: false, message: 'No autorizado, no se encontró token' }), { status: 401});

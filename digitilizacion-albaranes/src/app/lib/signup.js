@@ -3,7 +3,6 @@ import {cookies} from 'next/headers';
 import {redirect} from 'next/navigation';
 
 async function createUser(formData){
-    console.log(JSON.stringify(formData));
 
     try{
         // const url = `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user/register`;
@@ -49,7 +48,9 @@ export async function register(formData){
         }
 
         if(user && user.token){
-            cookies().set('bytoken', user.token,{
+            const cookieStorage = await cookies();
+
+            cookieStorage.set('bytoken', user.token,{
                 path:'/', //disponible en toda la app
                 httpOnly: false, //más seguro, no accesible desde JS del cliente - LO HE CAMBIADO A FALSE PARA PODER ACCEDER DESDE EL CLIENTE
                 // sameSite: 'strict', //solo se envía en peticiones del mismo sitio

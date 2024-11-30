@@ -2,6 +2,7 @@
 import {useRouter} from 'next/navigation';
 import ClientForm from '../components/ClientForm';
 
+
 export default function AddClientPage(){
     const router = useRouter();
 

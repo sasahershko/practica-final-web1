@@ -38,18 +38,19 @@ async function validate(formData) {
 export async function login(formData) {
     try {
         const user = await validate(formData);
+        const cookieStorage = await cookies();
 
         if (!user || !user.data?.token) {
             console.error('El servidor no devolvió un token:', user);
             throw new Error('El inicio de sesión fue exitoso, pero no se recibió un token.');
         }
 
-        cookies().set('bytoken', user.data.token, {
+        cookieStorage.set('bytoken', user.data.token, {
             path: '/', //toda la app
             httpOnly: false, 
         });
 
-        cookies().set('isLoggedIn', 'true', {
+        cookieStorage.set('isLoggedIn', 'true', {
             path: '/',
             httpOnly: false, 
         });

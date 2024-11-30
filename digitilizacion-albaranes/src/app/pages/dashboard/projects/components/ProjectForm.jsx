@@ -145,7 +145,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                         <div className='flex flex-col'>
                             <p className="text-gray-500 text-sm">Add note about your project.</p>
                             <input type="text" className="input-form mt-5" placeholder="Add a note" />
-                            <button className='blue-button'>Save</button>
+                            <button className='blue-button' onClick={()=>alert(clients)}>Save</button>
                         </div>
                     </Card>
                     <Card title="Tags">

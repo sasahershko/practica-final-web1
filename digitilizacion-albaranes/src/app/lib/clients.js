@@ -1,72 +1,43 @@
-'use server'
-import {cookies} from 'next/headers';
+export const getClients = async () => {
+    const response = await fetch('/api/clients');
+    const data = await response.json();
 
-export async function getClient(){
-
-    const token = cookies().get('bytoken')?.value;
-
-    if(!token){
-        throw new Error('No se encontró el token de las cookies');
+    if (!response.ok) {
+        throw new Error(data.message);
     }
+    return data.data;
+};
 
-    try{
+export const getClientById = async (id) => {
+    const response = await fetch(`/api/clients/${id}`);
+    const data = await response.json();
 
-        const response = await fetch ('https://bildy-rpmaya.koyeb.app/api/client', {
-            method: 'GET',
-            headers:{
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            },
-            // next: {revalidate:0} //no usar caché, obtener datos en tiempo real
-        });
-
-        if(!response.ok){
-            throw new Error('Error en la petición');
-        }
-
-        const data = await response.json();
-        return {success: true, data: data}
-
-    }catch(error){
-        return {success: false, error: error.message}
+    if (!response.ok) {
+        throw new Error(data.message);
     }
-}
+    return data.data;
+};
 
-export async function addClient(formData){
+export const addClient = async (clientData) => {
+    const response = await fetch('/api/clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(clientData),
+    });
+    const data = await response.json();
 
-    const token = cookies().get('bytoken')?.value;
-
-    if(!token){
-        throw new Error('No se encontró el token de las cookies');
+    if (!response.ok) {
+        throw new Error(data.message);
     }
+    return data.data;
+};
 
-    try{
-        const response = await fetch('https://bildy-rpmaya.koyeb.app/api/client', {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                name: formData.name,
-                cif: formData.cif,
-                address:{
-                    street: formData.street,
-                    number: formData.number,
-                    postal: formData.postal,
-                    city: formData.city,
-                    province: formData.province,
-                }
-            })
-        });
+export const deleteClientById = async (id) => {
+    const response = await fetch(`/api/clients/${id}`, { method: 'DELETE' });
+    const data = await response.json();
 
-        if(!response.ok){
-            throw new Error('Error en la petición');
-        }
-
-        const data = await response.json();
-        return {success: true, data: data}
-    }catch(error){
-        return {success: false, error: error.message}
+    if (!response.ok) {
+        throw new Error(data.message);
     }
-}
+    return data.data;
+};
