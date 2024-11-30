@@ -13,7 +13,6 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setLoading(true);
         if (client) {
             setSelectedClient(client);
         }
