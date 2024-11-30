@@ -1,8 +1,9 @@
-import {cookies} from 'nect/headers'
+import {cookies} from 'next/headers'
 
 export async function PUT(request, {params}){
     const {id} = params;
-    const token = cookies().get('bytoken')?.value;
+    const cookieStorage = await cookies();
+    const token = cookieStorage.get('bytoken')?.value;
 
     if(!token){
         return new Response(JSON.stringify({success: false, message: 'No autorizado, no se encontró token'}), {status: 401});
