@@ -3,8 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Card from '@/app/components/Card';
 import ObjectSelector from '@/app/components/ObjectSelector';
-import {useRouter} from 'next/navigation';
-import {useState, useEffect} from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 export default function ProjectForm({ title, initialValues, onSubmit, isEdit, onDelete, client, clients }) {
     const router = useRouter();
@@ -48,7 +48,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             clientId: Yup.string().required('The field is required'),
             notes: Yup.string().max(500, 'The notes cannot exceed 500 characters'),
         }),
-        onSubmit: (values) =>{
+        onSubmit: (values) => {
             const transformedValues = {
                 name: values.name,
                 code: values.code,
@@ -69,14 +69,14 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
         validateOnBlur: false,
     });
 
-    const handleClientSelect = (client) =>{
+    const handleClientSelect = (client) => {
         formik.setFieldValue('clientId', client._id);
         setSelectedClient(client);
     }
 
     return (
         <div>
-            <button className='blue-button' onClick={()=>router.push('/pages/dashboard/projects')}>Go back</button>
+            <button className='blue-button' onClick={() => router.push('/pages/dashboard/projects')}>Go back</button>
             <div className='grid grid-cols-3 gap-4 p-8  animate-fade-in-up'>
                 <div className="col-span-2">
                     <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
@@ -149,16 +149,39 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                             </div>
 
                         )}
-
                     </Card>
+
 
                     <Card title="Notes">
                         <div className='flex flex-col'>
                             <p className="text-gray-500 text-sm">Add note about your project.</p>
-                            <input type="text" className="input-form mt-5" placeholder="Add a note" />
-                            <button className='blue-button' onClick={()=>alert(clients)}>Save</button>
+                            {formik.values.notes && (
+                                <div className="mt-5 p-3 border rounded bg-gray-50">
+                                    <h4 className="font-bold text-black">Saved Note:</h4>
+                                    <p className="text-gray-500 text-lg">{formik.values.notes}</p>
+                                </div>
+                            )}
+                            <form onSubmit={(e) => {e.preventDefault();  formik.handleSubmit(); }} className='flex flex-col'>
+                                <input
+                                    type="text"
+                                    className="input-form mt-5"
+                                    placeholder="Add a note"
+                                    name="notes"
+                                    value={formik.values.notes}
+                                    onChange={formik.handleChange}
+                                />
+                                <button className='blue-button mt-3' type="submit">
+                                    Save
+                                </button>
+                            </form>
+
+                            {formik.errors.notes && (
+                                <p className="text-red-500 text-sm mt-2">{formik.errors.notes}</p>
+                            )}
                         </div>
                     </Card>
+
+
                     <Card title="Tags">
                         <div className='flex flex-col'>
                             <p className="text-gray-500 text-sm">Tags can be used to categorize projects into groups..</p>

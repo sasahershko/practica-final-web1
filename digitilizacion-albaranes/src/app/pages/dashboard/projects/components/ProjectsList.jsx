@@ -64,7 +64,7 @@ export default function ProjectList({ projects, onSelectProject, onAddProject })
               <h2 className="text-lg font-bold text-black">{project.name}</h2>
               <p className="text-sm text-gray-500"><strong>Code: </strong>#{project.code}</p>
               <p className="text-sm text-gray-500"><strong>Client: </strong>{project.clientId}</p>
-              <p className="text-sm text-gray-500"><strong>Status: </strong>{project.status}</p>
+              <p className="text-sm text-gray-500"><strong>Notes: </strong><span className='text-blue-300'>{project.notes}</span></p>
             </Card>
           </div>
         ))}

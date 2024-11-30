@@ -32,6 +32,7 @@ export default function ProjectDetails(){
             province: projectData.address?.province || '',
             code: projectData.code || '',
             clientId: projectData.clientId || '',
+            notes: projectData.notes || '',
           });
 
           //para separarlo del fetch del project
@@ -78,7 +79,6 @@ export default function ProjectDetails(){
       try{
         const response = await updateProject(id, values);
         alert('Project updated');
-        router.push('/pages/dashboard/projects');
       }catch(error){
         console.error(error.message);
         setError(error.message);
