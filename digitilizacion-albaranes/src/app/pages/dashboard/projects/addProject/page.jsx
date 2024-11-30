@@ -30,38 +30,13 @@ export default function AddProject(){
         fetchClients();
       }, []);
 
-      const handleSubmitProject= async(values) =>{
-        try{
-          const response = await fetch('/api/projects/addProject', {
-            method: 'POST',
-            headers:{
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values)
-          })
-
-          if(!response.ok){
-            throw new Error('Error al añadir proyecto');
-          }
-
-          const result = await response.json();
-          if(result.success){
-            alert('Proyecto añadido correctamente');
-            router.push('/pages/dashboard/projects');
-          }
-
-        }catch(error){
-            console.log('Error al añadir proyecto', error.message);
-        }
-      }
 
     return(
         <>
             <ProjectForm
                 title='Add Project'
                 initialValues={{ name: '', projectCode: '', email: '', street: '', number: '', postal: '', city: '', province: '', code: '', clientId: ''}}     
-                clients={clients}  
-                onSubmit={handleSubmitProject}     
+                clients={clients}    
             />
         </>
     )
