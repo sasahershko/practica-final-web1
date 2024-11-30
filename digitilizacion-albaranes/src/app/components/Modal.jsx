@@ -1,6 +1,6 @@
 import {useRouter} from 'next/navigation';
 
-export default function Modal({ title, children, onClose, isOpen, object, editFunction }) {
+export default function Modal({ title, children, onClose, isOpen, object }) {
     if (!isOpen) return null;
     const router = useRouter();
 

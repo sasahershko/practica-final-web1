@@ -106,7 +106,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
 
 
                         <button type="submit" className="blue-button mt-6 col-span-2 mx-auto w-full">{title}</button>
-
+                        {/* <button onClick={(e)=>{ e.preventDefault();console.log(client)}} className="blue-button mt-6 col-span-2 mx-auto w-full">CLIENTE</button> */}
                         {isEdit &&
                             <button type="submit" className="red-button col-span-2 w-full" onClick={onDelete}>
                                 Delete

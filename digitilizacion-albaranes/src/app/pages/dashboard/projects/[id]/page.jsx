@@ -15,10 +15,11 @@ export default function ProjectDetails(){
 
     const [project, setProject] = useState(null);
     const [client, setClient] = useState(null);
+    const [clientId, setClientId] = useState(null);
     
-    useEffect(()=>{
-      const fetchProjectAndClient = async() =>{
-        try{
+    useEffect(() => {
+      const fetchProject = async () => {
+        try {
           const projectData = await getProjectById(id);
           setProject({
             name: projectData.name || '',
@@ -31,26 +32,36 @@ export default function ProjectDetails(){
             province: projectData.address?.province || '',
             code: projectData.code || '',
             clientId: projectData.clientId || '',
-        });
+          });
 
-          //cliente asociado
-          const clientId = project.clientId;
-          if(clientId){
-            const clientData = await getClientById(clientId);
-            setClient(clientData);
-          }else{
-            setClient(null);
-          }
+          //para separarlo del fetch del project
+          setClientId(projectData.clientId || null);
 
-        }catch(error){
+        } catch (error) {
           setError(error.message);
-        }finally{
+        } finally {
           setLoading(false);
         }
+      };
+  
+      fetchProject();
+    }, [id]);
+  
+
+    useEffect(() => {
+      if (clientId) {
+        const fetchClient = async () => {
+          try {
+            const clientData = await getClientById(clientId);
+            setClient(clientData);
+          } catch (error) {
+            setError(error.message);
+          }
+        };
+  
+        fetchClient();
       }
-      
-      fetchProjectAndClient();
-    },[id]);
+    }, [clientId]);
 
     const handleDelete  = async() =>{
       try{
