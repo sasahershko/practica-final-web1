@@ -13,20 +13,22 @@ export default function Projects() {
     const [selectedProject, setSelectedProject] = useState(null);
     const [loading, setLoading] = useState(true);
 
+
     useEffect(() => {
         const fetchProjects = async () => {
-            try{
+            try {
                 const projectsData = await getProjects();
-                setProjects(projectsData);                
-            }catch(error){
+                setProjects(projectsData);
+            } catch (error) {
                 console.error(error);
-            }finally{
+            } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchProjects();
     }, []);
+    
 
     const handleAddProject = () => {
         router.push('/pages/dashboard/projects/addProject');

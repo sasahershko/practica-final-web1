@@ -3,69 +3,67 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ProjectForm from '@/app/pages/dashboard/projects/components/ProjectForm';
 
+///quiero info del proyexto y del cliente
+import { getProjectById, deleteProject } from '@/app/lib/projects';
+import { getClientById } from '@/app/lib/clients';
+
 export default function ProjectDetails(){
     const {id} = useParams();
     const router = useRouter();
-    const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    
-    useEffect(() => {
-        const fetchClient = async () => {
-          try {
-            const response = await fetch(`/api/clients/getProject/${id}`);
-            if (!response.ok) {
-              throw new Error('Error al cargar los datos del project.');
-            }
-    
-            const result = await response.json();
-    
-            if (result.success) {
-              setClient({
-                name: result.data.name || '',
-                cif: result.data.cif || '',
-                street: result.data.address?.street || '',
-                number: result.data.address?.number || '',
-                postal: result.data.address?.postal || '',
-                city: result.data.address?.city || '',
-                province: result.data.address?.province || '',
-              });
-            } else {
-              throw new Error(result.message || 'Proyecto no encontrado.');
-            }
-          } catch (err) {
-            setError(err.message);
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchClient();
-      }, [id]);
 
-    const handleDelete = async() =>{
+    const [project, setProject] = useState(null);
+    const [client, setClient] = useState(null);
+    
+    useEffect(()=>{
+      const fetchProjectAndClient = async() =>{
         try{
-            const response = await fetch(`/api/projects/deleteProject/${id}`, {
-                method:'DELETE',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-            });
+          const projectData = await getProjectById(id);
+          setProject({
+            name: projectData.name || '',
+            email: projectData.email || '',
+            projectCode: projectData.projectCode || '',
+            street: projectData.address?.street || '',
+            number: projectData.address?.number || '',
+            postal: projectData.address?.postal || '',
+            city: projectData.address?.city || '',
+            province: projectData.address?.province || '',
+            code: projectData.code || '',
+            clientId: projectData.clientId || '',
+        });
+        console.log('Datos del proyecto:', projectData);
+console.log('Dirección:', projectData.address.street);
 
-            if(!response.ok){
-                throw new Error('Error en la petición');
-            }
+          //cliente asociado
+          const clientId = project.clientId;
+          if(clientId){
+            const clientData = await getClientById(clientId);
+            setClient(clientData);
+          }else{
+            setClient(null);
+          }
 
-            const result = await response.json();
-
-            if(result.success){
-                alert('Project deleted');
-                router.push('/pages/dashboard/projects');
-            }
         }catch(error){
-            console.error(error.message);
+          setError(error.message);
+        }finally{
+          setLoading(false);
         }
-    };
+      }
+      
+      fetchProjectAndClient();
+    },[id]);
+
+    const handleDelete  = async() =>{
+      try{
+        const response = await deleteProject(id);
+        alert('Project deleted');
+        router.push('/pages/dashboard/projects');
+      }catch(error){
+        console.error(error.message);
+        setError(error.message);
+      }
+    }
 
     const handleUpdate = async(values) =>{
 
@@ -105,6 +103,7 @@ export default function ProjectDetails(){
           title="Edit Project" 
           isEdit={true}
           onDelete={handleDelete}
+          client={client}
         />
       </div>
     )

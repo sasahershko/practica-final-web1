@@ -1,5 +1,5 @@
+'use server';
 import { apiRequest } from './api';
-
 
 export async function getProjects() {
     try{
@@ -12,13 +12,12 @@ export async function getProjects() {
     }catch(error){
         throw new Error('Error al obtener proyectos');
     }
-
 }
 
 export async function getProjectById(projectId) {
 
     try{
-        const response = await apiRequest(`project/${projectId}`, 'GET');
+        const response = await apiRequest(`project/one/${projectId}`, 'GET');
         if (response.success) {
             return response.data; 
         } else {
@@ -73,6 +72,21 @@ export async function deleteProject(projectId) {
         }
     }catch(error){
         throw new Error('Error al eliminar el proyecto');
+    }
+
+}
+
+export async function getProjectByClientId(clientId) {
+    try{
+        const response = await apiRequest(`project/${clientId}`, 'GET');
+        if (response.success) {
+            return response.data; 
+        } else {
+            throw new Error(response.message || 'Error al obtener el proyecto');
+        }
+
+    }catch(error){
+        throw new Error('Error al obtener el proyecto');
     }
 
 }

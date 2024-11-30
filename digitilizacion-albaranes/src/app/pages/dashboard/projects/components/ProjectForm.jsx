@@ -9,19 +9,19 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
     const router = useRouter();
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues:
         {
-            name: '',
-            email: '',
-            projectCode: '',
-            street: '',
-            number: '',
-            postal: '',
-            city: '',
-            province: '',
-            code: '',
-            clientId: '',
-            ...initialValues
+            name: initialValues?.name || '',
+            email: initialValues?.email || '',
+            projectCode: initialValues?.projectCode || '',
+            street: initialValues?.street || '',
+            number: initialValues?.number || '',
+            postal: initialValues?.postal || '',
+            city: initialValues?.city || '',
+            province: initialValues?.province || '',
+            code: initialValues?.code || '',
+            clientId: initialValues?.clientId || '',
         },
         validationSchema: Yup.object({
             name: Yup.string().max(50, 'The name cannot exceed 100 characters').required('The field is required'),
@@ -34,40 +34,32 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             province: Yup.string().required('The field is required'),
             code: Yup.string().required('The field is required'),
             clientId: Yup.string().required('The field is required'),
+            notes: Yup.string().max(500, 'The notes cannot exceed 500 characters'),
         }),
-        onSubmit: async (values) => { handleSubmitProject(values) },
+        onSubmit: (values) =>{
+            const transformedValues = {
+                name: values.name,
+                code: values.code,
+                projectCode: values.projectCode,
+                email: values.email,
+                address: {
+                    street: values.street,
+                    number: values.number,
+                    postal: values.postal,
+                    city: values.city,
+                    province: values.province,
+                },
+                notes: values.notes
+            };
+            onSubmit(transformedValues);
+        },
         validateOnChange: false,
         validateOnBlur: false,
     });
 
-    const handleSubmitProject = async (values) => {
-        try {
-            const response = await fetch('/api/projects/addProject', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values)
-            })
-
-            if (!response.ok) {
-                throw new Error('Error al añadir proyecto');
-            }
-
-            const result = await response.json();
-            if (result.success) {
-                alert('Proyecto añadido correctamente');
-                router.push('/pages/dashboard/projects');
-            }
-
-        } catch (error) {
-            console.log('Error al añadir proyecto', error.message);
-        }
-    }
-
     return (
         <div>
-            <button className='blue-button' onClick={()=>router.push('/pages/dashboard/projects')}>Go back</button>
+            <button className='blue-button' onClick={()=>console.log(initialValues)}>Go back</button>
             <div className='grid grid-cols-3 gap-4 p-8  animate-fade-in-up'>
                 <div className="col-span-2">
                     <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
