@@ -22,6 +22,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             province: initialValues?.province || '',
             code: initialValues?.code || '',
             clientId: initialValues?.clientId || '',
+            notes: initialValues?.notes || '',
         },
         validationSchema: Yup.object({
             name: Yup.string().max(50, 'The name cannot exceed 100 characters').required('The field is required'),
@@ -59,7 +60,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
 
     return (
         <div>
-            <button className='blue-button' onClick={()=>console.log(initialValues)}>Go back</button>
+            <button className='blue-button' onClick={()=>router.push('/pages/dashboard/projects')}>Go back</button>
             <div className='grid grid-cols-3 gap-4 p-8  animate-fade-in-up'>
                 <div className="col-span-2">
                     <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>

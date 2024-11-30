@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ProjectForm from '@/app/pages/dashboard/projects/components/ProjectForm';
 
 ///quiero info del proyexto y del cliente
-import { getProjectById, deleteProject } from '@/app/lib/projects';
+import { getProjectById, deleteProject, updateProject } from '@/app/lib/projects';
 import { getClientById } from '@/app/lib/clients';
 
 export default function ProjectDetails(){
@@ -32,8 +32,6 @@ export default function ProjectDetails(){
             code: projectData.code || '',
             clientId: projectData.clientId || '',
         });
-        console.log('Datos del proyecto:', projectData);
-console.log('Dirección:', projectData.address.street);
 
           //cliente asociado
           const clientId = project.clientId;
@@ -66,33 +64,14 @@ console.log('Dirección:', projectData.address.street);
     }
 
     const handleUpdate = async(values) =>{
-
-        try{
-            const response = await fetch(`/api/projects/updateProject/${id}`, {
-                method:'PUT',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify(values)
-            });
-
-            if(!response.ok){
-                throw new Error('Error en la petición');
-            }
-
-            const result = await response.json();
-
-            if(result.success){
-                alert('Project updated');
-                router.push('/pages/dashboard/projects');
-            }
-        }catch(error){
-            console.error(error.message);
-            setError(error.message);
-        }
-        // finally{
-        //     setLoading(false);
-        // }
+      try{
+        const response = await updateProject(id, values);
+        alert('Project updated');
+        router.push('/pages/dashboard/projects');
+      }catch(error){
+        console.error(error.message);
+        setError(error.message);
+      }
     }
 
     return(
