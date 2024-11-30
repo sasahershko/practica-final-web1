@@ -1,32 +1,20 @@
 'use client'
 import {useRouter} from 'next/navigation';
 import ClientForm from '../components/ClientForm';
-
+import {addClient} from '@/app/lib/clients';
 
 export default function AddClientPage(){
     const router = useRouter();
 
     const handleSubmit = async(values) =>{
+        console.log(values);
         try{
-            const response = await fetch('/api/clients/addClient', {
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values)
-            });
-
-            const result = await response.json();
-
-            if(result.success){
-                alert('Cliente añadido correctamente');
-                router.push('/pages/dashboard/clients');
-            }else{
-                alert('Error al añadir cliente', result.message);
-            }
-
+            const data = await addClient(values);
+            alert('Cliente añadido correctamente');
+            router.push('/pages/dashboard/clients');
         }catch(error){
-            console.log('Error al añadir cliente', error.message);
+            console.error(error);
+            alert('Error al añadir cliente');
         }
     }
 

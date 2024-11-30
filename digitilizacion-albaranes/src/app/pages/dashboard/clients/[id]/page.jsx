@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import ClientForm from '../components/ClientForm';
+import {getClientById, updateClient, deleteClient} from '@/app/lib/clients';
 
 export default function EditClientPage() {
   const { id } = useParams();
@@ -14,83 +15,46 @@ export default function EditClientPage() {
   //función para cargar los datos del cliente
   useEffect(() => {
     const fetchClient = async () => {
-      try {
-        const response = await fetch(`/api/clients/getClient/${id}`);
-        if (!response.ok) {
-          throw new Error('Error al cargar los datos del cliente.');
+        try {
+            const data = await getClientById(id);
+            setClient({
+                name: data.name || '',
+                cif: data.cif || '',
+                street: data.address?.street || '',
+                number: data.address?.number || '',
+                postal: data.address?.postal || '',
+                city: data.address?.city || '',
+                province: data.address?.province || '',
+            });
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
         }
-
-        const result = await response.json();
-
-        if (result.success) {
-          setClient({
-            name: result.data.name || '',
-            cif: result.data.cif || '',
-            street: result.data.address?.street || '',
-            number: result.data.address?.number || '',
-            postal: result.data.address?.postal || '',
-            city: result.data.address?.city || '',
-            province: result.data.address?.province || '',
-          });
-        } else {
-          throw new Error(result.message || 'Cliente no encontrado.');
-        }
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
     };
 
     fetchClient();
-  }, [id]);
+}, [id]);
 
-
-  const handleUpdate = async (values) => {
+const handleUpdate = async (values) => {
     try {
-      const response = await fetch(`/api/clients/updateClient/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al actualizar el cliente.');
-      }
-
-      const result = await response.json();
-
-      if (result.success) {
+        await updateClient(id, values); 
         alert('Cliente actualizado correctamente.');
-        router.push('/pages/dashboard/clients');
-      } else {
-        throw new Error(result.message || 'Error desconocido.');
-      }
-    } catch (error) {
-      alert(`Error: ${error.message}`);
+    } catch (err) {
+        setError(err.message);
     }
-  };
+};
 
-  //PARA ELIMINAR
-  const handleDelete = async () => {
+const handleDelete = async() =>{
     try {
-      const response = await fetch(`/api/clients/deleteClient/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al eliminar el cliente');
-      }
-
-      const result = await response.json();
-      alert('Cliente eliminado correctamente');
-      router.push('/pages/dashboard/clients');
-    } catch (error) {
-      alert(`Error: ${error.message}`);
+        await deleteClient(id);
+        alert('Cliente eliminado correctamente.');
+        router.push('/pages/dashboard/clients');
+    } catch (err) {
+        setError(err.message);
     }
-  };
+};
+
 
   if (loading) {
     return (

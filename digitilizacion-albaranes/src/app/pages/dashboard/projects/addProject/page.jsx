@@ -2,6 +2,7 @@
 import ProjectForm from '../components/ProjectForm';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import {getClients} from '@/app/lib/clients';
 
 export default function AddProject(){
     const [clients, setClients] = useState([]);
@@ -9,27 +10,22 @@ export default function AddProject(){
     const router = useRouter();
 
     useEffect(() => {
-        const fetchClients = async () => {
-          try {
-            const response = await fetch('/api/clients/getClient');
-            if (!response.ok) {
-              throw new Error('Error en la petición');
-            }
-    
-            const result = await response.json();
-            if (result.success) {
-              setClients(result.data);
-            }
-          } catch (err) {
-            console.error(err.message);
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchClients();
-      }, []);
-
+      const fetchClients = async () => {
+        try {
+          const clients = await getClients();
+          setClients(clients);
+          setLoading(false);
+        }catch(error){
+          console.error(error);
+          setLoading(false);
+        }finally{
+          setLoading(false);
+        }
+      };
+  
+      fetchClients();
+  
+    }, []);
 
     return(
         <>

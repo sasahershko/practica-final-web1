@@ -14,7 +14,20 @@ export default function ClientForm({ initialValues, onSubmit, title, isEdit, onD
             city: Yup.string().required('The field is required'),
             province: Yup.string().required('The field is required'),
         }),
-        onSubmit: onSubmit,
+        onSubmit: (values)=>{
+            const transformedValues = {
+                name: values.name,
+                cif: values.cif,
+                address: {
+                    street: values.street,
+                    number: values.number,
+                    postal: values.postal,
+                    city: values.city,
+                    province: values.province,
+                },
+            };
+            onSubmit(transformedValues);
+        },
     });
 
 

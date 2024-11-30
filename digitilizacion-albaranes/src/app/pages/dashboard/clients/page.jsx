@@ -5,6 +5,7 @@ import ClientList from './components/ClientList';
 import ClientDetails from './components/ClientDetails';
 import NoClientsPlaceholder from './components/NoClientsPlaceHolder';
 import PlaceHolderItemsAddClient from './components/PlaceHolderItemsAddClient';
+import {getClients} from '@/app/lib/clients';
 
 export default function ClientPage() {
   const [clients, setClients] = useState([]);
@@ -16,18 +17,11 @@ export default function ClientPage() {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch('/api/clients/getClient');
-        if (!response.ok) {
-          throw new Error('Error en la petición');
-        }
-
-        const result = await response.json();
-        if (result.success) {
-          setClients(result.data);
-        }
-      } catch (err) {
-        console.error(err.message);
-      } finally {
+        const clients = await getClients();
+        setClients(clients);
+        setLoading(false);
+      }catch(error){
+        console.error(error);
         setLoading(false);
       }
     };

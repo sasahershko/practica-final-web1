@@ -5,6 +5,8 @@ import ProjectDetails from '@/app/pages/dashboard/projects/components/ProjectDet
 import ProjectList from '@/app/pages/dashboard/projects/components/ProjectsList';
 import NoProyectsPlaceHolder from '@/app/pages/dashboard/projects/components/NoProyectsPlaceHolder';
 
+import {getProjects} from '@/app/lib/projects';
+
 export default function Projects() {
     const router = useRouter();
     const [projects, setProjects] = useState([]);
@@ -13,19 +15,12 @@ export default function Projects() {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            try {
-                const response = await fetch('/api/projects/getProjects');
-                if (!response.ok) {
-                    throw new Error('Error en la petición');
-                }
-
-                const result = await response.json();
-                if (result.success) {
-                    setProjects(result.data);
-                }
-            } catch (error) {
-                console.error(error.message);
-            } finally {
+            try{
+                const projectsData = await getProjects();
+                setProjects(projectsData);                
+            }catch(error){
+                console.error(error);
+            }finally{
                 setLoading(false);
             }
         };
