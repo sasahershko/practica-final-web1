@@ -49,21 +49,38 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             notes: Yup.string().max(500, 'The notes cannot exceed 500 characters'),
         }),
         onSubmit: (values) => {
-            const transformedValues = {
-                name: values.name,
-                projectCode: values.projectCode,
-                email: values.email,
-                address: {
-                    street: values.street,
-                    number: values.number,
-                    postal: values.postal,
-                    city: values.city,
-                    province: values.province,
-                },
-                code: values.code,
-                clientId: values.clientId,
-            };
-            console.log(transformedValues);
+
+            const transformedValues = isEdit
+            ? {
+                  name: values.name,
+                  code: values.code,
+                  projectCode: values.projectCode,
+                  email: values.email,
+                  clientId: values.clientId,
+                  address: {
+                      street: values.street,
+                      number: values.number,
+                      postal: values.postal,
+                      city: values.city,
+                      province: values.province,
+                  },
+                  notes: values.notes, 
+              }
+            : {
+                  name: values.name,
+                  projectCode: values.projectCode,
+                  email: values.email,
+                  address: {
+                      street: values.street,
+                      number: values.number,
+                      postal: values.postal,
+                      city: values.city,
+                      province: values.province,
+                  },
+                  code: values.code,
+                  clientId: values.clientId,
+              };
+
             onSubmit(transformedValues);
         },
         validateOnChange: false,

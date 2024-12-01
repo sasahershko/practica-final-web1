@@ -62,6 +62,7 @@ export default function DashboardSummary () {
 }
 
 const StatCard = ({ title, value, icon, color }) => {
+  const router = useRouter();
   return (
     <div className={`${color} rounded-lg shadow-lg p-6 text-white flex items-center transition-transform duration-200 hover:scale-105`}>
       <div className="mr-4 text-4xl">{icon}</div>
