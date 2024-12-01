@@ -47,7 +47,6 @@ export default function NavBar(){
        console.log(isLoggedIn);
     }
 
-
     return(
         <>
             <nav>

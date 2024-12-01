@@ -18,7 +18,7 @@ export default function Home() {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className='p-8 space-y-8'>
+        <div className='p-4 space-y-8 animate-fade-in-up'>
             <button className='blue-button' onClick={()=>router.push('/pages/dashboard/projects')}>Go back to Projects</button>
             <h1 className='bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 bg-clip-text text-transparent animate-gradient-move text-center text-[100px] font-bold'>
                 {project?.name || 'No Project Found'}
@@ -93,7 +93,7 @@ export default function Home() {
             </div>
             <Card title={<span className="text-[30px]">{`Delivery Notes`}</span>}>
                 <div className="space-y-4">
-                    <p className="border border-blue-300 p-2 rounded-lg text-blue-950">No delivery notes available.</p>
+                    <p className="border border-blue-300 p-2 rounded-lg text-blue-950 text-center">No delivery notes available.</p>
                 </div>
             </Card>
         </div>
