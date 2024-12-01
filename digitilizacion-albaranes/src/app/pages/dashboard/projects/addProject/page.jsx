@@ -32,10 +32,8 @@ export default function AddProject(){
     const handleAddProject = async (values) => {
       try {
           const response = await addProject(values);
-          if (response.success) {
-              alert('Proyecto añadido correctamente');
-              router.push('/pages/dashboard/projects');
-          }
+          alert('Proyecto añadido correctamente');
+          router.push('/pages/dashboard/projects');
       } catch (error) {
           console.log('Error al añadir proyecto', error.message);
       }

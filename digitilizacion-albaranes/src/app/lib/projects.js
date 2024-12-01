@@ -15,7 +15,6 @@ export async function getProjects() {
 }
 
 export async function getProjectById(projectId) {
-
     try{
         const response = await apiRequest(`project/one/${projectId}`, 'GET');
         if (response.success) {

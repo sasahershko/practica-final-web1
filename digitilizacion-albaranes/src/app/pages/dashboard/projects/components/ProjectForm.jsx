@@ -51,7 +51,6 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
         onSubmit: (values) => {
             const transformedValues = {
                 name: values.name,
-                code: values.code,
                 projectCode: values.projectCode,
                 email: values.email,
                 address: {
@@ -61,8 +60,10 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                     city: values.city,
                     province: values.province,
                 },
-                notes: values.notes
+                code: values.code,
+                clientId: values.clientId,
             };
+            console.log(transformedValues);
             onSubmit(transformedValues);
         },
         validateOnChange: false,
@@ -196,5 +197,6 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                 </div>
             </div>
         </div>
+
     )
 }
