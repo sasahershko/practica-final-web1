@@ -2,6 +2,8 @@
 'use client';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import NavBar from '../../components/NavBar';
+import {Button} from '@nextui-org/react';
 
 export default function SignUpName() {
 
@@ -21,18 +23,58 @@ export default function SignUpName() {
         }
     });
 
-    return (
-        <div>
-            <h1>SignUpName</h1>
-            <form onSubmit={(e)=>{e.preventDefault; formik.handleSubmit}}>
-                <input type="text" name="name" placeholder="Name" value={formik.values.name} onChange={formik.handleChange}/>
-                {formik.errors.name ? <div>{formik.errors.name}</div> : null}
-                <input type="text" name="surnames" placeholder="Surnames" value={formik.values.surnames} onChange={formik.handleChange}/>
-                {formik.errors.surnames ? <div>{formik.errors.surnames}</div> : null}
-                <input type="text" name="nif" placeholder="NIF" value={formik.values.nif} onChange={formik.handleChange}/>
-                {formik.errors.nif ? <div>{formik.errors.nif}</div> : null}
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+    return(
+        <>
+        <NavBar/>
+            <div className='animate-fade-in-up'>
+                <h1 className="text-center text-[50px] mt-36 max-h-screen text-black mb-10 font-bold">More information</h1>
+
+                <form onSubmit={(e)=>{e.preventDefault(); formik.handleSubmit();}}className='flex mx-auto flex-col max-w-[300px]'>
+                    
+                    <div className='flex flex-col mb-4'>
+                        <label className='text-black'>Name</label>
+                        <input
+                            type='name'
+                            name='name'
+                            value = {formik.values.name}
+                            onChange={formik.handleChange}
+                            className='input-form'
+                        />
+                        {formik.touched.name && formik.errors.name ? (<p className='text-center text-red-500'>{formik.errors.name}</p>): null}
+                    </div>
+    
+
+                    <div className='flex flex-col'>
+                        <label className='text-black'>Surnames</label>
+                        <input
+                            type='surnames'
+                            name='surnames'
+                            value={formik.values.surnames}
+                            onChange={formik.handleChange}
+                            className='input-form'
+                        />
+                        
+                        {formik.touched.surnames && formik.errors.surnames ? (<p className='text-center text-red-500'>{formik.errors.surnames}</p>):null}
+                    </div>
+
+                    <div className='flex flex-col'>
+                        <label className='text-black'>NIF</label>
+                        <input
+                            type='nif'
+                            name='nif'
+                            value={formik.values.nif}
+                            onChange={formik.handleChange}
+                            className='input-form'
+                        />
+                        
+                        {formik.touched.nif && formik.errors.nif ? (<p className='text-center text-red-500'>{formik.errors.nif}</p>):null}
+                    </div>
+
+                    {/* <button type='submit' className='bg-white text-black rounded-md mt-5 hover:bg-black hover:text-white transitiono  duration-300 ease-in-out py-3'>Send</button> */}
+                    <Button type='submit' className='mt-5 rounded-md bg-blue-500 hover:bg-blue-300 transition duration-300 ease-in-out'>Send</Button>
+                </form>
+            </div>   
+        </>
+
     )
 }

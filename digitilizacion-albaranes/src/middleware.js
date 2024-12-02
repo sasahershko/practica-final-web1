@@ -10,7 +10,7 @@ export function middleware(request) {
     //redirigir al dashboard si el usuario está autenticado
     if (currentUser && isLoggedIn &&(request.nextUrl.pathname.startsWith('/pages/login') || request.nextUrl.pathname.startsWith('/pages/signup'))) {
         console.log('Usuario autenticado, redirigiendo a /dashboard/summary');
-        return NextResponse.redirect(new URL('/dashboard/summary', request.url));
+        return NextResponse.redirect(new URL('/pages/dashboard/summary', request.url));
     }
 
     //redirigir al login si el usuario no está autenticado
