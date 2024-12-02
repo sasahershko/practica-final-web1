@@ -16,7 +16,7 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
     uniqueClients.forEach((client, index) => {
       const timer = setTimeout(() => {
         setVisibleClients((prev) => {
-          // Evitar duplicados en el estado visibleClients
+          //evitar duplicados 
           if (prev.some((p) => p._id === client._id)) {
             return prev;
           }
@@ -39,7 +39,7 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
             key={client._id}
             className="bg-white shadow rounded-lg p-4 text-black font-semibold hover:bg-blue-100 animate-fade-in-up"
             style={{
-              animationDelay: `${index * 200}ms`, // Retrasar la animación
+              animationDelay: `${index * 100}ms`, //retrasar la animación
             }}
             onClick={() => onSelectClient(client)}
           >

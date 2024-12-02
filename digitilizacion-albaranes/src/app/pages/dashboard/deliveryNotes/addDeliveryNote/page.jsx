@@ -1,9 +1,10 @@
-// 'use client';
-// import ProjectForm from '../components/ProjectForm';
-// import { useState, useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
-// import {getClients} from '@/app/lib/clients';
-// import {addProject} from '@/app/lib/projects';
+'use client';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getClients } from '@/app/lib/clients';
+import { addProject } from '@/app/lib/projects';
+
+import DeliveryForm from '@/app/pages/dashboard/deliveryNotes/components/DeliveryForm';
 
 // export default function AddProject(){
 //     const [clients, setClients] = useState([]);
@@ -23,9 +24,9 @@
 //           setLoading(false);
 //         }
 //       };
-  
+
 //       fetchClients();
-  
+
 //     }, []);
 
 //     //ADD PROJECT
@@ -51,8 +52,13 @@
 //     )
 // }
 
-export default function AddDeliveryNote(){
-    return(
-        <h1>Add Delivery Note</h1>
+export default function AddDeliveryNote() {
+
+    
+
+    return (
+        <div>
+            <DeliveryForm title='Add Delivery Note' />
+        </div>
     )
 }

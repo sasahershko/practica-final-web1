@@ -59,30 +59,17 @@ export default function ProjectList({ projects, onSelectProject, onAddProject })
         {visibleProjects.map((project) => (
           <div
             key={project._id}
-            className="animate-fade-in-up hover-grow"
+            className="animate-fade-in-up'"
             onClick={() => handleProjectClick(project)}
           >
+            <div className='hover-grow'>
             <Card>
               <h2 className="text-[40px] font-bold text-black">{project.name}</h2>
               <p className="text-sm text-gray-500"><strong>Notes: </strong><span className='text-blue-300'>{project.notes}</span></p>
             </Card>
+            </div>
           </div>
         ))}
-{/* 
-        <Modal
-          title={selectedProject?.name}
-          onClose={closeModal}
-          isOpen={isModalOpen}
-          children={
-            <div>
-              <p className='mb-2 text-[20px]'>Project Code: #{selectedProject?.code}</p>
-              <p className='mb-2 text-[20px]'>E-mail: {selectedProject?.email}</p>
-              <p className='mb-2 text-[20px]'>Notes: {selectedProject?.notes ? (`${selectedProject?.notes}`) : ('There is no notes.')}</p>
-            </div>
-          }
-          object={selectedProject}
-          leftButton = {() => router.push(`/pages/dashboard/projects/${selectedProject._id}/editProject`)}
-        /> */}
       </div>
     </div>
   );

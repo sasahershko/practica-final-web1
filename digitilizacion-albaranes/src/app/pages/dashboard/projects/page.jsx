@@ -53,23 +53,6 @@ export default function Projects() {
                         <NoProyectsPlaceHolder onAddProject={handleAddProject} />
                     )}
                 </div>
-
-
-                {/* columna derecha */}
-                {selectedProject && (
-                    <>
-                        {projects.length > 0 ? (
-                            <div className="col-span-1">
-                                {/* <ProjectDetails projects={selectedProject} /> */}
-                                <p>project details</p>
-                            </div>
-                        ) : (
-                            // <PlaceHolderItemsAddClient />
-                            <p>nothin</p>
-                        )}
-                    </>)
-                }
-
             </div>
         </div>
     )

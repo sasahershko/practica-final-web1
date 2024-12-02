@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getDeliveryNotes } from '@/app/lib/deliveryNotes';
 import FilterBar from '@/app/components/FilterBar';
+import DeliveryNoteList from './components/DeliveryNoteList';
 
 export default function DeliveryNotesPage() {
   const [deliveryNotes, setDeliveryNotes] = useState([]);
@@ -33,20 +34,10 @@ export default function DeliveryNotesPage() {
 
 
   return (
-    <div>
+    <div className='animate-fade-in-up'>
       <h1 className='big-title'>Delivery Notes</h1>
       <FilterBar onFilterClick={handleFilterClick} onDateChange={handleDateChange} />
-      {loading ? (
-        <p>Loading...</p>
-      ) : deliveryNotes.length > 0 ? (
-        <ul>
-          {deliveryNotes.map(note => (
-            <li key={note.id}>
-              {note.code} - {note.clientName} - {note.status}
-            </li>
-          ))}
-        </ul>
-      ) : <p>No delivery notes found</p>}
+      <DeliveryNoteList deliveryNotes={deliveryNotes} />
     </div>
   );
 }

@@ -1,12 +1,29 @@
 'use client';
 import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useProjectDetails } from '@/app/hooks/useProjectDetails';
+import { getDeliveryNotesByProjectId } from '@/app/lib/deliveryNotes';
 import Card from '@/app/components/Card';
+import { useEffect } from 'react';
 
 export default function Home() {
     const { id } = useParams();
     const { project, loading, error, client } = useProjectDetails(id);
     const router = useRouter();
+    const [deliveryNotes, setDeliveryNotes] = useState([]);
+
+    useEffect(() => {
+        const fetchDeliveryNotes = async () => {
+            try {
+                const notes = await getDeliveryNotesByProjectId(id);
+                console.log('Delivery notes:', notes);
+            } catch (error) {
+                console.error('Error al obtener delivery notes:', error);
+            }
+        };
+
+        fetchDeliveryNotes();
+    }, [])
 
     if (loading) {
         return (
@@ -55,7 +72,7 @@ export default function Home() {
                                     ${project?.province || 'N/A'}`}
                                 </p>
                             </div>
-                            
+
                         </div>
                         <div className='mt-6 text-right'>
                             <button className='blue-button'
@@ -108,10 +125,26 @@ export default function Home() {
                 </div>
             </div>
 
-            <Card title={<span className="text-[30px]">{`Delivery Notes`}</span>}>          
-                <div className="space-y-4">
-                    <p className="border border-blue-300 p-2 rounded-lg text-blue-950 text-center">No delivery notes available.</p>
-                </div>
+            <Card title={<span className="text-[30px]">{`Delivery Notes`}</span>}
+                    action={
+                        <button
+                            className="blue-button"
+                            onClick={() => router.push(`/pages/dashboard/projects/${id}/addDeliveryNote`)}
+                        >
+                            Add Note
+                        </button>}>
+                {deliveryNotes.length > 0 ? (
+                   deliveryNotes.map((note, index) =>{
+                        <div key={index} className="border border-blue-300 p-2 rounded-lg">
+                            <p>{note.code} - {note.clientName} - {note.status}</p>    
+                        </div>
+                   })
+                ) 
+                : (
+                    <div className="space-y-4">
+                        <p className="border border-blue-300 p-2 rounded-lg text-blue-950 text-center">No delivery notes available.</p>
+                    </div>
+                )}
             </Card>
         </div>
     );
