@@ -53,48 +53,46 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             code: Yup.string().required('The field is required'),
             clientId: Yup.string().required('The field is required'),
             notes: Yup.string().max(500, 'The notes cannot exceed 500 characters'),
-            begin: Yup.date().required('The field is required'),
-            end: Yup.date().required('The field is required'),
+            begin: Yup.date(),
+            end: Yup.date(),
         }),
         onSubmit: (values) => {
-
-            console.log('Valores enviados a addProject:', values);
-            // const transformedValues = isEdit
-            //     ? {
-            //         name: values.name,
-            //         code: values.code,
-            //         projectCode: values.projectCode,
-            //         email: values.email,
-            //         clientId: values.clientId,
-            //         address: {
-            //             street: values.street,
-            //             number: values.number,
-            //             postal: values.postal,
-            //             city: values.city,
-            //             province: values.province,
-            //         },
-            //         notes: values.notes,
-            //     }
-            //     : {
-            //         name: values.name,
-            //         projectCode: values.projectCode,
-            //         email: values.email,
-            //         address: {
-            //             street: values.street,
-            //             number: values.number,
-            //             postal: values.postal,
-            //             city: values.city,
-            //             province: values.province,
-            //         },
-            //         code: values.code,
-            //         clientId: values.clientId,
-            //         begin: toApiFormat(values.begin),
-            //         end: toApiFormat(values.end),
-            //     };
+            const transformedValues = isEdit
+                ? {
+                    name: values.name,
+                    code: values.code,
+                    projectCode: values.projectCode,
+                    email: values.email,
+                    clientId: values.clientId,
+                    address: {
+                        street: values.street,
+                        number: values.number,
+                        postal: values.postal,
+                        city: values.city,
+                        province: values.province,
+                    },
+                    notes: values.notes,
+                }
+                : {
+                    name: values.name,
+                    projectCode: values.projectCode,
+                    email: values.email,
+                    address: {
+                        street: values.street,
+                        number: values.number,
+                        postal: values.postal,
+                        city: values.city,
+                        province: values.province,
+                    },
+                    code: values.code,
+                    clientId: values.clientId,
+                    begin: toApiFormat(values.begin),
+                    end: toApiFormat(values.end),
+                };
 
 
-            // console.log(transformedValues);
-            // onSubmit(transformedValues);
+            console.log(transformedValues);
+            onSubmit(transformedValues);
         },
         validateOnChange: false,
         validateOnBlur: false,
