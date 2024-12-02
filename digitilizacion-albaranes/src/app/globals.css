@@ -155,3 +155,7 @@ PARA QUE LAS CARTAS TENGAN UNA ANIMACIÓN DE POP */
 .red-button{
   @apply bg-red-500 text-white px-4 py-2 rounded hover:bg-red-300 transition duration-300 ease-in-out;
 }
+
+.big-title{
+  @apply text-black text-center text-[100px] font-bold animate-fade-in-up;
+}

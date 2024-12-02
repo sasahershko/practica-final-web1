@@ -31,7 +31,7 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
         Add Client
       </button>
       <ul className="space-y-2">
-        {clients.map((client, index) => (
+        {visibleClients.map((client, index) => (
           <li
             key={`${client._id}`}
             className="bg-white shadow rounded-lg p-4 text-black font-semibold transform transition-all ease-in-out duration-300 hover:bg-blue-100 animate-fade-in-up"

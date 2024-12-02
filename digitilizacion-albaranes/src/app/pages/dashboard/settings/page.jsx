@@ -2,7 +2,7 @@
 export default function Settings(){
     return(
         <div>
-            <h1 className='text-black text-center text-[100px] font-bold animate-fade-in-up'>Settings</h1>
+            <h1 className='big-title'>Settings</h1>
         </div>
     )
 }
