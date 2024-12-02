@@ -7,7 +7,6 @@ export default function AddClientPage(){
     const router = useRouter();
 
     const handleSubmit = async(values) =>{
-        console.log(values);
         try{
             const data = await addClient(values);
             alert('Cliente añadido correctamente');

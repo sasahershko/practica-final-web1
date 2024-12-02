@@ -58,46 +58,50 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
         }),
         onSubmit: (values) => {
 
-            const transformedValues = isEdit
-                ? {
-                    name: values.name,
-                    code: values.code,
-                    projectCode: values.projectCode,
-                    email: values.email,
-                    clientId: values.clientId,
-                    address: {
-                        street: values.street,
-                        number: values.number,
-                        postal: values.postal,
-                        city: values.city,
-                        province: values.province,
-                    },
-                    notes: values.notes,
-                }
-                : {
-                    name: values.name,
-                    projectCode: values.projectCode,
-                    email: values.email,
-                    address: {
-                        street: values.street,
-                        number: values.number,
-                        postal: values.postal,
-                        city: values.city,
-                        province: values.province,
-                    },
-                    code: values.code,
-                    clientId: values.clientId,
-                    begin: toApiFormat(values.begin),
-                    end: toApiFormat(values.end),
-                };
+            console.log('Valores enviados a addProject:', values);
+            // const transformedValues = isEdit
+            //     ? {
+            //         name: values.name,
+            //         code: values.code,
+            //         projectCode: values.projectCode,
+            //         email: values.email,
+            //         clientId: values.clientId,
+            //         address: {
+            //             street: values.street,
+            //             number: values.number,
+            //             postal: values.postal,
+            //             city: values.city,
+            //             province: values.province,
+            //         },
+            //         notes: values.notes,
+            //     }
+            //     : {
+            //         name: values.name,
+            //         projectCode: values.projectCode,
+            //         email: values.email,
+            //         address: {
+            //             street: values.street,
+            //             number: values.number,
+            //             postal: values.postal,
+            //             city: values.city,
+            //             province: values.province,
+            //         },
+            //         code: values.code,
+            //         clientId: values.clientId,
+            //         begin: toApiFormat(values.begin),
+            //         end: toApiFormat(values.end),
+            //     };
 
 
-                console.log(transformedValues);
-            onSubmit(transformedValues);
+            // console.log(transformedValues);
+            // onSubmit(transformedValues);
         },
         validateOnChange: false,
         validateOnBlur: false,
     });
+
+    console.log('values:', formik.values);
+    console.log('POR PARAMS', formik.initialValues);
 
     const handleClientSelect = (client) => {
         formik.setFieldValue('clientId', client._id);
@@ -125,7 +129,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                             </>
                         )}
                     </div>
-                    <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(); }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
+                    <form onSubmit={formik.handleSubmit} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
                         {[
                             { name: 'name', label: 'Name', type: 'text', colSpan: 2 },
                             { name: 'projectCode', label: 'Project Code', type: 'text' },

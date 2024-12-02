@@ -14,15 +14,7 @@ export default function AddProjectForClient({ params }) {
     const fetchClient = async () => {
       try {
         const clientData = await getClientById(clientId);
-        setClient({
-          name: clientData.name || '',
-          cif: clientData.cif || '',
-          street: clientData.address?.street || '',
-          number: clientData.address?.number || '',
-          postal: clientData.address?.postal || '',
-          city: clientData.address?.city || '',
-          province: clientData.address?.province || '',
-        });
+        setClient(clientData);
       } catch (error) {
         console.log(error.message);
       } finally {

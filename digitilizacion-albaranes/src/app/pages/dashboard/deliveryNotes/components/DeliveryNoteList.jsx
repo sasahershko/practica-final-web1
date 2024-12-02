@@ -21,7 +21,7 @@ export default function DeliveryNoteList({ deliveryNotes }) {
             deliveryNotes.map((note, index) => (
               <tr
                 key={index}
-                className="odd:bg-white even:bg-gray-50 hover:bg-gray-100"
+                className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 text-black"
               >
                 <td className="p-3 border border-gray-300">{note.code}</td>
                 <td className="p-3 border border-gray-300">

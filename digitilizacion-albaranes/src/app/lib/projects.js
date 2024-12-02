@@ -41,7 +41,6 @@ export async function addProject(projectData) {
     }catch(error){
         throw new Error('Error al añadir el proyecto');
     }
-
 }
 
 

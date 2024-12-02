@@ -13,6 +13,7 @@ export function useProjectDetails(projectId) {
       try {
         const projectData = await getProjectById(projectId);
         setProject({
+          _id: projectData._id,
           name: projectData.name || '',
           email: projectData.email || '',
           projectCode: projectData.projectCode || '',
