@@ -1,6 +1,7 @@
 'use client'
 // ELIMINAR framer-motion!!
 import NavBar from './components/NavBar';
+import { Lumiflex } from "uvcanvas";
 
 export default function HomePage(){
 
@@ -9,9 +10,11 @@ export default function HomePage(){
     // lg: Pantallas grandes (≥ 1024px)
     // xl: Pantallas extra grandes (≥ 1280px)
     // 2xl: Pantallas muy grandes (≥ 1536px)
+    console.log(Lumiflex);
 
     return (
        <>
+            {/* <Lumiflex /> */}
             <NavBar/>
             <div className  ='flex flex-col items-center justify-center bg-white text-black mt-[260px]'>
 

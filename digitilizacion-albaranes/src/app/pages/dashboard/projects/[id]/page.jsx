@@ -19,7 +19,7 @@ export default function Home() {
 
     return (
         <div className='p-4 space-y-8 animate-fade-in-up'>
-            <button className='blue-button' onClick={()=>router.push('/pages/dashboard/projects')}>Go back to Projects</button>
+            <button className='blue-button' onClick={() => router.push('/pages/dashboard/projects')}>Go back to Projects</button>
             <h1 className='bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 bg-clip-text text-transparent animate-gradient-move text-center text-[100px] font-bold'>
                 {project?.name || 'No Project Found'}
             </h1>
@@ -35,6 +35,14 @@ export default function Home() {
                                 <label className='block text-gray-500 font-medium'>Code</label>
                                 <p className='bg-gray-100 p-2 rounded-lg'>{project?.code || 'N/A'}</p>
                             </div>
+                            <div>
+                                <label className='block text-gray-500 font-medium'>Begin</label>
+                                <p className='bg-gray-100 p-2 rounded-lg'>{project?.begin || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label className='block text-gray-500 font-medium'>End</label>
+                                <p className='bg-gray-100 p-2 rounded-lg'>{project?.end || 'N/A'}</p>
+                            </div>
                             <div className='col-span-2'>
                                 <label className='block text-gray-500 font-medium'>Notes</label>
                                 <p className='bg-gray-100 p-2 rounded-lg'>{project?.notes || 'N/A'}</p>
@@ -47,9 +55,10 @@ export default function Home() {
                                     ${project?.province || 'N/A'}`}
                                 </p>
                             </div>
+                            
                         </div>
                         <div className='mt-6 text-right'>
-                            <button className='bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600'
+                            <button className='blue-button'
                                 onClick={() => router.push(`/pages/dashboard/projects/${id}/editProject`)}>
                                 Edit
                             </button>
@@ -87,11 +96,19 @@ export default function Home() {
                                     />
                                 </div>
                             )}
+
+                            <div className='mt-6 text-right'>
+                                <button className='blue-button'
+                                    onClick={() => router.push(`/pages/dashboard/clients/${client._id}`)}>
+                                    Edit
+                                </button>
+                            </div>
                         </div>
                     </Card>
                 </div>
             </div>
-            <Card title={<span className="text-[30px]">{`Delivery Notes`}</span>}>
+
+            <Card title={<span className="text-[30px]">{`Delivery Notes`}</span>}>          
                 <div className="space-y-4">
                     <p className="border border-blue-300 p-2 rounded-lg text-blue-950 text-center">No delivery notes available.</p>
                 </div>

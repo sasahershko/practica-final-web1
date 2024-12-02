@@ -24,6 +24,8 @@ export function useProjectDetails(projectId) {
           code: projectData.code || '',
           clientId: projectData.clientId || '',
           notes: projectData.notes || '',
+          begin: projectData.begin || '',
+          end: projectData.end || '',
         });
 
         if (projectData.clientId) {

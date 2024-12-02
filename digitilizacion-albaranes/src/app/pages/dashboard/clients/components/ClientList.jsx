@@ -13,15 +13,18 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
     setVisibleClients([]);
     let timers = [];
 
-    uniqueClients.forEach((client, index) =>{
-      const timer = setTimeout(()=>{
-        setVisibleClients((prev) =>{
-          if(prev.some((p)=>p._id=== client._id)) return prev;
+    uniqueClients.forEach((client, index) => {
+      const timer = setTimeout(() => {
+        setVisibleClients((prev) => {
+          // Evitar duplicados en el estado visibleClients
+          if (prev.some((p) => p._id === client._id)) {
+            return prev;
+          }
           return [...prev, client];
         });
-      }, index * 200)
+      }, index * 200); // Espaciado entre animaciones
       timers.push(timer);
-    })
+    });
   
   }, [clients]);
   
@@ -33,10 +36,12 @@ export default function ClientList({ clients, onSelectClient, onAddClient }) {
       <ul className="space-y-2">
         {visibleClients.map((client, index) => (
           <li
-            key={`${client._id}`}
-            className="bg-white shadow rounded-lg p-4 text-black font-semibold transform transition-all ease-in-out duration-300 hover:bg-blue-100 animate-fade-in-up"
+            key={client._id}
+            className="bg-white shadow rounded-lg p-4 text-black font-semibold hover:bg-blue-100 animate-fade-in-up"
+            style={{
+              animationDelay: `${index * 200}ms`, // Retrasar la animación
+            }}
             onClick={() => onSelectClient(client)}
-            style={{ animationDelay: `${index * 200}ms` }} 
           >
             {client.name}
           </li>

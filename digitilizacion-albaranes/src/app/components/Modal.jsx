@@ -1,6 +1,6 @@
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-export default function Modal({ title, children, onClose, isOpen, object, leftButton }) {
+export default function Modal({ title, children, onClose, isOpen }) {
     if (!isOpen) return null;
     const router = useRouter();
 
@@ -10,20 +10,6 @@ export default function Modal({ title, children, onClose, isOpen, object, leftBu
                 <h2 className="text-[50px] font-bold mb-4 text-black">{title}</h2>
                 <div className="mb-6 text-black">
                     {children}
-                </div>
- 
-                <div className="flex justify-between items-center gap-4">
-                    <button className='blue-button'
-                            onClick={()=>leftButton()}>
-                        Edit
-                    </button>
-                    
-                    <button
-                        className="red-button"
-                        onClick={onClose}
-                    >
-                        Close
-                    </button>
                 </div>
             </div>
         </div>

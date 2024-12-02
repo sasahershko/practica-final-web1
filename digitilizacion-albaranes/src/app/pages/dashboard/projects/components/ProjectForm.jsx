@@ -5,12 +5,16 @@ import Card from '@/app/components/Card';
 import ObjectSelector from '@/app/components/ObjectSelector';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import moment from 'moment';
 
 export default function ProjectForm({ title, initialValues, onSubmit, isEdit, onDelete, client, clients }) {
     const router = useRouter();
 
     const [selectedClient, setSelectedClient] = useState(client);
     const [loading, setLoading] = useState(true);
+    const toFormikFormat = (date) => moment(date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+    const toApiFormat = (date) => moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+
 
     useEffect(() => {
         if (client) {
@@ -34,6 +38,8 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             code: initialValues?.code || '',
             clientId: initialValues?.clientId || '',
             notes: initialValues?.notes || '',
+            begin: initialValues.begin ? toFormikFormat(initialValues.begin) : '',
+            end: initialValues.end ? toFormikFormat(initialValues.end) : '',
         },
         validationSchema: Yup.object({
             name: Yup.string().max(50, 'The name cannot exceed 100 characters').required('The field is required'),
@@ -47,40 +53,46 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             code: Yup.string().required('The field is required'),
             clientId: Yup.string().required('The field is required'),
             notes: Yup.string().max(500, 'The notes cannot exceed 500 characters'),
+            begin: Yup.date().required('The field is required'),
+            end: Yup.date().required('The field is required'),
         }),
         onSubmit: (values) => {
 
             const transformedValues = isEdit
-            ? {
-                  name: values.name,
-                  code: values.code,
-                  projectCode: values.projectCode,
-                  email: values.email,
-                  clientId: values.clientId,
-                  address: {
-                      street: values.street,
-                      number: values.number,
-                      postal: values.postal,
-                      city: values.city,
-                      province: values.province,
-                  },
-                  notes: values.notes, 
-              }
-            : {
-                  name: values.name,
-                  projectCode: values.projectCode,
-                  email: values.email,
-                  address: {
-                      street: values.street,
-                      number: values.number,
-                      postal: values.postal,
-                      city: values.city,
-                      province: values.province,
-                  },
-                  code: values.code,
-                  clientId: values.clientId,
-              };
+                ? {
+                    name: values.name,
+                    code: values.code,
+                    projectCode: values.projectCode,
+                    email: values.email,
+                    clientId: values.clientId,
+                    address: {
+                        street: values.street,
+                        number: values.number,
+                        postal: values.postal,
+                        city: values.city,
+                        province: values.province,
+                    },
+                    notes: values.notes,
+                }
+                : {
+                    name: values.name,
+                    projectCode: values.projectCode,
+                    email: values.email,
+                    address: {
+                        street: values.street,
+                        number: values.number,
+                        postal: values.postal,
+                        city: values.city,
+                        province: values.province,
+                    },
+                    code: values.code,
+                    clientId: values.clientId,
+                    begin: toApiFormat(values.begin),
+                    end: toApiFormat(values.end),
+                };
 
+
+                console.log(transformedValues);
             onSubmit(transformedValues);
         },
         validateOnChange: false,
@@ -138,6 +150,36 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                             </div>
                         ))}
 
+                        {isEdit && (
+                            <>
+                                <div className="flex flex-col col-span-1">
+                                    <label className='text-black'>Begin Date</label>
+                                    <input
+                                        type="date"
+                                        name="begin"
+                                        value={formik.values.begin}
+                                        onChange={formik.handleChange}
+                                        className="input-form"
+                                    />
+                                    {formik.errors.begin ? (
+                                        <p className="text-center text-red-500">{formik.errors.begin}</p>
+                                    ) : null}
+                                </div>
+                                <div className="flex flex-col col-span-1">
+                                    <label className='text-black'>End Date</label>
+                                    <input
+                                        type="date"
+                                        name="end"
+                                        value={formik.values.end}
+                                        onChange={formik.handleChange}
+                                        className="input-form"
+                                    />
+                                    {formik.errors.end ? (
+                                        <p className="text-center text-red-500">{formik.errors.end}</p>
+                                    ) : null}
+                                </div>
+                            </>
+                        )}
 
                         <button type="submit" className="blue-button mt-6 col-span-2 mx-auto w-full">{title}</button>
                         {/* <button onClick={(e)=>{ e.preventDefault();console.log(client)}} className="blue-button mt-6 col-span-2 mx-auto w-full">CLIENTE</button> */}
@@ -179,7 +221,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                                     <p className="text-gray-500 text-lg">{formik.values.notes}</p>
                                 </div>
                             )}
-                            <form onSubmit={(e) => {e.preventDefault();  formik.handleSubmit(); }} className='flex flex-col'>
+                            <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(); }} className='flex flex-col'>
                                 <input
                                     type="text"
                                     className="input-form mt-5"
