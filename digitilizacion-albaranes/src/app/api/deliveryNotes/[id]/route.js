@@ -1,20 +1,12 @@
-import { getDeliveryNotesByProjectId, deleteDeliveryNote, updateDeliveryNote } from "@/app/lib/api";
+import { apiRequest } from '@/app/lib/api';
 
-export async function getDeliveryNotesByProjectId(request, {params}) {
-    const {id} = params;
-    const result = await getDeliveryNotesByProjectId(id);
-    return new Response(JSON.stringify(result), {status: result.status});
+export async function POST(request) {
+    const formData = await request.json();
+    const result = await apiRequest('deliverynote', 'POST', formData);
+    return new Response(JSON.stringify(result), { status: result.status });
 }
 
-export async function deleteDeliveryNote(request, {params}){
-    const {id} = params;
-    const result = await deleteDeliveryNote(id);
-    return new Response(JSON.stringify(result), {status: result.status});
-}
-
-export async function updateDeliveryNote(request, {params}){
-    const {id} = params;
-    const updateData = await request.json();
-    const result = await updateDeliveryNote(id, updateData);
-    return new Response(JSON.stringify(result), {status: result.status});
+export async function GET(request) {
+    const result = await apiRequest('deliverynote', 'GET');
+    return new Response(JSON.stringify(result), { status: result.status });
 }
