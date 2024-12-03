@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import ClientForm from '../components/ClientForm';
-import {getClientById, updateClient, deleteClient} from '@/app/lib/clients';
+import {getClientById, updateClient, deleteClient, uploadLogo} from '@/app/lib/clients';
 
 export default function EditClientPage() {
   const { id } = useParams();
@@ -55,6 +55,16 @@ const handleDelete = async() =>{
     }
 };
 
+const handleLogo = async(values) =>{
+  try{
+    await uploadLogo(id, values.logo);
+    alert('Logo actualizado correctamente.');
+  } catch (err) {
+    setError(err.message);
+    alert('Error al actualizar el logo.');
+  }
+}
+
 
   if (loading) {
     return (
@@ -74,6 +84,7 @@ const handleDelete = async() =>{
       <ClientForm
         initialValues={client}
         onSubmit={handleUpdate}
+        onSubmitLogo={handleLogo}
         title="Edit Client"
         isEdit={true}
         onDelete={handleDelete}

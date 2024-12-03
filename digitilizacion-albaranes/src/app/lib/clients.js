@@ -45,3 +45,12 @@ export async function getClientById(clientId) {
         throw new Error(response.message || 'Error al obtener cliente');
     }    
 }
+
+export async function uploadLogo(clientId, logo) {
+    const response = await apiRequest(`client/logo/${clientId}`, 'PATCH', { logo });
+    if (response.success) {
+        return response.data;
+    } else {
+        throw new Error(response.message || 'Error al subir logo');
+    }
+}

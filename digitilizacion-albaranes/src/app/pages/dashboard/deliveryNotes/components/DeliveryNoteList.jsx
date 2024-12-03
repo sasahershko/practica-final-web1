@@ -8,11 +8,10 @@ export default function DeliveryNoteList({ deliveryNotes }) {
       <table className="min-w-full border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-100 text-black">
-            <th className="p-3 text-left border border-gray-300">Código</th>
-            <th className="p-3 text-left border border-gray-300">Fecha</th>
-            <th className="p-3 text-left border border-gray-300">Nombre</th>
-            <th className="p-3 text-left border border-gray-300">Cliente</th>
-            <th className="p-3 text-left border border-gray-300">Código Interno</th>
+            <th className="p-3 text-left border border-gray-300">Code</th>
+            <th className="p-3 text-left border border-gray-300">Date</th>
+            <th className="p-3 text-left border border-gray-300">Description</th>
+            <th className="p-3 text-left border border-gray-300">Client</th>
             <th className="p-3 text-left border border-gray-300">Status</th>
           </tr>
         </thead>
@@ -23,11 +22,11 @@ export default function DeliveryNoteList({ deliveryNotes }) {
                 key={index}
                 className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 text-black"
               >
-                <td className="p-3 border border-gray-300">{note.code}</td>
+                <td className="p-3 border border-gray-300">{note._id}</td>
                 <td className="p-3 border border-gray-300">
-                  {new Date(note.date).toLocaleString()}
+                  {note.begin}
                 </td>
-                <td className="p-3 border border-gray-300">{note.projectName}</td>
+                <td className="p-3 border border-gray-300">{note.description}</td>
                 <td className="p-3 border border-gray-300 flex items-center space-x-2">
                   <img
                     src={note.clientImage || 'https://via.placeholder.com/40'}
@@ -35,9 +34,6 @@ export default function DeliveryNoteList({ deliveryNotes }) {
                     className="w-8 h-8 rounded-full"
                   />
                   <span>{note.clientName}</span>
-                </td>
-                <td className={`p-3 border border-gray-300 ${note.internalCode < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                  {note.internalCode}
                 </td>
                 <td
                   className={`p-3 border border-gray-300 ${

@@ -10,12 +10,13 @@ export default function Home() {
     const { id } = useParams();
     const { project, loading, error, client } = useProjectDetails(id);
     const router = useRouter();
-    const [deliveryNotes, setDeliveryNotes] = useState([]);
+    const [deliveryNotes, setDeliveryNotes] = useState({});
 
     useEffect(() => {
         const fetchDeliveryNotes = async () => {
             try {
                 const notes = await getDeliveryNotesByProjectId(id);
+                setDeliveryNotes(notes);
                 console.log('Delivery notes:', notes);
             } catch (error) {
                 console.error('Error al obtener delivery notes:', error);
@@ -23,7 +24,8 @@ export default function Home() {
         };
 
         fetchDeliveryNotes();
-    }, [])
+    }, [id])
+
 
     if (loading) {
         return (
@@ -126,25 +128,28 @@ export default function Home() {
             </div>
 
             <Card title={<span className="text-[30px]">{`Delivery Notes`}</span>}
-                    action={
-                        <button
-                            className="blue-button"
-                            onClick={() => router.push(`/pages/dashboard/projects/${id}/addDeliveryNote`)}
-                        >
-                            Add Note
-                        </button>}>
+                action={
+                    <button
+                        className="blue-button"
+                        onClick={() => router.push(`/pages/dashboard/projects/${id}/addDeliveryNote`)}
+                    >
+                        Add Note
+                    </button>}>
                 {deliveryNotes.length > 0 ? (
-                   deliveryNotes.map((note, index) =>{
-                        <div key={index} className="border border-blue-300 p-2 rounded-lg">
-                            <p>{note.code} - {note.clientName} - {note.status}</p>    
+                    deliveryNotes.map((note, index) => {
+                        return (
+                            <div key={index} className="border border-blue-300 p-2 rounded-lg text-black">
+                                <p>{note._id} - {note.description}</p>
+                            </div>
+                        )
+
+                    })
+                )
+                    : (
+                        <div className="space-y-4 flex flex-between">
+                            <p className="border border-blue-300 p-2 rounded-lg text-blue-950 text-center">No delivery notes available.</p>
                         </div>
-                   })
-                ) 
-                : (
-                    <div className="space-y-4">
-                        <p className="border border-blue-300 p-2 rounded-lg text-blue-950 text-center">No delivery notes available.</p>
-                    </div>
-                )}
+                    )}
             </Card>
         </div>
     );
