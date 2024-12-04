@@ -32,6 +32,9 @@ export default function DeliveryNotesPage() {
     console.log('Selected date:', date);
   };
 
+  if(loading){
+    return <div>Loading...</div>
+  }
 
   return (
     <div className='animate-fade-in-up'>

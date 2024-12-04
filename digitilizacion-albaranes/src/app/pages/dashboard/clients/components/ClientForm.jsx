@@ -3,8 +3,25 @@ import * as Yup from 'yup';
 import Card from '@/app/components/Card';
 import { useState } from 'react';
 
-export default function ClientForm({ initialValues, onSubmit, onSubmitLogo,  title, isEdit, onDelete }) {
-    const [image, setImage] = useState('https://img.freepik.com/fotos-premium/imagen-fondo_910766-187.jpg');
+export default function ClientForm({ initialValues, onSubmit, onSubmitLogo, title, isEdit, onDelete }) {
+    const [image, setImage] = useState('https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg');
+    const [file, setFile] = useState(null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        console.log('Archivo seleccionado:', file);
+
+        if (file && file.type.includes('image')) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setImage(reader.result); // Previsualización
+                setFile(file); // Archivo original para la API
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please select a valid image file.');
+        }
+    };
 
     const formik = useFormik({
         enableReinitialize: true, //si ya existen campos, los rellena
@@ -33,16 +50,25 @@ export default function ClientForm({ initialValues, onSubmit, onSubmitLogo,  tit
         },
     });
 
-    const formikLogo = useFormik({
-        initialValues: { logo: null },
-        onSubmit: (values) => {
-            onSubmitLogo(values.logo);
+    // const handleImageChange = (e) => {
+    //     const file = e.target.files[0];
 
-        }
-    });
+    //     if (file && file.type.includes('image')) {
+    //         const reader = new FileReader();
+    //         reader.onload = () => {
+    //             setImage(reader.result);
+    //         }
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
+
+
+    const triggerFileInput = () => {
+        document.getElementById('file-input').click();
+    };
 
     return (
-        <div  className={`grid ${isEdit ? 'grid-cols-3' : 'grid-cols-1'} gap-4 p-8 animate-fade-in-up`}>
+        <div className={`grid ${isEdit ? 'grid-cols-3' : 'grid-cols-1'} gap-4 p-8 animate-fade-in-up`}>
             <div className={`${isEdit ? 'col-span-2' : 'col-span-1 mx-auto'}`}>
                 <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
                 <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit() }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
@@ -78,45 +104,63 @@ export default function ClientForm({ initialValues, onSubmit, onSubmitLogo,  tit
 
             {/* COLUMNA DERECHA */}
             {isEdit &&
-                <div className='space-y-6'>
-                    <Card title="Client Logo">
-                        {/* <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center">
-                        <svg
-                            className="h-8 w-8 text-blue-500"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            />
-                        </svg>
-                    </div>
-                </div> */}
-                        <img src={image ? (image) : ('https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg')} alt='Client Logo' className='mb-5 rounded-lg'></img>
-                        <form onSubmit={(e) => { e.preventDefault(); formikLogo.handleSubmit() }}>
-                            <input
-                                type="file"
-                                name='logo'
-                                className='w-full '
-                                value={formikLogo.values.logo}
-                                onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    if (file) {
-                                        formikLogo.setFieldValue('logo', file); 
-                                        setImage(URL.createObjectURL(file)); 
-                                    }
-                                }}
-                            />
-                            <button type='submit' className='blue-button w-full'>Apply image</button>
-                        </form>
+                // <div className="space-y-6">
+                //     <Card title='Client Logo'>
+                //         <div className="card">
+                //             <img
+                //                 src={image || 'https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg'}
+                //                 alt="Client Logo"
+                //                 className="mb-5 rounded-lg "
+                //             />
+                //             <input
+                //                 type="file"
+                //                 id="file-input"
+                //                 onChange={handleImageChange}
+                //                 className="hidden" // Oculta el input pero mantiene su funcionalidad
+                //             />
+                //             {/* Botón para seleccionar archivo */}
+                //             <button
+                //                 onClick={triggerFileInput}
+                //                 className="blue-button w-full"
+                //             >
+                //                 Select Image
+                //             </button>
+                //             <button
+                //                 onClick={() => onSubmitLogo(image)}
+                //                 className="blue-button w-full mt-4"
+                //             >
+                //                 Apply Image
+                //             </button>
+                //         </div>
+                //     </Card>
 
-
-                    </Card>
+                // </div>
+                <div>
+                    <img src={image} alt="Client Logo" className="mb-5 rounded-lg" />
+                    <input
+                        type="file"
+                        id="file-input"
+                        onChange={handleImageChange}
+                        className="hidden"
+                    />
+                    <button
+                        onClick={triggerFileInput}
+                        className="blue-button w-full"
+                    >
+                        Select Image
+                    </button>
+                    <button
+                        onClick={() => {
+                            if (file) {
+                                onSubmitLogo(file);
+                            } else {
+                                alert('Please select an image first.');
+                            }
+                        }}
+                        className="blue-button w-full mt-4"
+                    >
+                        Apply Image
+                    </button>
                 </div>
             }
         </div>

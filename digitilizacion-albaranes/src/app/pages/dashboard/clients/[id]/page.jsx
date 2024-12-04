@@ -55,12 +55,19 @@ const handleDelete = async() =>{
     }
 };
 
-const handleLogo = async(values) =>{
+const handleLogo = async(image) =>{
   try{
-    await uploadLogo(id, values.logo);
-    alert('Logo actualizado correctamente.');
+    const formData = new FormData();
+    console.log(image);
+    formData.append('image', image, image.name);
+
+    // for (const pair of formData.entries()) {
+    //   console.log(`${pair[0]}:`, pair[1]);
+    // }
+    await uploadLogo(id, formData);
+    // alert('Logo actualizado correctamente.');
   } catch (err) {
-    setError(err.message);
+    // setError(err.message);
     alert('Error al actualizar el logo.');
   }
 }

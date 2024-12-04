@@ -98,9 +98,6 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
         validateOnBlur: false,
     });
 
-    console.log('values:', formik.values);
-    console.log('POR PARAMS', formik.initialValues);
-
     const handleClientSelect = (client) => {
         formik.setFieldValue('clientId', client._id);
         setSelectedClient(client);

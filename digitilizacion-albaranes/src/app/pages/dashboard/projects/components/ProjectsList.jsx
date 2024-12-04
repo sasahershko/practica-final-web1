@@ -45,11 +45,6 @@ export default function ProjectList({ projects, onSelectProject, onAddProject })
     router.push(`/pages/dashboard/projects/${project._id}`);
   }
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProject(null);
-  }
-
   return (
     <div>
       <button className="blue-button mb-5" onClick={onAddProject}>

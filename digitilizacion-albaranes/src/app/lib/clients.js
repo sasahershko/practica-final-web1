@@ -47,7 +47,8 @@ export async function getClientById(clientId) {
 }
 
 export async function uploadLogo(clientId, logo) {
-    const response = await apiRequest(`client/logo/${clientId}`, 'PATCH', { logo });
+    console.log('LOGO:', logo);
+    const response = await apiRequest(`client/logo/${clientId}`, 'PATCH',  logo );
     if (response.success) {
         return response.data;
     } else {
