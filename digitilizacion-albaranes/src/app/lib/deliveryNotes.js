@@ -45,6 +45,19 @@ export async function getDeliveryNotesByProjectId(projectId){
 
 };
 
+export async function getDeliveryNoteById(deliveryNoteId){
+    try{
+        const response = await apiRequest(`deliverynote/${deliveryNoteId}`, 'GET');
+        if(response.success){
+            return response.data;
+        }else{
+            throw new Error(response.message || 'Error al obtener nota de entrega');
+        }
+    }catch(error){
+        throw new Error(error.message);
+    }
+}
+
 export async function deleteDeliveryNote(deliveryNoteId){
     try{
         const response = await apiRequest(`deliverynote/${deliveryNoteId}`, 'DELETE');

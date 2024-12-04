@@ -9,6 +9,7 @@ export default function DeliveryNotesPage() {
   const [deliveryNotes, setDeliveryNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const fetchDeliveryNotes = async () => {
       try {
@@ -24,22 +25,13 @@ export default function DeliveryNotesPage() {
     fetchDeliveryNotes();
   }, []);
 
-  const handleFilterClick = () => {
-    console.log('Filter button clicked');
-  };
-
-  const handleDateChange = (date) => {
-    console.log('Selected date:', date);
-  };
-
-  if(loading){
+  if (loading) {
     return <div>Loading...</div>
   }
 
   return (
     <div className='animate-fade-in-up'>
       <h1 className='big-title'>Delivery Notes</h1>
-      <FilterBar onFilterClick={handleFilterClick} onDateChange={handleDateChange} />
       <DeliveryNoteList deliveryNotes={deliveryNotes} />
     </div>
   );
