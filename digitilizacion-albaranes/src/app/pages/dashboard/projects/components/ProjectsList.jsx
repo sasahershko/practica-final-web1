@@ -54,7 +54,7 @@ export default function ProjectList({ projects, onSelectProject, onAddProject })
         {visibleProjects.map((project) => (
           <div
             key={project._id}
-            className="animate-fade-in-up'"
+            className="animate-fade-in-up"
             onClick={() => handleProjectClick(project)}
           >
             <div className='hover-grow'>

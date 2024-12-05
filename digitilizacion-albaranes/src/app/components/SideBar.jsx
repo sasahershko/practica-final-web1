@@ -13,8 +13,8 @@ export default function SideBar({isOpen, setIsOpen}){
     };
 
     return(
-        <div className='flex h-screen z-40'>
-            <div className={`fixed top-30 h-full shadow-md transition-transform duration-300 ${isOpen ? 'translate-x-0': '-translate-x-full'}`}>
+        <div className='flex h-screen z-70'>
+            <div className={`fixed top-16 h-full shadow-md transition-transform duration-300 ${isOpen ? 'translate-x-0': '-translate-x-full'}`}>
                 <nav className='px-5 py-8'>
                     <ul className='space-y-4 text-left'>
                         <li>

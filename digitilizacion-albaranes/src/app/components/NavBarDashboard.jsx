@@ -5,6 +5,7 @@ import SearchBar from './SearchBar';
 import UserCircle from './UserCircle';
 import { getClients } from '@/app/lib/clients';
 import { getProjects } from '@/app/lib/projects';
+import { getDeliveryNotes } from '@/app/lib/deliveryNotes';
 
 export default function NavBar() {
     const pathname = usePathname();
@@ -22,12 +23,20 @@ export default function NavBar() {
             return projects.filter(project =>
                 project.name.toLowerCase().includes(query.toLowerCase())
             );
+        } else if(pathname?.includes('delivery')){
+            const deliveries = await getDeliveryNotes();
+            // deliveries.map(delivery =>{
+            //     console.log(delivery.description);
+            // })
+            return deliveries.filter(delivery =>
+                delivery.description.toLowerCase().includes(query.toLowerCase())
+            );
         }
         return [];
     };
 
     return (
-        <nav className="sticky top-0 bg-white shadow-sm w-full">
+        <nav className="sticky top-0 bg-white shadow-sm w-full z-50">
             <div className="container mx-auto flex justify-between items-center h-20">
                 <div className="flex gap-4 mt-3">
                     <Link className="text-black font-bold text-4xl" href="/">
@@ -43,6 +52,8 @@ export default function NavBar() {
                                 ? 'Search clients...'
                                 : pathname?.includes('projects')
                                 ? 'Search projects...'
+                                : pathname?.includes('delivery')
+                                ? 'Search delivery notes...'
                                 : 'Search...'
                         }
                     />

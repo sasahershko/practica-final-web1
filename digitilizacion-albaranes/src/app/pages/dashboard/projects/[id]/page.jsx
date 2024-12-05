@@ -5,6 +5,7 @@ import { useProjectDetails } from '@/app/hooks/useProjectDetails';
 import { getDeliveryNotesByProjectId } from '@/app/lib/deliveryNotes';
 import Card from '@/app/components/Card';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
     const { id } = useParams();
@@ -138,7 +139,9 @@ export default function Home() {
                 {deliveryNotes.length > 0 ? (
                     deliveryNotes.map((note, index) => {
                         return (
-                            <div key={index} className="border border-blue-300 p-2 rounded-lg text-black">
+                            //! MIRAR!!!!!!!!!!!!!
+                            <div key={index} className="border border-blue-300 p-2 rounded-lg text-black hover-grow"
+                                onClick={()=>router.push(`/pages/dashboard/deliveryNotes/${note._id}`)}>
                                 <p>{note._id} - {note.description}</p>
                             </div>
                         )

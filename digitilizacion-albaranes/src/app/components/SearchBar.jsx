@@ -26,7 +26,7 @@ export default function SearchBar({ onSearch, placeholder = 'Search...' }) {
 
     const closeDropdown = (e) => {
         if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-            setIsDropdownOpen(false); //cierra el dropdown si el clic fue fuera
+            setIsDropdownOpen(false); //cierra el dropdown si el clic fuera
         }
     };
 
@@ -74,7 +74,7 @@ export default function SearchBar({ onSearch, placeholder = 'Search...' }) {
                                 key={index}
                                 className="p-2 hover:bg-gray-100 cursor-pointer"
                                 onClick={()=>{
-                                    const path = placeholder.includes('client') ? 'clients' : 'projects';
+                                    const path = placeholder.includes('client') ? 'clients' : placeholder.includes('projects') ? 'projects' : 'deliveryNotes';
                                     router.push(`/pages/dashboard/${path}/${result._id}`);
                                 }}
                             >

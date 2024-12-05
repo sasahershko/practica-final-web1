@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import ProjectDetails from '@/app/pages/dashboard/projects/components/ProjectDetails';
 import ProjectList from '@/app/pages/dashboard/projects/components/ProjectsList';
 import NoProyectsPlaceHolder from '@/app/pages/dashboard/projects/components/NoProyectsPlaceHolder';
 

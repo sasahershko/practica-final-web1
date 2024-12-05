@@ -14,22 +14,18 @@ export default function DeliveryNoteList({ deliveryNotes }) {
   const router = useRouter();
 
 
-  // Función para manejar cambios en la fecha
   const handleDateChange = (date) => {
     setFilters(prev => ({ ...prev, date }));
   };
 
-  // Función para manejar cambios en el estado
   const handleStatusChange = (status) => {
     setFilters(prev => ({ ...prev, status }));
   };
 
-  // Función para manejar cambios en el orden
   const handleSortChange = (sort) => {
     setFilters(prev => ({ ...prev, sort }));
   };
 
-  // Aplicar los filtros seleccionados
   const applyFilters = () => {
     const { date, status, sort } = filters;
 

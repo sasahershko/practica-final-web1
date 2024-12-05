@@ -4,28 +4,62 @@ import NavBarDashboard from './NavBarDashboard';
 import SideBar from './SideBar';
 
 export default function LayoutWithSidebar({ children }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <>
+    <div className="flex h-screen">
+      <SideBar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+
+      <div className="flex-1 flex flex-col">
+
         <NavBarDashboard />
-      <div className="flex h-screen overflow-hidden">
-        <SideBar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
-        <button className='blue-button fixed top-6 left-4' onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                  {isSidebarOpen ? <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M6.3508 12.7499L11.2096 17.4615L10.1654 18.5383L3.42264 11.9999L10.1654 5.46148L11.2096 6.53833L6.3508 11.2499L21 11.2499L21 12.7499L6.3508 12.7499Z" fill="#080341"></path> </g></svg>
-                  : <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M15 8.25V9L13.5 9V6H15V6.75L19.5 6.75V8.25L15 8.25ZM9 13.5L9 10.5L7.5 10.5L7.5 11.25L4.5 11.25V12.75L7.5 12.75L7.5 13.5H9ZM17.25 15V15.75H19.5V17.25H17.25V18H15.75V15H17.25ZM4.5 15.75V17.25H15V15.75H4.5ZM9.75 11.25L19.5 11.25V12.75L9.75 12.75V11.25ZM4.5 6.75H12.75V8.25H4.5V6.75Z" fill="#080341"></path> </g></svg>}  
-        </button>
-        {/* Main Content */}
-        <div
-          className={`flex-1 bg-gray-50 transition-all duration-300 ${
-            isSidebarOpen ? 'ml-48' : 'ml-0'
-          }`}
+        <button
+          className="fixed top-4 left-4 z-50 bg-blue-500 text-white w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-blue-600 transition-colors"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
-          <main className="p-6 ">{children}</main>
-        </div>
-      </div>
-    </>
+          {isSidebarOpen ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          )}
+        </button>
 
+
+        {/* Main Content */}
+        <main
+          className={`flex-1 top-16 transition-all duration-300 bg-gray-50 ${isSidebarOpen ? 'ml-48' : 'ml-0'
+            }`}
+        >
+          {children}
+        </main>
+      </div>
+    </div>
   );
 }
