@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState } from "react";
-import {useParams} from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { getDeliveryNoteById } from "@/app/lib/deliveryNotes";
+import DeliveryForm from "@/app/pages/dashboard/deliveryNotes/components/DeliveryForm";
 
 export default function DeliveryDetails() {
     const { id } = useParams();
@@ -27,12 +28,8 @@ export default function DeliveryDetails() {
     return (
         <>
             {loading ? (<p>Loading...</p>) : (
-                <div className="text-black">
-                    <h1>{deliveryNote.description}</h1>
-                    <p>{deliveryNote._id}</p>
-                    <p>{deliveryNote.clientAddress}</p>
-                </div>
-            )}
+                <DeliveryForm initialValues={deliveryNote} isEdit={true} title='Edit Delivery Note' />)
+            }
         </>
     )
 }

@@ -15,7 +15,7 @@ export default function LayoutWithSidebar({ children }) {
         <NavBarDashboard />
 
         <button
-          className="fixed top-4 left-4 z-50 bg-blue-500 text-white w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-blue-600 transition-colors"
+          className="fixed mt-6 left-4 z-50 bg-blue-500 text-white flex items-center blue-button"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
           {isSidebarOpen ? (
@@ -25,7 +25,7 @@ export default function LayoutWithSidebar({ children }) {
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="w-6 h-6"
+              className="w-4 h-6"
             >
               <path
                 strokeLinecap="round"
@@ -40,7 +40,7 @@ export default function LayoutWithSidebar({ children }) {
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="w-6 h-6"
+              className="w-4 h-6"
             >
               <path
                 strokeLinecap="round"
@@ -52,10 +52,8 @@ export default function LayoutWithSidebar({ children }) {
         </button>
 
 
-        {/* Main Content */}
         <main
-          className={`flex-1 top-16 transition-all duration-300 bg-gray-50 ${isSidebarOpen ? 'ml-48' : 'ml-0'
-            }`}
+          className={`flex-1 top-16 transition-all duration-300 bg-gray-50 ${isSidebarOpen ? 'ml-48' : 'ml-0'}`}
         >
           {children}
         </main>

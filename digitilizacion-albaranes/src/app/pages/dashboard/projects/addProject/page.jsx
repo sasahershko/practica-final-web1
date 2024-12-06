@@ -55,6 +55,7 @@ export default function AddProject() {
       console.log('ID del proyecto:', project._id);
       alert('Project dates updated successfully!', project._id, values);
       setIsModalOpen(false);
+      router.push('/pages/dashboard/projects');
     } catch (error) {
       console.log('Error updating project dates', error.message);
     }

@@ -4,6 +4,8 @@
 // import { getClients } from '@/app/lib/clients';
 // import { addProject } from '@/app/lib/projects';
 
+import DeliveryForm from '@/app/pages/dashboard/deliveryNotes/components/DeliveryForm';
+
 // export default function AddProject(){
 //     const [clients, setClients] = useState([]);
 //     const [loading, setLoading] = useState(true);
@@ -48,12 +50,12 @@
 //             />
 //         </>
 //     )
-//            {/* <DeliveryForm title='Add Delivery Note' /> */} -> ESTO ESTÁ DENTRO DEL RETURN PERO NO SE PORQUE NO ME DEJA HACER RUN BUILD
 // }
 
 export default function AddDeliveryNote() {
     return (
         <div>
+            <DeliveryForm title='Add Delivery Note' /> 
             <h1 className=''>Add Delivery Note</h1>
         </div>
     )

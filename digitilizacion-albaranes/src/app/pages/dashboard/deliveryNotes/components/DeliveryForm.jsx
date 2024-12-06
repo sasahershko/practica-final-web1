@@ -24,8 +24,6 @@ export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, o
             workdate: Yup.date().required('Required'),
         }),
         onSubmit: (values) => {
-            console.log('ANTES DE formulario:', values);
-
             const transformedValues = ({
                 clientId: values.clientId,
                 projectId: values.projectId,

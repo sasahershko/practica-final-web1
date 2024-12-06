@@ -7,6 +7,7 @@ import { addDeliveryNote } from '@/app/lib/deliveryNotes';
 export default function AddDeliveryNotesByProject() {
     const { id } = useParams();
     const { project, loading, error, client } = useProjectDetails(id);
+    const router = useRouter();
 
     const handleSubmit = async (values) => {
         console.log('Valores enviados al formulario:', JSON.stringify(values)); // Inspecciona los valores
@@ -14,6 +15,7 @@ export default function AddDeliveryNotesByProject() {
         try {
             const data = await addDeliveryNote(values);
             alert('Delivery note added correctly');
+            router.push('/pages/dashboard/deliveryNotes');
         } catch (error) {
             console.error('Error al añadir nota de entrega:', error.message);
             alert('Error al añadir nota de entrega');
