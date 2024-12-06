@@ -85,3 +85,16 @@ export async function updateDeliveryNote(deliveryNoteId, deliveryNoteData){
     }
 
 };
+
+export async function downloadDeliveryNote(deliveryNoteId){
+    try{
+        const response = await apiRequest(`deliverynote/pdf/${deliveryNoteId}`, 'GET');
+        if(response.success){
+            return response.data;
+        }else{
+            throw new Error(response.message || 'Error al descargar nota de entrega');
+        }
+    }catch(error){
+        throw new Error(error.message);
+    }
+}

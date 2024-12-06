@@ -1,8 +1,10 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
 
 export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, onDelete }) {
+    const router = useRouter();
 
     const formik = useFormik({
         initialValues: {
@@ -42,6 +44,7 @@ export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, o
 
     return (
         <div className='grid grid-cols-3 gap-4 p-8  animate-fade-in-up'>
+            <button className='blue-button' onClick={()=>router.push('/pages/dashboard/deliveryNotes')}>Go back to Delivery Notes</button>
             <div className="col-span-3">
                 <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
                 <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit() }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">

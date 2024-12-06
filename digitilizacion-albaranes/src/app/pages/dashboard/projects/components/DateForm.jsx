@@ -29,6 +29,7 @@ export default function DateForm({ onSubmit, projectName }) {
     });
 
     return (
+        <>
         <form onSubmit={formik.handleSubmit} className='space-y-4'>
             <div className='flex flex-col items-center spaxe-y-2'>
                 <label htmlFor='begin' className='block text-gray-700 mb-2'>Begin Date</label>
@@ -68,6 +69,7 @@ export default function DateForm({ onSubmit, projectName }) {
                 Update Dates
             </button>
         </form>
+        </>
     )
 
 }

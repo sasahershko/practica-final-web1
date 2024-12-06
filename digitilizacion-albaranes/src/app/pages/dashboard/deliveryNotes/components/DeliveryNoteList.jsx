@@ -11,8 +11,8 @@ export default function DeliveryNoteList({ deliveryNotes }) {
     sort: ''
   });
   const [filteredNotes, setFilteredNotes] = useState(deliveryNotes);
+  const [selectedNotes, setSelectedNotes] = useState([]); // Para almacenar los seleccionados
   const router = useRouter();
-
 
   const handleDateChange = (date) => {
     setFilters(prev => ({ ...prev, date }));
@@ -41,7 +41,6 @@ export default function DeliveryNoteList({ deliveryNotes }) {
       filtered = filtered.filter(note => note.status === status);
     }
 
-
     if (sort) {
       filtered.sort((a, b) => {
         if (sort === 'asc') {
@@ -56,6 +55,25 @@ export default function DeliveryNoteList({ deliveryNotes }) {
     setFilteredNotes(filtered);
   };
 
+  const toggleSelectNote = (noteId) => {
+    if (selectedNotes.includes(noteId)) {
+      setSelectedNotes(selectedNotes.filter(id => id !== noteId));
+    } else {
+      setSelectedNotes([...selectedNotes, noteId]);
+    }
+  };
+
+  const handleDownload = () => {
+    try{
+      selectedNotes.forEach(async (noteId) => {
+        
+      });
+    }catch(error){
+
+    }
+
+  };
+
   return (
     <>
       <FilterBar
@@ -66,9 +84,34 @@ export default function DeliveryNoteList({ deliveryNotes }) {
       />
 
       <div className="p-4">
+        {/*botón de Descarga */}
+        <button
+          className={`mb-4 px-4 py-2 bg-blue-500 text-white rounded-md transition ${
+            selectedNotes.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          onClick={handleDownload}
+          disabled={selectedNotes.length === 0}
+        >
+          Download Selected
+        </button>
+
         <table className="min-w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-100 text-black">
+              <th className="p-3 text-left border border-gray-300">
+                <input
+                  type="checkbox"
+                  onChange={(e) =>
+                    setSelectedNotes(
+                      e.target.checked ? filteredNotes.map(note => note._id) : []
+                    )
+                  }
+                  checked={
+                    filteredNotes.length > 0 &&
+                    selectedNotes.length === filteredNotes.length
+                  }
+                />
+              </th>
               <th className="p-3 text-left border border-gray-300">Description</th>
               <th className="p-3 text-left border border-gray-300">Code</th>
               <th className="p-3 text-left border border-gray-300">Date</th>
@@ -79,16 +122,27 @@ export default function DeliveryNoteList({ deliveryNotes }) {
           <tbody>
             {filteredNotes.length > 0 ? (
               filteredNotes.map((note, index) => (
-
                 <tr
                   key={index}
                   className="odd:bg-white transition duration-300 even:bg-gray-50 hover:bg-gray-100 text-black"
-                  onClick={() => router.push(`/pages/dashboard/deliveryNotes/${note._id}`)}
+                  onClick={(e) => {
+                    //evitar que el clic en el checkbox abra los detalles
+                    if (e.target.type !== 'checkbox') {
+                      router.push(`/pages/dashboard/deliveryNotes/${note._id}`);
+                    }
+                  }}
                 >
+                  <td className="p-3 border border-gray-300">
+                    <input
+                      type="checkbox"
+                      checked={selectedNotes.includes(note._id)}
+                      onChange={() => toggleSelectNote(note._id)}
+                    />
+                  </td>
                   <td className="p-3 border border-gray-300">{note.description}</td>
                   <td className="p-3 border border-gray-300">{note._id}</td>
 
-                  {/* pongo updatedAt porque no está la variable de workdate  */}
+                  {/*pongo updatedAt porque no está la variable de workdate */}
                   <td className="p-3 border border-gray-300">
                     {note.updatedAt ? moment(note.updatedAt).format('DD/MM/YYYY') : ''}
                   </td>
@@ -100,10 +154,7 @@ export default function DeliveryNoteList({ deliveryNotes }) {
                     />
                     <span>{note.clientName}</span>
                   </td>
-                  <td
-                    // ${note?.status === 'CANCELED' ? 'text-red-500' : note?.status === 'PENDING' ? 'text-yellow-500' : 'text-green-500'
-                    className={`p-3 border border-gray-300  text-yellow-500}`}
-                  >
+                  <td className={`p-3 border border-gray-300 text-yellow-500`}>
                     PENDING
                   </td>
                 </tr>

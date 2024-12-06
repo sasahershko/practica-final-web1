@@ -61,11 +61,11 @@ const handleLogo = async(image) =>{
     console.log(image);
     formData.append('image', image, image.name);
 
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}:`, pair[1]);
-    // }
+    console.log('image: ', image, 'formData: ', image, 'name; ', image.name);
+    console.log('FORMDATA: ', formData);
+
     await uploadLogo(id, formData);
-    // alert('Logo actualizado correctamente.');
+    alert('Logo actualizado correctamente.');
   } catch (err) {
     // setError(err.message);
     alert('Error al actualizar el logo.');
