@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import FilterBar from '@/app/components/FilterBar';
+import { downloadDeliveryNote } from '@/app/lib/deliveryNotes';
 
 export default function DeliveryNoteList({ deliveryNotes }) {
   const [filters, setFilters] = useState({
@@ -11,7 +12,7 @@ export default function DeliveryNoteList({ deliveryNotes }) {
     sort: ''
   });
   const [filteredNotes, setFilteredNotes] = useState(deliveryNotes);
-  const [selectedNotes, setSelectedNotes] = useState([]); // Para almacenar los seleccionados
+  const [selectedNotes, setSelectedNotes] = useState([]); 
   const router = useRouter();
 
   const handleDateChange = (date) => {
@@ -63,17 +64,20 @@ export default function DeliveryNoteList({ deliveryNotes }) {
     }
   };
 
-  const handleDownload = () => {
-    try{
-      selectedNotes.forEach(async (noteId) => {
-        
-      });
-    }catch(error){
-
+  //ejecuta múltiples promesas en paralelo y espera a que todas se resuelvan antes de continuar (para operaciones asíncronass)
+  const handleDownload = async () => {
+    try {
+        await Promise.all(
+            selectedNotes.map(noteId => downloadDeliveryNote(noteId))
+        );
+        alert('Downloaded all selected notes!');
+    } catch (error) {
+        console.error('Error during download:', error.message);
+        alert('Error downloading selected notes');
     }
+};
 
-  };
-
+  
   return (
     <>
       <FilterBar
