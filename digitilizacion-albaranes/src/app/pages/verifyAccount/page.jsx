@@ -1,9 +1,9 @@
 'use client'
 import {useState} from 'react';
 import {Button} from '@nextui-org/react';
-import {verify} from '../../lib/verify';
+import {verify} from '@/app/lib/auth';
 import {useRouter} from 'next/navigation';
-import NavBar from '../../components/NavBar';
+import NavBar from '@/app/components/NavBar';
 
 export default function VerifyAccount(){
 
@@ -42,6 +42,7 @@ export default function VerifyAccount(){
 
         const codeValue = code.join('');
 
+        //!PONER SETERROR
         if (!codeValue || codeValue.length !== 6) {
             alert('Por favor, ingresa el código completo (6 dígitos).');
             return;
@@ -55,8 +56,9 @@ export default function VerifyAccount(){
             if(result.success){
                 console.log('Verificación correcta: ', result);
 
-                router.push('/pages/dashboard/summary');
-                // router.push('/pages/signupName');
+                router.push('/pages/profileSetUp');
+            }else{
+                console.log('Error al verificar la cuenta: ', result.message);
             }
 
         }catch(error){

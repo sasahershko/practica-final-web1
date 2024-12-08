@@ -3,10 +3,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { register } from '../../lib/signup';
+import { register } from '@/app/lib/auth';
 import { useState } from 'react';
-import ErrorPage from '../../components/ErrorPage';
-import NavBar from '../../components/NavBar';
+import ErrorPage from '@/app/components/ErrorPage';
+import NavBar from '@/app/components/NavBar';
 
 export default function SignUp() {
     const router = useRouter();

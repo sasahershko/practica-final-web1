@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import {Button, User} from '@nextui-org/react';
 import Link from 'next/link';
-import LogoutButton from '../components/LogoutButton';
 import UserCircle from '../components/UserCircle';
 
 export default function NavBar(){

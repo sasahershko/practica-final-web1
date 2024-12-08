@@ -4,11 +4,9 @@ import * as Yup from 'yup';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import {useState} from 'react';
-import { login } from '../../lib/login';
+import { login } from '../../lib/auth';
 import NavBar from '../../components/NavBar';
 import ErrorPage from '@/app/components/ErrorPage';
-
-import {login} from '@/app/lib/auth';
 
 export default function Login() {
 
@@ -32,17 +30,15 @@ export default function Login() {
         onSubmit: async (values) => {
             try {
                 const result = await login(values);
-
+        
                 if (result.success) {
                     router.push('/pages/dashboard/summary');
                 } else {
                     setError(true);
                 }
-
             } catch (e) {
                 setError(true);
-                console.log('ERROR:', error)
-                console.log(e.message);
+                console.error('ERROR en el login:', e.message);
             }
         }
     });

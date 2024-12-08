@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { logout } from '../lib/logout';
+import { logout } from '@/app/lib/auth';
 import Link from 'next/link';
 
 export default function UserCircle() {
@@ -54,7 +54,7 @@ export default function UserCircle() {
                         }`}
                 >
                     <Link
-                        href="/pages/dashboard/profile"
+                        href="/pages/profile"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-150"
                     >
                         Profile
