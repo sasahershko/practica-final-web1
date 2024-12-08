@@ -6,10 +6,12 @@ import { Button } from '@nextui-org/react';
 import { registrationComplete, getUserData } from '@/app/lib/auth';
 import { useEffect, useState } from 'react';
 import Loading from '@/app/components/Loading';
+import {useRouter } from 'next/navigation';
 
 export default function SignUpName({ isEdit }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchUser() {
@@ -26,8 +28,6 @@ export default function SignUpName({ isEdit }) {
         fetchUser();
     }, []);
 
-
-    console.log(user);
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -47,12 +47,13 @@ export default function SignUpName({ isEdit }) {
         onSubmit: async (values) => {
             try {
                 const response = await registrationComplete(values);
-                if (response.success) {
-                    alert('Profile updated successfully');
-                } 
+                alert('Profile updated successfully');
+                router.push('/pages/dashboard/summary');
+
             } catch (error) {
                 console.error('Error during profile update:', error);
                 alert('Error interno al actualizar el perfil');
+                router.push('/');
             }
         },
     });

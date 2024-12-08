@@ -1,12 +1,16 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { getUserData } from '@/app/lib/auth';
+import { getUserData, deleteUser } from '@/app/lib/auth';
 import NavBar from '@/app/components/NavBar';
 import Loading from '@/app/components/Loading';
+import SuccessModal from '@/app/components/SuccessModal';
+import { useRouter } from 'next/navigation';
 
 export default function UserProfile() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false); 
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchUser() {
@@ -24,9 +28,19 @@ export default function UserProfile() {
         fetchUser();
     }, []);
 
+    const handleDelete = async () => {
+        const response = await deleteUser();
+        if (response.success) {
+            setShowModal(true);
+        } else {
+            alert('Error deleting user');
+        }
+    };
 
     return (
-        loading ? (<Loading />) : (
+        loading ? (
+            <Loading />
+        ) : (
             <>
                 <NavBar />
                 <div className="animate-fade-in-up max-w-4xl mx-auto mt-28 p-8 bg-white shadow-lg rounded-lg">
@@ -74,12 +88,21 @@ export default function UserProfile() {
                         </button>
                         <button
                             className="bg-red-600 text-white px-6 py-3 rounded-lg shadow hover:bg-red-500 transition duration-300"
-                            onClick={() => alert('Delete profile functionality coming soon!')}
+                            onClick={() => handleDelete()}
                         >
                             Delete Account
                         </button>
                     </div>
                 </div>
+
+                {/* Modal */}
+                {showModal && (
+                    <SuccessModal
+                        message="User deleted successfully!"
+                        redirectPath="/"
+                        buttonText="Go to Home"
+                    />
+                )}
             </>
         )
     );

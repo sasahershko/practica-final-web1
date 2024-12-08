@@ -53,26 +53,51 @@ export async function verify(codeValue) {
     }
 }
 
+export async function deleteUser() {
+    try {
+        const response = await apiRequest('user', 'DELETE');
+        console.log('Response from DELETE /user:', response);
+
+        if (response.success) {
+            await logout(); 
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Error deleting user:', error.message);
+        return { success: false, message: error.message };
+    }
+}
+
 
 export async function logout() {
-    cookies().delete('bytoken');
-    cookies().delete('isLoggedIn');
+    const cookieStore = await cookies();
+    cookieStore.delete('bytoken');
+    cookieStore.delete('isLoggedIn');
 
     //esto hace que se espere 100ms antes de redirigir ( para asegurarme de que las cookies se eliminen antes del redireccionamiento)
     await new Promise((resolve) => setTimeout(resolve, 100)); 
-    redirect('/pages/login');
 }
 
 export async function registrationComplete(values) {
-    const { email, name, surnames, nif } = values;
-    const response = await apiRequest('user/register', 'PUT', { email, name, surnames, nif });
-
-    return response;
+    try{
+        const { email, name, surnames, nif } = values;
+        const response = await apiRequest('user/register', 'PUT', { email, name, surnames, nif });
+        
+        return response;
+    }catch(error){
+        return {success: false, message: error.message};
+    }
 }
 
 export async function getUserData() {
-    const response = await apiRequest('user');
-    return response;
+    try{
+        const response = await apiRequest('user');
+
+        return response;
+    }catch(error){
+        return {success: false, message: error.message};
+    }
 }
 
 export async function changePassword(newPassword) {

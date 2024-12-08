@@ -69,7 +69,7 @@ export default function UserCircle() {
                             className="object-cover w-full h-full"
                         />
                     </button>
-                    <p className='text-black'>{user.name ? user.name : ''}</p>
+                    <p className='text-black'>{user?.name || 'User'}</p>
 
                     <div
                         className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 transform transition-all duration-300 origin-top-right ${userMenuOpen

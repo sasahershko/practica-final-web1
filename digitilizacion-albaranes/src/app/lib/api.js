@@ -21,7 +21,13 @@ export async function apiRequest(endpoint, method = 'GET', body = null, isBlob =
         };
 
         const response = await fetch(`${BASE_URL}/${endpoint}`, requestOptions);
-        // console.log('Datos enviados al servidor:', { endpoint, method, body });
+        console.log('Request Details:', {
+            endpoint,
+            method,
+            headers: requestOptions.headers,
+            body: requestOptions.body,
+        });
+        
 
         if (isBlob) {
             if (!response.ok) throw new Error('Error en la solicitud');

@@ -26,11 +26,12 @@ export default function SignUp() {
 
             console.log(values);
             try {
-
                 // const url = `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user/register`;
                 const result = await register(values);
                 if (result.success) {
                     router.push('/pages/verifyAccount');
+                }else{
+                    setError(true);
                 }
 
             } catch (error) {
