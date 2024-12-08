@@ -36,10 +36,8 @@ export default function AddProject() {
   //ADD PROJECT
   const handleAddProject = async (values) => {
     try {
-        console.log('Valores enviados a addProject:', values);
         const response = await addProject(values);
-        console.log('Respuesta del servidor:', response);
-        alert('Proyecto añadido correctamente');
+        alert('Proyecto añadido');
         setIsModalOpen(true);
         setProject(response);
     } catch (error) {
@@ -51,8 +49,6 @@ export default function AddProject() {
   const handleUpdateDates = async (values) => {
     try {
       const response = await updateProject(project._id, values);
-      console.log('Valores enviados a updateProject:', values);
-      console.log('ID del proyecto:', project._id);
       alert('Project dates updated successfully!', project._id, values);
       setIsModalOpen(false);
       router.push('/pages/dashboard/projects');

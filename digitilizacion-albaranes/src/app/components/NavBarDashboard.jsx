@@ -25,9 +25,7 @@ export default function NavBar() {
             );
         } else if(pathname?.includes('delivery')){
             const deliveries = await getDeliveryNotes();
-            // deliveries.map(delivery =>{
-            //     console.log(delivery.description);
-            // })
+
             return deliveries.filter(delivery =>
                 delivery.description.toLowerCase().includes(query.toLowerCase())
             );

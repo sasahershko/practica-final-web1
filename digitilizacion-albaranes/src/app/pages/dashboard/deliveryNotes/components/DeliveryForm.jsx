@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, onDelete }) {
     const router = useRouter();
@@ -9,7 +10,7 @@ export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, o
     const formik = useFormik({
         initialValues: {
             clientId: initialValues.clientId || '',
-            projectId: initialValues.projectId || '',
+            projectId: initialValues.projectId._id || '',
             format: initialValues.format || '',
             material: initialValues.material || '',
             hours: initialValues.hours || 0,
@@ -23,7 +24,7 @@ export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, o
             material: Yup.string(),
             hours: Yup.number(),
             description: Yup.string().required('Required'),
-            workdate: Yup.date().required('Required'),
+            workdate: Yup.date(),
         }),
         onSubmit: (values) => {
             const transformedValues = ({
@@ -33,20 +34,29 @@ export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, o
                 material: values.material,
                 hours: isNaN(parseInt(values.hours, 10)) ? 0 : parseInt(values.hours, 10),
                 description: values.description,
-                workdate: moment(values.workdate, 'YYYY-MM-DD').format('D/M/YYYY'), //le he quitado DD y tal por los ceros
+                workdate: moment(values.workdate, 'YYYY-MM-DD').format('D/M/YYYY'), //le he quitado DD  por los ceros
             });
-
-            console.log('DESPUÉS FORMULARIO', transformedValues);
             onSubmit(transformedValues);
         }
     });
 
-
     return (
         <div className='grid grid-cols-3 gap-4 p-8  animate-fade-in-up'>
-            <button className='blue-button' onClick={()=>router.push('/pages/dashboard/deliveryNotes')}>Go back to Delivery Notes</button>
+            <button className='blue-button' onClick={() => router.push('/pages/dashboard/deliveryNotes')}>Go back to Delivery Notes</button>
             <div className="col-span-3">
                 <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
+
+                <div className='flex justify-center mb-10'>
+                    <Link href={`/pages/dashboard/projects/${initialValues.projectId._id}`}
+                        className='main-title-gradient text-[20px] text-center'>
+                        <span className='text-black'>
+                            Project:
+                        </span>
+                        <br></br>
+                        {initialValues.projectId.name}
+                    </Link>
+                </div>
+
                 <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit() }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
 
                     <div className="flex flex-col">

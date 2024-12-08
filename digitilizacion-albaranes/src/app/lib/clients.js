@@ -1,5 +1,5 @@
 'use server';
-import { apiRequest } from './api.js';
+import { apiRequest } from '@/app/lib/api';
 
 export async function getClients() {
     const response = await apiRequest('client', 'GET');
@@ -43,15 +43,41 @@ export async function getClientById(clientId) {
         return response.data;
     } else {
         throw new Error(response.message || 'Error al obtener cliente');
-    }    
+    }
 }
 
-export async function uploadLogo(clientId, logo) {
-    console.log('LOGO:', logo);
-    const response = await apiRequest(`client/logo/${clientId}`, 'PATCH',  logo );
-    if (response.success) {
+// export async function uploadLogo(clientId, logo) {
+//     console.log('LOGO:', logo);
+//     const response = await apiRequest(`client/logo/${clientId}`, 'PATCH',  logo );
+//     if (response.success) {
+//         return response.data;
+//     } else {
+//         throw new Error(response.message || 'Error al subir logo');
+//     }
+// }
+
+// export async function uploadLogo(clientId, formData) {
+//     const response = await apiRequest(`client/logo/${clientId}`, 'PATCH', formData);
+//     if (response.success) {
+//         return response.data;
+//     } else {
+//         console.log('ERROR DESDE CLIENTS.JS');
+//     }
+// }
+
+
+export async function uploadLogo(clientId, formData) {
+    console.log('FORMDATA: ', formData);
+    try {
+        const response = await apiRequest(`client/logo/${clientId}`, 'PATCH', formData);
+
+        if (!response.success) {
+            throw new Error(response.message || 'Error al subir el logo');
+        }
+
         return response.data;
-    } else {
-        throw new Error(response.message || 'Error al subir logo');
+    } catch (error) {
+        console.error('Error en uploadLogo:', error.message);
+        throw new Error(error.message);
     }
 }

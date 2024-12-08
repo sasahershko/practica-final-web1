@@ -10,8 +10,6 @@ export default function AddDeliveryNotesByProject() {
     const router = useRouter();
 
     const handleSubmit = async (values) => {
-        console.log('Valores enviados al formulario:', JSON.stringify(values)); // Inspecciona los valores
-    
         try {
             const data = await addDeliveryNote(values);
             alert('Delivery note added correctly');

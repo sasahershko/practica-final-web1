@@ -5,6 +5,7 @@ import { getDeliveryNoteById } from "@/app/lib/deliveryNotes";
 import DeliveryForm from "@/app/pages/dashboard/deliveryNotes/components/DeliveryForm";
 import { updateDeliveryNote} from "@/app/lib/deliveryNotes";
 import { deleteDeliveryNote } from "@/app/lib/deliveryNotes";
+import {getDeliveryNotes} from "@/app/lib/deliveryNotes";
 
 export default function DeliveryDetails() {
     const { id } = useParams();
@@ -16,11 +17,19 @@ export default function DeliveryDetails() {
         const fetchData = async () => {
 
             try {
-                const response = await getDeliveryNoteById(id);
-                setDeliveryNote(response);
+                const response = await getDeliveryNotes();
+                //busco la nota específica por id
+                const deliveryNote = response.find((note) => note._id === id); //lo hago asi, porque si saco el delivery por el id, no me salen datos como el id del cliente ni del proyecto
+
+                if(!deliveryNote){
+                    throw new Error('Delivery note not found');
+                }
+
+                setDeliveryNote(deliveryNote);
             } catch (error) {
                 console.error(error);
-            } finally {
+            }
+            finally {
                 setLoading(false);
             }
 

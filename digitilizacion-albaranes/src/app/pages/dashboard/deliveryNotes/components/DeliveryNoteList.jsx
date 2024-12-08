@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import FilterBar from '@/app/components/FilterBar';
-import { downloadDeliveryNote } from '@/app/lib/deliveryNotes';
+import { getPDFDeliveryNote } from '@/app/lib/deliveryNotes';
 
 export default function DeliveryNoteList({ deliveryNotes }) {
   const [filters, setFilters] = useState({
@@ -12,8 +12,10 @@ export default function DeliveryNoteList({ deliveryNotes }) {
     sort: ''
   });
   const [filteredNotes, setFilteredNotes] = useState(deliveryNotes);
-  const [selectedNotes, setSelectedNotes] = useState([]); 
+  const [selectedNotes, setSelectedNotes] = useState([]);
+  const [isDownloading, setIsDownloading] = useState(false);
   const router = useRouter();
+
 
   const handleDateChange = (date) => {
     setFilters(prev => ({ ...prev, date }));
@@ -64,20 +66,34 @@ export default function DeliveryNoteList({ deliveryNotes }) {
     }
   };
 
-  //ejecuta múltiples promesas en paralelo y espera a que todas se resuelvan antes de continuar (para operaciones asíncronass)
-  const handleDownload = async () => {
+  const handleDownloadSelected = async () => {
     try {
-        await Promise.all(
-            selectedNotes.map(noteId => downloadDeliveryNote(noteId))
-        );
-        alert('Downloaded all selected notes!');
-    } catch (error) {
-        console.error('Error during download:', error.message);
-        alert('Error downloading selected notes');
-    }
-};
+      setIsDownloading(true);
 
-  
+      await Promise.all( //para descargar varios archivos a la vez
+        selectedNotes.map(async (noteId) => {
+          const blob = await getPDFDeliveryNote(noteId); //obtiene el blob del PDF
+          const fileURL = window.URL.createObjectURL(blob); //crea url temporal para el blob
+
+
+          const link = document.createElement('a'); //crea enlace
+          link.href = fileURL; //establece el blob como destino del enlace
+          link.download = `delivery-note-${noteId}.pdf`; //nombre único para cada archivo
+          document.body.appendChild(link);
+          link.click(); //simula el clic en el enlace para descargar el archivo
+
+          //liberar recursos (memory) después de la descarga
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(fileURL);
+        })
+      );
+
+    } catch (error) {
+      console.error('Error during multi-download:', error.message);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
   return (
     <>
       <FilterBar
@@ -88,15 +104,14 @@ export default function DeliveryNoteList({ deliveryNotes }) {
       />
 
       <div className="p-4">
-        {/*botón de Descarga */}
+        {/*bnotón de descarga múltiple */}
         <button
-          className={`mb-4 px-4 py-2 bg-blue-500 text-white rounded-md transition ${
-            selectedNotes.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-          onClick={handleDownload}
-          disabled={selectedNotes.length === 0}
+          className={`mb-4 px-4 py-2 bg-blue-500 text-white rounded-md transition ${selectedNotes.length === 0 || isDownloading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          onClick={handleDownloadSelected}
+          disabled={selectedNotes.length === 0 || isDownloading}
         >
-          Download Selected
+          {isDownloading ? 'Downloading...' : 'Download Selected'}
         </button>
 
         <table className="min-w-full border-collapse border border-gray-300">
@@ -120,6 +135,7 @@ export default function DeliveryNoteList({ deliveryNotes }) {
               <th className="p-3 text-left border border-gray-300">Code</th>
               <th className="p-3 text-left border border-gray-300">Date</th>
               <th className="p-3 text-left border border-gray-300">Client</th>
+              <th className="p-3 text-left border border-gray-300">Project</th>
               <th className="p-3 text-left border border-gray-300">Status</th>
             </tr>
           </thead>
@@ -130,7 +146,7 @@ export default function DeliveryNoteList({ deliveryNotes }) {
                   key={index}
                   className="odd:bg-white transition duration-300 even:bg-gray-50 hover:bg-gray-100 text-black"
                   onClick={(e) => {
-                    //evitar que el clic en el checkbox abra los detalles
+                    // evitar que el clic en el checkbox abra los detalles
                     if (e.target.type !== 'checkbox') {
                       router.push(`/pages/dashboard/deliveryNotes/${note._id}`);
                     }
@@ -146,18 +162,19 @@ export default function DeliveryNoteList({ deliveryNotes }) {
                   <td className="p-3 border border-gray-300">{note.description}</td>
                   <td className="p-3 border border-gray-300">{note._id}</td>
 
-                  {/*pongo updatedAt porque no está la variable de workdate */}
+                  {/* pongo updatedAt porque no está la variable de workdate */}
                   <td className="p-3 border border-gray-300">
                     {note.updatedAt ? moment(note.updatedAt).format('DD/MM/YYYY') : ''}
                   </td>
-                  <td className="p-3 border border-gray-300 flex items-center space-x-2">
-                    <img
-                      src={note.clientImage || 'https://via.placeholder.com/40'}
-                      alt="Client"
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <span>{note.clientName}</span>
+
+                  <td className="p-3 border border-gray-300">
+                    {note.clientId}
                   </td>
+
+                  <td className="p-3 border border-gray-300">
+                    {note.projectId.name ? note.projectId.name : 'No project'}
+                  </td>
+
                   <td className={`p-3 border border-gray-300 text-yellow-500`}>
                     PENDING
                   </td>

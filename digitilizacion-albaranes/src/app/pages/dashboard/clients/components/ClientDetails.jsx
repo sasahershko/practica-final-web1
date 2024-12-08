@@ -44,7 +44,7 @@ export default function ClientDetails({ client }) {
             <div className="grid grid-cols-2">
               <h2 className="text-xl font-bold mb-4">Client Details</h2>
               <img
-                src="https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg"
+                src={client.logo || 'https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg'}
                 width={200}
                 height={200}
                 alt="client"

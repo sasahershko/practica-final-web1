@@ -40,7 +40,7 @@ export default function Home() {
     return (
         <div className='p-4 space-y-8 animate-fade-in-up'>
             <button className='blue-button' onClick={() => router.push('/pages/dashboard/projects')}>Go back to Projects</button>
-            <h1 className='bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 bg-clip-text text-transparent animate-gradient-move text-center text-[100px] font-bold'>
+            <h1 className='main-title-gradient  text-[100px]'>
                 {project?.name || 'No Project Found'}
             </h1>
             <div className='grid grid-cols-3 gap-8 text-black'>

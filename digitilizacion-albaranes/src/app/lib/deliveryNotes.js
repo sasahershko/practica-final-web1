@@ -87,33 +87,19 @@ export async function updateDeliveryNote(deliveryNoteId, deliveryNoteData){
 
 };
 
-//! CREAR FUNCION DE GET COOKIE
-export async function downloadDeliveryNoteFromServer(deliveryNoteId) {
-    const BASE_URL = 'https://bildy-rpmaya.koyeb.app/api';
+export async function getPDFDeliveryNote(deliveryNoteId) {
+    const endpoint = `deliverynote/pdf/${deliveryNoteId}`;
+
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get('bytoken')?.value;
+        const response = await apiRequest(endpoint, 'GET', null, true);
 
-        if (!token) {
-            throw new Error('Unauthorized: No token found');
+        if (!response.success) {
+            throw new Error(response.message || 'Error al obtener el PDF');
         }
 
-        // Realizar la solicitud al backend
-        const response = await fetch(`${BASE_URL}/deliverynote/pdf/${deliveryNoteId}`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error('Error downloading file: ' + response.statusText);
-        }
-
-        // Retornar directamente el Blob al cliente
-        return await response.blob();
+        return response.data; //devuelve el blob directamente
     } catch (error) {
-        console.error('Error en downloadDeliveryNoteFromServer:', error.message);
-        throw new Error('Error al descargar nota de entrega');
+        console.error('Error en getPDFDeliveryNote:', error);
+        throw new Error(error.message);
     }
 }

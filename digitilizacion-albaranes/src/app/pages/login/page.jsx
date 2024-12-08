@@ -8,6 +8,8 @@ import { login } from '../../lib/login';
 import NavBar from '../../components/NavBar';
 import ErrorPage from '@/app/components/ErrorPage';
 
+import {login} from '@/app/lib/auth';
+
 export default function Login() {
 
     //COMO LEER DESDE LAS COOKES
@@ -28,7 +30,6 @@ export default function Login() {
             password: Yup.string().required('Campo requerido')
         }),
         onSubmit: async (values) => {
-            console.log(JSON.stringify(values));
             try {
                 const result = await login(values);
 
@@ -36,7 +37,6 @@ export default function Login() {
                     router.push('/pages/dashboard/summary');
                 } else {
                     setError(true);
-                    console.log('Credenciales inválidas');
                 }
 
             } catch (e) {

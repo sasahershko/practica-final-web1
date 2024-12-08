@@ -1,21 +1,19 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import Card from '@/app/components/Card';
 import { useState } from 'react';
 
 export default function ClientForm({ initialValues, onSubmit, onSubmitLogo, title, isEdit, onDelete }) {
-    const [image, setImage] = useState('https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg');
+    const [image, setImage] = useState(null);
     const [file, setFile] = useState(null);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        console.log('Archivo seleccionado:', file);
 
         if (file && file.type.includes('image')) {
             const reader = new FileReader();
             reader.onload = () => {
                 setImage(reader.result); // Previsualización
-                setFile(file); // Archivo original para la API
+                setFile(file); //archivo original para la API
             };
             reader.readAsDataURL(file);
         } else {
@@ -49,18 +47,6 @@ export default function ClientForm({ initialValues, onSubmit, onSubmitLogo, titl
             onSubmit(transformedValues);
         },
     });
-
-    // const handleImageChange = (e) => {
-    //     const file = e.target.files[0];
-
-    //     if (file && file.type.includes('image')) {
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             setImage(reader.result);
-    //         }
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
 
 
     const triggerFileInput = () => {
@@ -104,39 +90,8 @@ export default function ClientForm({ initialValues, onSubmit, onSubmitLogo, titl
 
             {/* COLUMNA DERECHA */}
             {isEdit &&
-                // <div className="space-y-6">
-                //     <Card title='Client Logo'>
-                //         <div className="card">
-                //             <img
-                //                 src={image || 'https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg'}
-                //                 alt="Client Logo"
-                //                 className="mb-5 rounded-lg "
-                //             />
-                //             <input
-                //                 type="file"
-                //                 id="file-input"
-                //                 onChange={handleImageChange}
-                //                 className="hidden" // Oculta el input pero mantiene su funcionalidad
-                //             />
-                //             {/* Botón para seleccionar archivo */}
-                //             <button
-                //                 onClick={triggerFileInput}
-                //                 className="blue-button w-full"
-                //             >
-                //                 Select Image
-                //             </button>
-                //             <button
-                //                 onClick={() => onSubmitLogo(image)}
-                //                 className="blue-button w-full mt-4"
-                //             >
-                //                 Apply Image
-                //             </button>
-                //         </div>
-                //     </Card>
-
-                // </div>
                 <div>
-                    <img src={image} alt="Client Logo" className="mb-5 rounded-lg" />
+                    <img src={image ? image : initialValues.logo} alt="Client Logo" className="mb-5 rounded-lg" />
                     <input
                         type="file"
                         id="file-input"

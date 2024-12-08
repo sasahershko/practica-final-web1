@@ -7,7 +7,6 @@ export default function LogoutButton(){
     const handleLogout = async() =>{
         try{
             await logout();
-            console.log('hecho');
         }catch(error){
             console.log(error.message);
         }

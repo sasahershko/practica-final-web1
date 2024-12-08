@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function SearchBar({ onSearch, placeholder = 'Search...' }) {
     const [search, setSearch] = useState('');
@@ -70,15 +70,15 @@ export default function SearchBar({ onSearch, placeholder = 'Search...' }) {
                 <div className="absolute bg-white w-full max-w-lg mt-2 rounded-lg shadow-lg z-50">
                     <ul>
                         {searchResults.map((result, index) => (
-                            <li
+                                <li
                                 key={index}
                                 className="p-2 hover:bg-gray-100 cursor-pointer"
-                                onClick={()=>{
+                                onClick={() => {
                                     const path = placeholder.includes('client') ? 'clients' : placeholder.includes('projects') ? 'projects' : 'deliveryNotes';
                                     router.push(`/pages/dashboard/${path}/${result._id}`);
                                 }}
                             >
-                                {result.name}
+                                {result.name || result.description || 'Sin descripción'}
                             </li>
                         ))}
                     </ul>
