@@ -32,9 +32,9 @@ export default function DashboardSummary() {
       <h1 className='text-center text-black text-[80px] font-bold mb-10'>Summary</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <StatCard title="Clients" value={stats.clients} icon="👥" color="bg-blue-500" handleNavigate={handleNavigateToClients} loading={loading}/>
-        <StatCard title="Projects" value={stats.projects} icon="📊" color="bg-green-500" handleNavigate={handleNavigateToProjects} loading={loading}/>
-        <StatCard title="Delivery Notes" value={stats.deliveryNotes} icon="📄" color="bg-purple-500" handleNavigate={handleNavigateToDeliveryNotes} loading={loading}/>
+        <StatCard title="Clients" value={stats.clients} icon="👥" color="bg-blue-500" handleNavigate={handleNavigateToClients} loading={loading} />
+        <StatCard title="Projects" value={stats.projects} icon="📊" color="bg-green-500" handleNavigate={handleNavigateToProjects} loading={loading} />
+        <StatCard title="Delivery Notes" value={stats.deliveryNotes} icon="📄" color="bg-purple-500" handleNavigate={handleNavigateToDeliveryNotes} loading={loading} />
         <StatCard title="Revenue" value={`$${stats.revenue.toLocaleString()}`} icon="💰" color="bg-yellow-500" />
       </div>
 
@@ -59,14 +59,15 @@ const StatCard = ({ title, value, icon, color, handleNavigate, loading }) => {
     <div className={`${color} rounded-lg shadow-lg p-6 text-white flex items-center transition-transform duration-200 hover:scale-105`}
       onClick={() => handleNavigate()}>
       <div className="mr-4 text-4xl">{icon}</div>
-      
-      {loading ? (<div className="flex justify-center items-center h-1">
-        <div className="loader border-t-4 border-white rounded-full w-12 h-12 animate-spin"></div>
-      </div>) :(
-      <div>
-        <h2 className="text-lg font-semibold mb-1">{title}</h2>
-        <p className="text-3xl font-bold">{value}</p>
-      </div>
+
+      {loading ? (
+        <div className="flex justify-center items-center h-1">
+          <div className="loader border-t-4 border-white rounded-full w-12 h-12 animate-spin"></div>
+        </div>) : (
+        <div>
+          <h2 className="text-lg font-semibold mb-1">{title}</h2>
+          <p className="text-3xl font-bold">{value}</p>
+        </div>
       )}
 
     </div>

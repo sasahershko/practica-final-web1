@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import ClientForm from '../components/ClientForm';
 import { getClientById, updateClient, deleteClient, uploadLogo } from '@/app/lib/clients';
+import Loading from '@/app/components/Loading';
 
 export default function EditClientPage() {
   const { id } = useParams();
@@ -59,43 +60,37 @@ export default function EditClientPage() {
 
   const handleLogo = async (image) => {
     try {
-        const formData = new FormData();
-        formData.append('image', image, image.name); 
+      const formData = new FormData();
+      formData.append('image', image, image.name);
 
-        const response = await uploadLogo(id, formData);
-        alert('Logo actualizado correctamente.');
+      const response = await uploadLogo(id, formData);
+      alert('Logo actualizado correctamente.');
     } catch (err) {
-        console.error('Error al subir el logo:', err.message);
-        alert('Error al actualizar el logo.');
+      console.error('Error al subir el logo:', err.message);
+      alert('Error al actualizar el logo.');
     }
-};
+  };
 
-
-
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[400px]">
-        <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-      </div>
-    )
-  }
 
   if (error) {
     return <div className="text-red-500 text-center mt-8">Error: {error}</div>;
   }
 
   return (
-    <div className="p-8">
-      <button className='blue-button' onClick={() => router.push('/pages/dashboard/clients')}>Go back</button>
-      <ClientForm
-        initialValues={client}
-        onSubmit={handleUpdate}
-        onSubmitLogo={handleLogo}
-        title="Edit Client"
-        isEdit={true}
-        onDelete={handleDelete}
-      />
-    </div>
+    loading ?
+      <Loading /> :
+      <div className="p-8">
+        <button className='blue-button' onClick={() => router.push('/pages/dashboard/clients')}>Go back</button>
+        <ClientForm
+          initialValues={client}
+          onSubmit={handleUpdate}
+          onSubmitLogo={handleLogo}
+          title="Edit Client"
+          isEdit={true}
+          onDelete={handleDelete}
+        />
+      </div>
+
+
   );
 }

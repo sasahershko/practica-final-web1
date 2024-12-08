@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Card from '../../../../components/Card';
 import { useRouter } from 'next/navigation';
 import { getProjectByClientId } from '@/app/lib/projects';
+import Loading from '@/app/components/Loading';
 
 export default function ClientDetails({ client }) {
   const router = useRouter();
@@ -102,9 +103,7 @@ export default function ClientDetails({ client }) {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center h-[100px]">
-              <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-            </div>
+            <Loading />
           ) : error ? (
             <p className="text-red-500">Error: {error}</p>
           ) : projects.length > 0 ? (

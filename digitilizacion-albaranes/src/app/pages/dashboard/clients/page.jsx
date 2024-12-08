@@ -6,6 +6,7 @@ import ClientDetails from './components/ClientDetails';
 import NoClientsPlaceholder from './components/NoClientsPlaceHolder';
 import PlaceHolderItemsAddClient from './components/PlaceHolderItemsAddClient';
 import {getClients} from '@/app/lib/clients';
+import Loading from '@/app/components/Loading';
 
 export default function ClientPage() {
   const [clients, setClients] = useState([]);
@@ -44,9 +45,7 @@ export default function ClientPage() {
           </h1>
 
           {loading ? (
-            <div className="flex justify-center items-center h-[400px]">
-              <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-            </div>
+            <Loading />
           ) : clients.length > 0 ? (
             <ClientList clients={clients} onSelectClient={setSelectedClient} onAddClient={handleAddClient} />
           ) : (

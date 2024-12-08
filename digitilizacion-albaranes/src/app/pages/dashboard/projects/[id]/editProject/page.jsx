@@ -3,6 +3,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useProjectDetails } from '@/app/hooks/useProjectDetails';
 import ProjectForm from '@/app/pages/dashboard/projects/components/ProjectForm';
 import { deleteProject, updateProject } from '@/app/lib/projects';
+import Loading from '@/app/components/Loading';
 
 export default function ProjectDetails() {
   const { id } = useParams();
@@ -28,17 +29,11 @@ export default function ProjectDetails() {
     }
   };
 
-  if (loading){
-    return (
-      <div className="flex justify-center items-center h-[400px]">
-        <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-      </div>
-    );
-  } 
 
   // if (error) return <p>Error: {error}</p>;
 
   return (
+    loading ? (<Loading/>) : (
     <div className="p-8">
       <ProjectForm
         initialValues={project}
@@ -49,5 +44,6 @@ export default function ProjectDetails() {
         client={client}
       />
     </div>
+    )
   );
 }

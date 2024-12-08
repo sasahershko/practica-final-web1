@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ProjectList from '@/app/pages/dashboard/projects/components/ProjectsList';
 import NoProyectsPlaceHolder from '@/app/pages/dashboard/projects/components/NoProyectsPlaceHolder';
-
+import Loading from '@/app/components/Loading';
 import {getProjects} from '@/app/lib/projects';
 
 export default function Projects() {
@@ -43,9 +43,7 @@ export default function Projects() {
                     </h1>
 
                     {loading ? (
-                        <div className="flex justify-center items-center h-[400px]">
-                            <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-                        </div>
+                        <Loading />
                     ) : projects.length > 0 ? (
                         <ProjectList projects={projects} onSelectProject={setSelectedProject} onAddProject={handleAddProject} />
                     ) : (

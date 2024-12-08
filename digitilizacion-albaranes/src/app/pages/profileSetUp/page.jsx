@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar';
 import { Button } from '@nextui-org/react';
 import { registrationComplete, getUserData } from '@/app/lib/auth';
 import { useEffect, useState } from 'react';
+import Loading from '@/app/components/Loading';
 
 export default function SignUpName({ isEdit }) {
     const [user, setUser] = useState(null);
@@ -56,11 +57,9 @@ export default function SignUpName({ isEdit }) {
         },
     });
 
-    if (loading) {
-        return <p>Cargando datos del usuario...</p>;
-    }
 
     return (
+        loading ? (<Loading />) :
         <>
             <NavBar />
             <div className="animate-fade-in-up">

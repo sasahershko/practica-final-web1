@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getDeliveryNotes } from '@/app/lib/deliveryNotes';
 import FilterBar from '@/app/components/FilterBar';
 import DeliveryNoteList from './components/DeliveryNoteList';
+import Loading from '@/app/components/Loading';
 
 export default function DeliveryNotesPage() {
   const [deliveryNotes, setDeliveryNotes] = useState([]);
@@ -25,14 +26,11 @@ export default function DeliveryNotesPage() {
     fetchDeliveryNotes();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
   return (
+    loading ? (<Loading/>) : (
     <div className='animate-fade-in-up'>
       <h1 className='big-title'>Delivery Notes</h1>
       <DeliveryNoteList deliveryNotes={deliveryNotes} />
-    </div>
+    </div>)
   );
 }

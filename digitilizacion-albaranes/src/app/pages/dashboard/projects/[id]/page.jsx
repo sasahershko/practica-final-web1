@@ -5,7 +5,8 @@ import { useProjectDetails } from '@/app/hooks/useProjectDetails';
 import { getDeliveryNotesByProjectId } from '@/app/lib/deliveryNotes';
 import Card from '@/app/components/Card';
 import { useEffect } from 'react';
-import Link from 'next/link';
+import Loading from '@/app/components/Loading';
+
 
 export default function Home() {
     const { id } = useParams();
@@ -28,16 +29,10 @@ export default function Home() {
     }, [id])
 
 
-    if (loading) {
-        return (
-            <div className='flex justify-center items-center h-screen'>
-                <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500'></div>
-            </div>
-        );
-    }
     if (error) return <p>Error: {error}</p>;
 
     return (
+        loading ? (<Loading />) : (
         <div className='p-4 space-y-8 animate-fade-in-up'>
             <button className='blue-button' onClick={() => router.push('/pages/dashboard/projects')}>Go back to Projects</button>
             <h1 className='main-title-gradient  text-[100px]'>
@@ -155,5 +150,6 @@ export default function Home() {
                     )}
             </Card>
         </div>
+        )
     );
 }

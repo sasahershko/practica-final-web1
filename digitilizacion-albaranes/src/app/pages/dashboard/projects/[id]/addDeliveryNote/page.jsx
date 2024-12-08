@@ -3,6 +3,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useProjectDetails } from '@/app/hooks/useProjectDetails';
 import DeliveryForm from '@/app/pages/dashboard/deliveryNotes/components/DeliveryForm';
 import { addDeliveryNote } from '@/app/lib/deliveryNotes';
+import Loading from '@/app/components/Loading';
 
 export default function AddDeliveryNotesByProject() {
     const { id } = useParams();
@@ -24,9 +25,7 @@ export default function AddDeliveryNotesByProject() {
     return (
         <div>
             {loading ? (
-                <div className="flex justify-center items-center h-[400px]">
-                    <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-                </div>
+                <Loading />
             ) : (            
             <DeliveryForm
                 initialValues={{ clientId: client._id, projectId: project._id, }}
