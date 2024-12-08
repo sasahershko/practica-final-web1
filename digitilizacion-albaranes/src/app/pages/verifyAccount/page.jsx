@@ -54,8 +54,6 @@ export default function VerifyAccount(){
             const result = await verify(codeValue);
 
             if(result.success){
-                console.log('Verificación correcta: ', result);
-
                 router.push('/pages/profileSetUp');
             }else{
                 console.log('Error al verificar la cuenta: ', result.message);
