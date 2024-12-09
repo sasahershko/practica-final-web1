@@ -41,8 +41,8 @@ export default function FilterBar({ onFilterApply, onDateChange, onStatusChange,
                 >
                     <option value="">Filter by Status</option>
                     <option value="PENDING">PENDING</option>
-                    <option value="HECHO">HECHO</option>
-                    <option value="NO ACABADO">NO ACABADO</option>
+                    <option value="DONE">DONE</option>
+                    <option value="UNDONE">UNDONE</option>
                 </select>
 
                 <button

@@ -29,13 +29,12 @@ export default function DashboardSummary() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-50 p-8 animate-fade-in-up">
-      <h1 className='text-center text-black text-[80px] font-bold mb-10'>Summary</h1>
+      <h1 className='text-center text-black text-[100px] font-bold mb-10'>Summary</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <StatCard title="Clients" value={stats.clients} icon="👥" color="bg-blue-500" handleNavigate={handleNavigateToClients} loading={loading} />
         <StatCard title="Projects" value={stats.projects} icon="📊" color="bg-green-500" handleNavigate={handleNavigateToProjects} loading={loading} />
         <StatCard title="Delivery Notes" value={stats.deliveryNotes} icon="📄" color="bg-purple-500" handleNavigate={handleNavigateToDeliveryNotes} loading={loading} />
-        <StatCard title="Revenue" value={`$${stats.revenue.toLocaleString()}`} icon="💰" color="bg-yellow-500" />
       </div>
 
       <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -105,7 +104,6 @@ const QuickActions = () => {
     { id: 1, text: "Add New Client", icon: "👥", page: '/pages/dashboard/clients/addClient' },
     { id: 2, text: "Create Project", icon: "📊", page: '/pages/dashboard/projects/addProject' },
     { id: 3, text: "Digitize Delivery Note", icon: "📄", page: '/pages/dashboard/deliveryNotes/addDeliveryNote' },
-    { id: 4, text: "Generate Report", icon: "📈", page: '/' },
   ]
 
   return (
