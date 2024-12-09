@@ -36,13 +36,14 @@ export default function UserProfile() {
         }
     };
 
-    // console.log(user);
+    console.log(user);
     return (
         loading ? (
             <Loading />
         ) : (
             <>
                 <NavBar />
+                
                 <div className="animate-fade-in-up max-w-4xl mx-auto mt-28 p-8 bg-white shadow-lg rounded-lg">
                     <h1 className="text-[100px] font-extrabold text-center text-blue-600 mb-8">
                         User Profile

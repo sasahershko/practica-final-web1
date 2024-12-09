@@ -22,7 +22,7 @@ export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, o
             projectId: Yup.string().required('Required'),
             format: Yup.string().oneOf(['material', 'hours'], 'Invalid, choose "material" or "hours"').required('Required'),
             material: Yup.string(),
-            hours: Yup.number(),
+            hours: Yup.number().min(0, 'Invalid number'),
             description: Yup.string().required('Required'),
             workdate: Yup.date(),
         }),

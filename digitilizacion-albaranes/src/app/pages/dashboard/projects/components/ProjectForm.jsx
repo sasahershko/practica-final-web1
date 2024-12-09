@@ -46,7 +46,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
             projectCode: Yup.string().max(50, 'The project code cannot exceed 50 characters').required('The field is required'),
             email: Yup.string().email('Invalid email').required('The field is required'),
             street: Yup.string().required('The field is required'),
-            number: Yup.number().required('The field is required'),
+            number: Yup.number().min(0, 'Invalid number').required('The field is required'),
             postal: Yup.string().matches(/^\d{5}$/, 'The postal code must have exactly 5 digits').required('The field is required'),
             city: Yup.string().required('The field is required'),
             province: Yup.string().required('The field is required'),
