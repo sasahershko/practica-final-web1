@@ -46,28 +46,9 @@ export async function getClientById(clientId) {
     }
 }
 
-// export async function uploadLogo(clientId, logo) {
-//     console.log('LOGO:', logo);
-//     const response = await apiRequest(`client/logo/${clientId}`, 'PATCH',  logo );
-//     if (response.success) {
-//         return response.data;
-//     } else {
-//         throw new Error(response.message || 'Error al subir logo');
-//     }
-// }
-
-// export async function uploadLogo(clientId, formData) {
-//     const response = await apiRequest(`client/logo/${clientId}`, 'PATCH', formData);
-//     if (response.success) {
-//         return response.data;
-//     } else {
-//         console.log('ERROR DESDE CLIENTS.JS');
-//     }
-// }
 
 
 export async function uploadLogo(clientId, formData) {
-    console.log('FORMDATA: ', formData);
     try {
         const response = await apiRequest(`client/logo/${clientId}`, 'PATCH', formData);
 

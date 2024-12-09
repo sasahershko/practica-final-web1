@@ -1,9 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { Checkbox } from "@nextui-org/react";
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import FilterBar from '@/app/components/FilterBar';
 import { getPDFDeliveryNote } from '@/app/lib/deliveryNotes';
+import { getClientById } from '@/app/lib/clients';
+import Loading from '@/app/components/Loading';
 
 export default function DeliveryNoteList({ deliveryNotes }) {
   const [filters, setFilters] = useState({
@@ -15,6 +18,33 @@ export default function DeliveryNoteList({ deliveryNotes }) {
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [isDownloading, setIsDownloading] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  //ESTO ES PARA TEMA DE CLIENTES YA QUE NO NOS LO PROPORCIONA EL BACKEND, hay que sacar datos del cliente desde su id
+  useEffect(() => {
+
+    const fetchClientNames = async () => {
+      const updatedNotes = await Promise.all(
+        deliveryNotes.map(async (note) => {
+          if (note.clientId) {
+            try {
+              const client = await getClientById(note.clientId);
+              return { ...note, clientName: client.name };
+            } catch (error) {
+              return { ...note, clientName: 'Error fetching client' };
+            }
+          }
+          return { ...note, clientName: 'No client' };
+        })
+      );
+      setFilteredNotes(updatedNotes);
+      setLoading(false);
+    };
+
+    fetchClientNames();
+  }, [deliveryNotes]);
+
+
 
 
   const handleDateChange = (date) => {
@@ -94,6 +124,11 @@ export default function DeliveryNoteList({ deliveryNotes }) {
       setIsDownloading(false);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <FilterBar
@@ -118,19 +153,23 @@ export default function DeliveryNoteList({ deliveryNotes }) {
           <thead>
             <tr className="bg-gray-100 text-black">
               <th className="p-3 text-left border border-gray-300">
-                <input
-                  type="checkbox"
-                  onChange={(e) =>
-                    setSelectedNotes(
-                      e.target.checked ? filteredNotes.map(note => note._id) : []
-                    )
-                  }
-                  checked={
-                    filteredNotes.length > 0 &&
-                    selectedNotes.length === filteredNotes.length
-                  }
-                />
+                <div className="flex justify-center items-center">
+                  <input
+                    type="checkbox"
+                    checked={
+                      filteredNotes.length > 0 &&
+                      selectedNotes.length === filteredNotes.length
+                    }
+                    onChange={(e) =>
+                      setSelectedNotes(
+                        e.target.checked ? filteredNotes.map((note) => note._id) : []
+                      )
+                    }
+                    className="w-6 h-6 appearance-none rounded-lg bg-gray-200 border-2 border-gray-300 checked:bg-blue-500 checked:border-blue-500 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-300 cursor-pointer hover:scale-105 active:scale-90"
+                  />
+                </div>
               </th>
+
               <th className="p-3 text-left border border-gray-300">Description</th>
               <th className="p-3 text-left border border-gray-300">Code</th>
               <th className="p-3 text-left border border-gray-300">Date</th>
@@ -153,11 +192,14 @@ export default function DeliveryNoteList({ deliveryNotes }) {
                   }}
                 >
                   <td className="p-3 border border-gray-300">
+                  <div className="flex justify-center items-center">
                     <input
                       type="checkbox"
                       checked={selectedNotes.includes(note._id)}
                       onChange={() => toggleSelectNote(note._id)}
+                      className="w-6 h-6 appearance-none rounded-lg bg-gray-200 border-2 border-gray-300 checked:bg-blue-500 checked:border-blue-500 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-300 cursor-pointer hover:scale-105 active:scale-90"
                     />
+                    </div>
                   </td>
                   <td className="p-3 border border-gray-300">{note.description}</td>
                   <td className="p-3 border border-gray-300">{note._id}</td>
@@ -168,7 +210,7 @@ export default function DeliveryNoteList({ deliveryNotes }) {
                   </td>
 
                   <td className="p-3 border border-gray-300">
-                    {note.clientId}
+                    {note.clientName ? note.clientName : 'No client'}
                   </td>
 
                   <td className="p-3 border border-gray-300">

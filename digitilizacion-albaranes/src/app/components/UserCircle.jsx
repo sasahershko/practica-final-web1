@@ -30,7 +30,7 @@ export default function UserCircle() {
         async function fetchUser() {
             try {
                 const userData = await getUserData();
-                setUser(userData?.data || null);
+                setUser((userData?.data || null), (userData?.logo || null));
             } catch (error) {
                 console.error('Error fetching user data:', error);
             } finally {
@@ -64,7 +64,7 @@ export default function UserCircle() {
                         aria-label="User menu"
                     >
                         <img
-                            src="https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg"
+                            src={user.logo || "https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg"}
                             alt="Avatar"
                             className="object-cover w-full h-full"
                         />

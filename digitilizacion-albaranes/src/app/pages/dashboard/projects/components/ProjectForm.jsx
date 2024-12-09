@@ -197,7 +197,7 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                             <>
                                 {console.log(selectedClient.logo)}
                                 <div className='grid justify-center'>
-                                    <img src={selectedClient.logo} alt={selectedClient.name} className='rounded-lg mb-5 h-64'/>
+                                    <img src={selectedClient.logo || 'https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg'} alt={selectedClient.name} className='rounded-lg mb-5 h-64'/>
                                 </div>
                                 <div>
                                     <p className="text-gray-500 text-sm">Name: {selectedClient.name}</p>

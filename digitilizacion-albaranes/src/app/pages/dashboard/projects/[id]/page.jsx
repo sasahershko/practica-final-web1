@@ -19,7 +19,6 @@ export default function Home() {
             try {
                 const notes = await getDeliveryNotesByProjectId(id);
                 setDeliveryNotes(notes);
-                console.log('Delivery notes:', notes);
             } catch (error) {
                 console.error('Error al obtener delivery notes:', error);
             }

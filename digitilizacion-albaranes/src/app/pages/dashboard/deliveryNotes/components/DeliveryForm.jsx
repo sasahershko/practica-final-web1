@@ -7,10 +7,13 @@ import Link from 'next/link';
 export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, onDelete }) {
     const router = useRouter();
 
+    console.log(initialValues);
+
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             clientId: initialValues.clientId || '',
-            projectId: initialValues.projectId._id || '',
+            projectId: initialValues.projectId._id || initialValues.projectId ||'',
             format: initialValues.format || '',
             material: initialValues.material || '',
             hours: initialValues.hours || 0,
@@ -46,16 +49,20 @@ export default function DeliveryForm({ initialValues, onSubmit, title, isEdit, o
             <div className="col-span-3">
                 <h1 className='text-center text-[65px] font-bold text-black mb-3'>{title}</h1>
 
-                <div className='flex justify-center mb-10'>
-                    <Link href={`/pages/dashboard/projects/${initialValues.projectId._id}`}
-                        className='main-title-gradient text-[20px] text-center'>
-                        <span className='text-black'>
-                            Project:
-                        </span>
-                        <br></br>
-                        {initialValues.projectId.name}
-                    </Link>
-                </div>
+                {initialValues.projectId._id ? (
+                    <div className='flex justify-center mb-10'>
+                        <Link href={`/pages/dashboard/projects/${initialValues.projectId._id}`}
+                            className='main-title-gradient text-[20px] text-center'>
+                            <span className='text-black'>
+                                Project:
+                            </span>
+                            <br></br>
+                            {initialValues.projectId.name}
+                        </Link>
+                    </div>
+
+                ) : null}
+
 
                 <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit() }} className="grid grid-cols-2 gap-4 mx-auto max-w-[600px]">
 

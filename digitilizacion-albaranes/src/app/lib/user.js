@@ -103,3 +103,21 @@ export async function getUserData() {
 export async function changePassword(newPassword) {
     return apiRequest('user/password', 'PATCH', { password: newPassword });
 }
+
+
+
+export async function uploadLogo(formData) {
+    console.log(formData);
+    try {
+        const response = await apiRequest(`user/logo`, 'PATCH', formData);
+
+        if (!response.success) {
+            throw new Error(response.message || 'Error al subir el logo');
+        }
+
+        return response.data;
+    } catch (error) {
+        console.error('Error en uploadLogo:', error.message);
+        throw new Error(error.message);
+    }
+}
