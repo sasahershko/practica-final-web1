@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from 'next/navigation';
 import { getDeliveryNoteById } from "@/app/lib/deliveryNotes";
 import DeliveryForm from "@/app/pages/dashboard/deliveryNotes/components/DeliveryForm";
-import { updateDeliveryNote} from "@/app/lib/deliveryNotes";
-import { deleteDeliveryNote } from "@/app/lib/deliveryNotes";
-import {getDeliveryNotes} from "@/app/lib/deliveryNotes";
+import { updateDeliveryNote, deleteDeliveryNote, getDeliveryNotes} from "@/app/lib/deliveryNotes";
+import Loading from "@/app/components/Loading";
+
 
 export default function DeliveryDetails() {
     const { id } = useParams();
@@ -59,7 +59,7 @@ export default function DeliveryDetails() {
 
     return (
         <>
-            {loading ? (<p>Loading...</p>) : (
+            {loading ? (<Loading/>) : (
                 <DeliveryForm initialValues={deliveryNote} isEdit={true} title='Edit Delivery Note'  onSubmit={handleUpdate} onDelete={handleDelete}/>)
             }
         </>

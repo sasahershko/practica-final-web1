@@ -16,7 +16,7 @@ export default function ClientDetails({ client }) {
       if (!client) return; 
 
       try {
-        const projectsData = await getProjectByClientId(client._id); // Llama a la API
+        const projectsData = await getProjectByClientId(client._id);
         setProjects(projectsData);
       } catch (err) {
         setError(err.message);
@@ -49,6 +49,7 @@ export default function ClientDetails({ client }) {
                 width={200}
                 height={200}
                 alt="client"
+                className='rounded-lg mb-4'
               />
             </div>
 

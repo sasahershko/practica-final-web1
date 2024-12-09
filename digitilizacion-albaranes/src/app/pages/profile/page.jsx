@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 export default function UserProfile() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false); 
+    const [showModal, setShowModal] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -36,6 +36,7 @@ export default function UserProfile() {
         }
     };
 
+    // console.log(user);
     return (
         loading ? (
             <Loading />
@@ -47,6 +48,9 @@ export default function UserProfile() {
                         User Profile
                     </h1>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* <div>
+                            <img href={user.logo} alt='User Logo'/>
+                        </div> */}
                         <div>
                             <h2 className="font-semibold text-gray-700">Full Name</h2>
                             <p className="text-gray-900">

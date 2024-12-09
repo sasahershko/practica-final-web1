@@ -21,12 +21,12 @@ export async function apiRequest(endpoint, method = 'GET', body = null, isBlob =
         };
 
         const response = await fetch(`${BASE_URL}/${endpoint}`, requestOptions);
-        console.log('Request Details:', {
-            endpoint,
-            method,
-            headers: requestOptions.headers,
-            body: requestOptions.body,
-        });
+        // console.log('Request Details:', {
+        //     endpoint,
+        //     method,
+        //     headers: requestOptions.headers,
+        //     body: requestOptions.body,
+        // });
         
 
         if (isBlob) {
