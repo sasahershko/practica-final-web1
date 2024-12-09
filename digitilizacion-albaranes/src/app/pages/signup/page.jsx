@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { register } from '@/app/lib/auth';
+import { register } from '@/app/lib/user';
 import { useState } from 'react';
 import ErrorPage from '@/app/components/ErrorPage';
 import NavBar from '@/app/components/NavBar';

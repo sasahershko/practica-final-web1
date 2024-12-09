@@ -140,8 +140,8 @@ export default function Home() {
                                         className="border border-blue-300 bg-white shadow-md hover:shadow-lg p-4 rounded-lg text-black transform hover-grow"
                                         onClick={() => router.push(`/pages/dashboard/deliveryNotes/${note._id}`)}
                                     >
-                                        <h3 className="text-lg font-semibold text-blue-600">{note._id}</h3>
-                                        <p className="text-gray-700 mt-2">{note.description}</p>
+                                        <h3 className="text-lg font-semibold text-blue-600">{note.description}</h3>
+                                        <p className="text-gray-700 mt-2">{note._id}</p>
                                     </div>
                                 );
                             })}

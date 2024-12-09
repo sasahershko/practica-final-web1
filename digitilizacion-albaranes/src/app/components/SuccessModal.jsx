@@ -2,10 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 
-export default function SuccessModal({ message = 'Success!', redirectPath = '/pages/dashboard/summary', buttonText = 'Go to Summary' }) {
+export default function SuccessModal({ message = 'Success!', redirectPath = '/pages/dashboard/summary', buttonText = 'Go to Summary', onClose }) {
     const router = useRouter();
 
     const handleRedirect = () => {
+        if(onClose) onClose();
         router.push(redirectPath);
     };
 

@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import NavBar from '../../components/NavBar';
 import { Button } from '@nextui-org/react';
-import { registrationComplete, getUserData } from '@/app/lib/auth';
+import { updateUser, getUserData } from '@/app/lib/user';
 import { useEffect, useState } from 'react';
 import Loading from '@/app/components/Loading';
 import {useRouter } from 'next/navigation';
@@ -46,7 +46,7 @@ export default function SignUpName({ isEdit }) {
         }),
         onSubmit: async (values) => {
             try {
-                const response = await registrationComplete(values);
+                const response = await updateUser(values);
                 alert('Profile updated successfully');
                 router.push('/pages/dashboard/summary');
 

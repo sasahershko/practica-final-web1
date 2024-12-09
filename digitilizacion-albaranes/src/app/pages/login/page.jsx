@@ -4,8 +4,8 @@ import * as Yup from 'yup';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import {useState} from 'react';
-import { login } from '../../lib/auth';
-import NavBar from '../../components/NavBar';
+import { login } from '@/app/lib/user';
+import NavBar from '@/app/components/NavBar';
 import ErrorPage from '@/app/components/ErrorPage';
 
 export default function Login() {

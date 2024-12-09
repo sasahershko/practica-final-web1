@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { logout } from '@/app/lib/auth';
+import { logout } from '@/app/lib/user';
 import Link from 'next/link';
-import { getUserData } from '@/app/lib/auth';
+import { getUserData } from '@/app/lib/user';
 import Loading from '@/app/components/Loading';
 
 export default function UserCircle() {

@@ -79,7 +79,7 @@ export async function logout() {
     await new Promise((resolve) => setTimeout(resolve, 100)); 
 }
 
-export async function registrationComplete(values) {
+export async function updateUser(values) {
     try{
         const { email, name, surnames, nif } = values;
         const response = await apiRequest('user/register', 'PUT', { email, name, surnames, nif });

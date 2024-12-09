@@ -1,7 +1,7 @@
 'use client'
 import {useState} from 'react';
 import {Button} from '@nextui-org/react';
-import {verify} from '@/app/lib/auth';
+import {verify} from '@/app/lib/user';
 import {useRouter} from 'next/navigation';
 import NavBar from '@/app/components/NavBar';
 

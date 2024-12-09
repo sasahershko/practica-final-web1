@@ -194,14 +194,20 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                 <div className='space-y-6'>
                     <Card title="Client">
                         {selectedClient ? (
-                            <div>
-                                <p className="text-gray-500 text-sm">Name: {selectedClient.name}</p>
-                                <p className="text-gray-500 text-sm">CIF: {selectedClient.cif}</p>
-                                <p className="text-gray-500 text-sm">Address: {selectedClient.address.street} {selectedClient.address.number}</p>
-                                <p className="text-gray-500 text-sm">Postal:{selectedClient.address.postal} {selectedClient.address.city} ({selectedClient.address.province})</p>
-                                <p className="text-gray-500 text-sm">City: {selectedClient.address.city} </p>
-                                <p className="text-gray-500 text-sm">Provice:({selectedClient.address.province})</p>
-                            </div>
+                            <>
+                                {console.log(selectedClient.logo)}
+                                <div className='grid justify-center'>
+                                    <img src={selectedClient.logo} alt={selectedClient.name} className='rounded-lg mb-5 h-64'/>
+                                </div>
+                                <div>
+                                    <p className="text-gray-500 text-sm">Name: {selectedClient.name}</p>
+                                    <p className="text-gray-500 text-sm">CIF: {selectedClient.cif}</p>
+                                    <p className="text-gray-500 text-sm">Address: {selectedClient.address.street} {selectedClient.address.number}</p>
+                                    <p className="text-gray-500 text-sm">Postal:{selectedClient.address.postal} {selectedClient.address.city} ({selectedClient.address.province})</p>
+                                    <p className="text-gray-500 text-sm">City: {selectedClient.address.city} </p>
+                                    <p className="text-gray-500 text-sm">Provice:({selectedClient.address.province})</p>
+                                </div>
+                            </>
                         ) : (
                             <div>
                                 <p className="text-gray-500 text-sm">Select a client to see more details.</p>
@@ -237,19 +243,6 @@ export default function ProjectForm({ title, initialValues, onSubmit, isEdit, on
                             {formik.errors.notes && (
                                 <p className="text-red-500 text-sm mt-2">{formik.errors.notes}</p>
                             )}
-                        </div>
-                    </Card>
-
-
-                    <Card title="Tags">
-                        <div className='flex flex-col'>
-                            <p className="text-gray-500 text-sm">Tags can be used to categorize projects into groups..</p>
-                            <select className='mt-5 mb-5 bg-gray-100 rounded-md px-4 py-2 text-gray-500'>
-                                <option>Tag 1</option>
-                                <option>Tag 2</option>
-                                <option>Tag 3</option>
-                            </select>
-                            <button className='blue-button'>Save</button>
                         </div>
                     </Card>
                 </div>
