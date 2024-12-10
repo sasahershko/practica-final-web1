@@ -100,14 +100,7 @@ export async function getUserData() {
     }
 }
 
-export async function changePassword(newPassword) {
-    return apiRequest('user/password', 'PATCH', { password: newPassword });
-}
-
-
-
 export async function uploadLogo(formData) {
-    console.log(formData);
     try {
         const response = await apiRequest(`user/logo`, 'PATCH', formData);
 
@@ -120,4 +113,15 @@ export async function uploadLogo(formData) {
         console.error('Error en uploadLogo:', error.message);
         throw new Error(error.message);
     }
+}
+
+
+export async function changePassword(newPassword) {
+    try{
+        const response =  apiRequest('user/password', 'PATCH', { password: newPassword });
+        return response;
+    }catch(e){
+        throw new Error(error.message);
+    }
+    
 }

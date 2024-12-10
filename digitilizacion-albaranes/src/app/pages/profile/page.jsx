@@ -167,7 +167,7 @@ export default function UserProfile() {
                 {showModal && (
                     <SuccessModal
                         message="User deleted successfully!"
-                        redirectPath="/pages/profile"
+                        redirectPath="/pages/dashboard/summary"
                         buttonText="Go to Home"
                         onClose={() => { setShowModal(false); }}
                     />

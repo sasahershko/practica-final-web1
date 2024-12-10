@@ -64,7 +64,7 @@ export default function UserCircle() {
                         aria-label="User menu"
                     >
                         <img
-                            src={user.logo || "https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg"}
+                            src={user?.logo || "https://gcs.tripi.vn/public-tripi/tripi-feed/img/474230Lgd/hinh-chibi-avatar-dep_031501308.jpg"}
                             alt="Avatar"
                             className="object-cover w-full h-full"
                         />

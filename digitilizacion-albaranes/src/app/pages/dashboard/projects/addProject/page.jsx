@@ -6,14 +6,14 @@ import { getClients } from '@/app/lib/clients';
 import { addProject, updateProject } from '@/app/lib/projects';
 import Modal from '@/app/components/Modal';
 import DateForm from '@/app/pages/dashboard/projects/components/DateForm';
+import SuccessModal from '@/app/components/SuccessModal';
 
 export default function AddProject() {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [closeModal, setCloseModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [project, setProject] = useState({});
 
   useEffect(() => {
@@ -33,33 +33,28 @@ export default function AddProject() {
     fetchClients();
   }, []);
 
-  //ADD PROJECT
   const handleAddProject = async (values) => {
     try {
-        const response = await addProject(values);
-        alert('Proyecto añadido');
-        setIsModalOpen(true);
-        setProject(response);
+      const response = await addProject(values);
+      setIsModalOpen(true);
+      setProject(response);
     } catch (error) {
-        console.error('Error al añadir proyecto:', error.message);
+      console.error('Error al añadir proyecto:', error.message);
     }
-};
-
+  };
 
   const handleUpdateDates = async (values) => {
     try {
-      const response = await updateProject(project._id, values);
-      alert('Project dates updated successfully!', project._id, values);
+      await updateProject(project._id, values);
       setIsModalOpen(false);
-      router.push('/pages/dashboard/projects');
+      setShowSuccessModal(true);
     } catch (error) {
       console.log('Error updating project dates', error.message);
     }
+  };
 
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
     router.push('/pages/dashboard/projects');
   };
 
@@ -78,15 +73,22 @@ export default function AddProject() {
           onClose={() => setIsModalOpen(false)}
           isOpen={isModalOpen}
           children={
-            <>
             <DateForm
               onSubmit={handleUpdateDates}
               projectName={project.name}
             />
-            </>
           }
         />
       )}
+
+      {showSuccessModal && (
+        <SuccessModal
+          message="Project added and dates updated successfully!"
+          buttonText="Go to Projects"
+          onClose={handleCloseSuccessModal}
+          redirectPath='/pages/dashboard/projects'
+        />
+      )}
     </>
-  )
+  );
 }
