@@ -131,14 +131,14 @@ export default function ProfileForm({ initialValues, isEdit, onCancel, onSubmit,
           >
             Select Image
           </button>
-          {/* {file && (
+          {file && (
             <button
               onClick={() => onSubmitLogo(file)}
               className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:shadow-lg hover:from-pink-500 hover:to-blue-700 transition-transform duration-300 transform hover:scale-105 w-full mt-4"
             >
               Apply Image
             </button>
-          )} */}
+          )}
         </div>
       </div>
     </div>
